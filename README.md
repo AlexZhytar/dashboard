@@ -1,4 +1,4 @@
-# Dashboard Frontend
+# Dashboard (Frontend)
 
 Цей проект — сучасний веб-додаток для управління проектами, створений на базі Next.js та TypeScript.
 
