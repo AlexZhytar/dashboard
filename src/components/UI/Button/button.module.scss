@@ -1,0 +1,77 @@
+@use '../../../scss/utils/const' as *;
+
+.button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    border-radius: .4rem;
+    min-height: 4rem;
+    font-size: 1.4rem;
+    line-height: 1;
+    gap: 1rem;
+    border: 0;
+    padding: 1rem 2.4rem;
+    font-weight: $fw-medium;
+    transition:
+        background-color $transition-time,
+        color $transition-time,
+        border-color $transition-time,
+        opacity $transition-time;
+
+    span {
+        transition: color $transition-time;
+    }
+
+    &_primary {
+        background: var(--color-button-primary);
+        color: var(--color-button-text);
+
+        @media (hover: hover) {
+            &:hover {
+                background: var(--color-button-primary-hover);
+            }
+        }
+
+        &:active {
+            background: var(--color-button-primary-hover);
+        }
+    }
+
+    &_secondary {
+        background: var(--color-button-secondary);
+        color: var(--color-text-high);
+        border: 1px solid var(--color-border-strong);
+
+        @media (hover: hover) {
+            &:hover {
+                background: var(--color-button-secondary-hover);
+            }
+        }
+
+        &:active {
+            background: var(--color-button-secondary-hover);
+        }
+    }
+
+    &_clear {
+        border-radius: 0;
+        background: transparent;
+        text-transform: capitalize;
+        line-height: 1;
+        padding: 0;
+        letter-spacing: 0;
+    }
+
+    &_addProject {
+        svg {
+            fill: none;
+            stroke: var(--color-gray-500);
+        }
+    }
+
+    &:disabled {
+        opacity: 0.5;
+        pointer-events: none;
+    }
+}

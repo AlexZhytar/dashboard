@@ -1,0 +1,37 @@
+@use '../utils/const' as *;
+
+html * {
+  -webkit-text-size-adjust: none;
+  -moz-text-size-adjust: none;
+  -ms-text-size-adjust: none;
+  text-size-adjust: none;
+  -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
+}
+
+html {
+  font-size: 10px;
+}
+
+.no-transition *,
+.no-transition *::before,
+.no-transition *::after {
+  transition: none !important;
+}
+
+body {
+  font-family: var(--font-inter);
+  background: var(--color-bg-subtle);
+  color: var(--color-text-high);
+  font-size: 1.6rem;
+  line-height: $lh-100;
+  font-weight: $fw-normal;
+  scroll-behavior: smooth;
+
+  &.no-scroll {
+    overflow: hidden;
+  }
+}
+
+.page-wrapper {
+  width: 100%;
+}

@@ -1,0 +1,239 @@
+@use '../../scss/utils/const' as *;
+@use '../../scss/utils/mixin' as *;
+
+.modal {
+  position: fixed;
+  left: 0;
+  top: -100%;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  outline: 0;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  overscroll-behavior: none;
+
+  &::before {
+    content: "";
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    right: 0;
+    margin: 0 auto;
+    opacity: 0;
+    transition: none;
+    background: var(--color-gray-400);
+  }
+
+  &_wrapper {
+    position: relative;
+    max-height: 100%;
+    display: flex;
+    align-items: flex-start;
+    width: 100%;
+    padding: 0 3rem;
+    overscroll-behavior: none;
+
+    @include mediaMax(dw) {
+      max-height: 100%;
+    }
+  }
+
+  &_inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    min-height: 30rem;
+    background: var(--color-bg-surface);
+    overscroll-behavior: none;
+    margin: 3rem auto;
+    border-radius: 1.6rem;
+    overflow: hidden;
+  }
+
+  &_head {
+    width: 100%;
+    padding: 1.2rem 4.8rem 1.2rem 2rem;
+    border-bottom: 1px solid var(--color-border-strong);
+    font-size: 1.6rem;
+    font-weight: $fw-semiBold;
+    line-height: $lh-145;
+  }
+
+  &_close {
+    position: absolute;
+    right: .8rem;
+    top: .3rem;
+    width: 4rem;
+    height: 4rem;
+    cursor: pointer;
+    z-index: 10;
+
+    &::before,
+    &::after {
+      content: "";
+      position: absolute;
+      width: 1.6px;
+      height: 1.6rem;
+      top: calc(50% - .8rem);
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: var(--color-gray-400);
+      pointer-events: none;
+      transition: background-color $transition-time, transform $transition-time;
+    }
+
+    &::before {
+      transform: rotate(45deg);
+    }
+
+    &::after {
+      transform: rotate(-45deg);
+    }
+
+    &:hover {
+      &::before {
+        transform: rotate(225deg);
+        background-color: var(--color-high);
+      }
+
+      &::after {
+        transform: rotate(-225deg);
+        background-color: var(--color-high);
+      }
+    }
+  }
+
+  &.is_open {
+    top: 0;
+
+    &::before {
+      opacity: .8;
+    }
+
+    .modal_inner {}
+
+    .modal_wrapper {
+
+      overscroll-behavior: contain;
+    }
+  }
+
+  &.is_center {
+    .modal {
+      &_close {
+        right: calc(50% - 39.4rem);
+        top: 3.3rem;
+      }
+
+      &_head {
+        text-align: center;
+      }
+
+      &_inner {
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        max-width: 80rem;
+        overflow: hidden;
+      }
+    }
+  }
+
+  &.is_right {
+    .modal {
+      &_wrapper {
+        padding: 0;
+        max-height: 100vh;
+        justify-content: flex-end;
+      }
+
+      &_inner {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        max-width: 40rem;
+        height: 100vh;
+        margin: 0;
+        border-radius: 0;
+      }
+    }
+  }
+
+  &.is_left {
+    .modal {
+      &_wrapper {
+        padding: 0;
+        max-height: 100vh;
+        justify-content: flex-start;
+      }
+
+      &_close {
+        left: 52rem;
+        top: 2rem;
+      }
+
+      &_inner {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        max-width: 40rem;
+        height: 100vh;
+        margin: 0;
+        border-radius: 0;
+      }
+    }
+  }
+
+  &.is_top {
+    .modal {
+      &_close {
+        right: calc((100% - 52rem) / 2);
+        top: 7rem;
+      }
+
+      &_inner {
+        display: flex;
+        max-width: 40rem;
+        overflow: hidden;
+      }
+    }
+  }
+
+  &.is_bottom {
+    .modal {
+      &_close {
+        right: calc((100% - 52rem) / 2);
+        top: 7rem;
+      }
+
+      &_inner {
+        display: flex;
+        max-width: 40rem;
+        overflow: hidden;
+      }
+    }
+  }
+
+  // &--head {
+  //   width: 100%;
+  // }
+
+  // &--caption {
+  //   font-size: 1.8rem;
+  //   line-height: 2.3rem;
+  //   color: var(--text-main);
+  //   font-weight: $fw-semibold;
+  //   text-transform: uppercase;
+  // }
+
+  // &--block {
+  //   width: 100%;
+  //   display: flex;
+  //   flex-direction: column;
+  //   gap: 1.6rem;
+  // }
+}

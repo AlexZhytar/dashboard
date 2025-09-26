@@ -1,0 +1,8 @@
+@use '../utils/const';
+
+.container {
+  width: 100%;
+  max-width: const.$container;
+  margin: 0 auto;
+  padding: 0;
+}

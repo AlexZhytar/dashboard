@@ -1,0 +1,267 @@
+@use 'sass:map';
+@use '../utils/breakpoints' as *;
+
+// @media max-width
+@mixin mediaMax($width) {
+  $max-width: map.get($breakpoints-max, $width);
+  @if $max-width == null {
+    $max-width: $width;
+  }
+
+  @media (max-width: $max-width) {
+    @content;
+  }
+}
+
+// @media min-width
+@mixin mediaMin($width) {
+  $min-width: map.get($breakpoints-min, $width);
+  @if $min-width == null {
+    $min-width: $width;
+  }
+
+  @media (min-width: $min-width) {
+    @content;
+  }
+}
+
+// @media min-width and min-width
+@mixin mediaMinMax($minWidth, $maxWidth) {
+  $min-value: map.get($breakpoints-min, $minWidth);
+  $max-value: map.get($breakpoints-max, $maxWidth);
+
+  @if $min-value == null {
+    $min-value: $minWidth;
+  }
+  @if $max-value == null {
+    $max-value: $maxWidth;
+  }
+
+  @media (min-width: $min-value) and (max-width: $max-value) {
+    @content;
+  }
+}
+
+// @media max-height
+@mixin mediaMaxH($height) {
+  $max-height: map.get($breakpoints-max, $height);
+
+  @if $max-height == null {
+    $max-height: $height;
+  }
+
+  @media (max-height: $max-height) {
+    @content;
+  }
+}
+
+// @media min-height
+@mixin mediaMinH($height) {
+  $min-height: map.get($breakpoints-min, $height);
+
+  @if $min-height == null {
+    $min-height: $height;
+  }
+
+  @media (min-height: $min-height) {
+    @content;
+  }
+}
+
+// @media min-height and max-height
+@mixin mediaMinMaxH($minHeight, $maxHeight) {
+  $min-height: map.get($breakpoints-min, $minHeight);
+  $max-height: map.get($breakpoints-max, $maxHeight);
+
+  @if $min-height == null {
+    $min-height: $minHeight;
+  }
+  @if $max-height == null {
+    $max-height: $maxHeight;
+  }
+
+  @media (min-height: $min-height) and (max-height: $max-height) {
+    @content;
+  }
+}
+
+// @media max-width and max-height
+@mixin mediaMaxSize($maxWidth, $maxHeight) {
+  $max-width: map.get($breakpoints-max, $maxWidth);
+  $max-height: map.get($breakpoints-max, $maxHeight);
+
+  @if $max-width == null {
+    $max-width: $maxWidth;
+  }
+  @if $max-height == null {
+    $max-height: $maxHeight;
+  }
+
+  @media (max-width: $max-width) and (max-height: $max-height) {
+    @content;
+  }
+}
+
+// @media min-width and min-height
+@mixin mediaMinSize($minWidth, $minHeight) {
+  $min-width: map.get($breakpoints-min, $minWidth);
+  $min-height: map.get($breakpoints-min, $minHeight);
+
+  @if $min-width == null {
+    $min-width: $minWidth;
+  }
+  @if $min-height == null {
+    $min-height: $minHeight;
+  }
+
+  @media (min-width: $min-width) and (min-height: $min-height) {
+    @content;
+  }
+}
+
+// @media max-width and min-height
+@mixin mediaMaxMinSize($maxWidth, $minHeight) {
+  $max-width: map.get($breakpoints-max, $maxWidth);
+  $min-height: map.get($breakpoints-min, $minHeight);
+
+  @if $max-width == null {
+    $max-width: $maxWidth;
+  }
+  @if $min-height == null {
+    $min-height: $minHeight;
+  }
+
+  @media (max-width: $max-width) and (min-height: $min-height) {
+    @content;
+  }
+}
+
+// @media min-width and max-height
+@mixin mediaMinMaxSize($minWidth, $maxHeight) {
+  $min-width: map.get($breakpoints-min, $minWidth);
+  $max-height: map.get($breakpoints-max, $maxHeight);
+
+  @if $min-width == null {
+    $min-width: $minWidth;
+  }
+  @if $max-height == null {
+    $max-height: $maxHeight;
+  }
+
+  @media (min-width: $min-width) and (max-height: $max-height) {
+    @content;
+  }
+}
+
+// margin for block: top and bottom
+@mixin mBlock($top: 4.8rem, $bottom: 4.8rem) {
+  margin-top: $top;
+  margin-bottom: $bottom;
+  @include mediaMax(i) {
+    margin-top: 3.6rem;
+    margin-bottom: 3.6rem;
+  }
+  @include mediaMax(pw) {
+    margin-top: 2.4rem;
+    margin-bottom: 2.4rem;
+  }
+}
+
+// padding for block: top and bottom
+@mixin pBlock($top: 4.8rem, $bottom: 4.8rem) {
+  padding-top: $top;
+  padding-bottom: $bottom;
+  @include mediaMax(i) {
+    padding-top: 3.6rem;
+    padding-bottom: 3.6rem;
+  }
+  @include mediaMax(pw) {
+    padding-top: 2.4rem;
+    padding-bottom: 2.4rem;
+  }
+}
+
+// for retina background image
+@mixin image-2x($image, $width, $height) {
+  @media (-webkit-min-device-pixel-ratio: 2),
+    (min--moz-device-pixel-ratio: 2),
+    (-o-min-device-pixel-ratio: 2/1),
+    (min-device-pixel-ratio: 2),
+    (min-resolution: 192dpi),
+    (min-resolution: 2dppx) {
+    background-image: url($image);
+    background-size: $width $height;
+  }
+}
+
+// create triangle
+@mixin triangle($width, $direction, $color) {
+  width: 0;
+  height: 0;
+  @if $direction == up {
+    border-left: $width solid transparent;
+    border-right: $width solid transparent;
+    border-bottom: $width solid $color;
+  }
+  @if $direction == down {
+    border-left: $width solid transparent;
+    border-right: $width solid transparent;
+    border-top: $width solid $color;
+  }
+  @if $direction == left {
+    border-top: $width solid transparent;
+    border-bottom: $width solid transparent;
+    border-right: $width solid $color;
+  }
+  @if $direction == right {
+    border-top: $width solid transparent;
+    border-bottom: $width solid transparent;
+    border-left: $width solid $color;
+  }
+}
+
+@mixin centering-xy() {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+@mixin centering-x() {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+@mixin centering-y() {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+@mixin abs($w: 100%, $h: 100%, $pos: absolute) {
+  position: $pos;
+  width: $w;
+  height: $h;
+}
+
+// default for before, after
+@mixin pseudo-element($content: '', $display: block, $pos: absolute) {
+  content: $content;
+  display: $display;
+  position: $pos;
+}
+
+@mixin vh-height($type, $offset: 0px) {
+  $property: null;
+
+  @if $type == min {
+    $property: min-height;
+  } @else if $type == max {
+    $property: max-height;
+  } @else {
+    $property: height;
+  }
+
+  #{$property}: calc(var(--vh, 1vh) * 100 - #{$offset});
+}

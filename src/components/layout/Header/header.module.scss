@@ -1,0 +1,69 @@
+@use '../../../scss/utils/const' as *;
+@use '../../../scss/utils/mixin' as *;
+
+.header {
+    width: 100%;
+    background-color: var(--color-bg-surface);
+    border-bottom: 1px solid var(--color-border-subtle );
+
+    &_wrapper { 
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        height: 6.4rem;
+        width: 100%;
+    }
+
+    &_logo {
+        font-size: 1.8rem;
+        font-weight: bold;
+        color: #333;
+        text-decoration: none;
+        margin-right: 2rem;
+
+        &_img {
+            height: 3rem;
+            width: auto;
+        }
+    }
+
+    &_nav {
+        ul {
+            display: flex;
+            align-items: center;
+            gap: 2.4rem;
+
+            a {
+                font-weight: $fw-semiBold;
+                color: var(--color-text-high);
+                display: inline-block;
+                line-height: 6.8rem;
+                transition: color $transition-time;
+                position: relative;
+
+                &::after {
+                    content: '';
+                    @include pseudo-element();
+                    bottom: .2rem ;
+                    left: 0;
+                    width: 100%;
+                    height: .2rem;
+                    background-color: var(--color-primary);
+                    opacity: 0;
+                    transition: opacity $transition-time;
+                }
+
+                &.active {
+                    &::after {
+                        opacity: 1;
+                    }
+                }
+            }
+        }
+    }
+
+    &_actions {
+        display: flex;
+        margin-left: auto;
+    }
+}

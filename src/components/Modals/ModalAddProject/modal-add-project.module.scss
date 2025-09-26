@@ -1,0 +1,36 @@
+@use "../../../scss/utils/const" as *;
+
+.formAddProject {
+    width: 100%;
+
+    &_inner {
+        width: 100%;
+        padding: 3.2rem 4rem;
+    }
+
+    &_bottom {
+        display: flex;
+        justify-content: flex-end;
+        gap: .8rem;
+        width: 100%;
+        padding: 2rem 4rem;
+        border-top: 1px solid var(--color-border-strong);
+    }
+
+    &_field {
+        .field_100 {
+            width: 100%;
+        }
+
+        .field_50 {
+            width: 50%;
+        }
+
+        &_caption {
+            font-size: 1.3rem;
+            font-weight: $fw-semiBold;
+            line-height: $lh-138;
+            color: var(--color-text-high);
+        }
+    }
+}

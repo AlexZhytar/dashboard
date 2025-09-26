@@ -1,0 +1,41 @@
+// ---- ~ breakpoints max
+$point-max-dw: 1679.98px;
+$point-max-dm: 1499.98px;
+$point-max-d: 1279.98px;
+$point-max-i: 1023.98px;
+$point-max-t: 767.98px;
+$point-max-pw: 639.98px;
+$point-max-pm: 559.98px;
+$point-max-p: 399.98px;
+
+// ---- ~ breakpoints min
+$point-min-dw: 1680px;
+$point-min-dm: 1500px;
+$point-min-d: 1280px;
+$point-min-i: 1024px;
+$point-min-t: 768px;
+$point-min-pw: 640px;
+$point-min-pm: 560px;
+$point-min-p: 400px;
+
+$breakpoints-min: (
+  dw: $point-min-dw,
+  dm: $point-min-dm,
+  d: $point-min-d,
+  i: $point-min-i,
+  t: $point-min-t,
+  pw: $point-min-pw,
+  pm: $point-min-pm,
+  p: $point-min-p
+);
+
+$breakpoints-max: (
+  dw: $point-max-dw,
+  dm: $point-max-dm,
+  d: $point-max-d,
+  i: $point-max-i,
+  t: $point-max-t,
+  pw: $point-max-pw,
+  pm: $point-max-pm,
+  p: $point-max-p
+);
