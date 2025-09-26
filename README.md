@@ -1,36 +1,45 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Dashboard Frontend
 
-## Getting Started
+Цей проект — сучасний веб-додаток для управління проектами, створений на базі Next.js та TypeScript.
 
-First, run the development server:
+## Основні можливості
+- Перегляд, пошук та фільтрація проектів
+- Додавання нових проектів
+- Налаштування проектів
+- Модальні вікна для взаємодії з користувачем
+- Адаптивний дизайн
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Технології
+- Next.js
+- React
+- TypeScript
+- SCSS Modules
+- ESLint
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Структура проекту
+- `src/components` — UI компоненти, модалі, layout
+- `src/constants` — константи для різних частин додатку
+- `src/store` — глобальний state management
+- `src/utils` — утиліти
+- `src/scss` — стилі
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+## Запуск проекту
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+1. Встановіть залежності:
+   ```bash
+   npm install
+   ```
+2. Запустіть локальний сервер:
+   ```bash
+   npm run dev
+   ```
+3. Відкрийте [http://localhost:3000](http://localhost:3000) у браузері.
 
-## Learn More
+## Сценарії npm
+- `npm run dev` — запуск у режимі розробки
+- `npm run build` — збірка проекту
+- `npm run start` — запуск production-сервера
+- `npm run lint` — перевірка коду на помилки
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Контакти
+Для питань та пропозицій звертайтесь до команди Artilab.
