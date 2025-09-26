@@ -10,7 +10,10 @@ export const useProjectsStore = create(
                 projects: [],
             },
             hasHydrated: false,
+            isSearchActive: false,
             setHasHydrated: (value) => set({ hasHydrated: value }),
+
+            setSearchActive: (value) => set({ isSearchActive: value }),
 
             setProjectData: (data) => {
                 const current = get().projectData;

@@ -4,6 +4,7 @@ import { LinkCard, ManagerCard } from "../ProjectsCard/types"
 export type DraggableBlockProps = {
     id: string | number;
     children: ReactNode;
+    stateSearch: boolean;
 }
 
 export type ProjectsList = {
@@ -20,4 +21,5 @@ export type ProjectsList = {
 
 export type ProjectsProps = {
     projects: ProjectsList[];
+    isSearchActive?: boolean;
 }

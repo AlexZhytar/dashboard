@@ -7,7 +7,7 @@ import { arrayMove, SortableContext, useSortable, verticalListSortingStrategy } 
 import { useProjectsStore } from '@/store/useProjects';
 import { DraggableBlockProps, ProjectsProps } from './types';
 
-const DraggableBlock = ({ id, children }: DraggableBlockProps) => {
+const DraggableBlock = ({ id, children, stateSearch }: DraggableBlockProps) => {
     const { attributes, listeners, transition, isDragging, setNodeRef, transform } = useSortable({
         id: id.toString(),
     });
@@ -25,19 +25,21 @@ const DraggableBlock = ({ id, children }: DraggableBlockProps) => {
             className={`${style.draggable_block}`}
             style={styleDraggable}
         >
-            <div className={style.drag_handle} {...listeners} {...attributes}>
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                    <path d="M9.25 16.25C9.94036 16.25 10.5 16.8096 10.5 17.5C10.5 18.1904 9.94036 18.75 9.25 18.75C8.55964 18.75 8 18.1904 8 17.5C8 16.8096 8.55964 16.25 9.25 16.25ZM14.75 16.25C15.4404 16.25 16 16.8096 16 17.5C16 18.1904 15.4404 18.75 14.75 18.75C14.0596 18.75 13.5 18.1904 13.5 17.5C13.5 16.8096 14.0596 16.25 14.75 16.25ZM9.25 10.75C9.94036 10.75 10.5 11.3096 10.5 12C10.5 12.6904 9.94036 13.25 9.25 13.25C8.55964 13.25 8 12.6904 8 12C8 11.3096 8.55964 10.75 9.25 10.75ZM14.75 10.75C15.4404 10.75 16 11.3096 16 12C16 12.6904 15.4404 13.25 14.75 13.25C14.0596 13.25 13.5 12.6904 13.5 12C13.5 11.3096 14.0596 10.75 14.75 10.75ZM9.25 5.25C9.94036 5.25 10.5 5.80964 10.5 6.5C10.5 7.19036 9.94036 7.75 9.25 7.75C8.55964 7.75 8 7.19036 8 6.5C8 5.80964 8.55964 5.25 9.25 5.25ZM14.75 5.25C15.4404 5.25 16 5.80964 16 6.5C16 7.19036 15.4404 7.75 14.75 7.75C14.0596 7.75 13.5 7.19036 13.5 6.5C13.5 5.80964 14.0596 5.25 14.75 5.25Z" />
-                </svg>
-            </div>
+            {
+                !stateSearch && <div className={style.drag_handle} {...listeners} {...attributes}>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                        <path d="M9.25 16.25C9.94036 16.25 10.5 16.8096 10.5 17.5C10.5 18.1904 9.94036 18.75 9.25 18.75C8.55964 18.75 8 18.1904 8 17.5C8 16.8096 8.55964 16.25 9.25 16.25ZM14.75 16.25C15.4404 16.25 16 16.8096 16 17.5C16 18.1904 15.4404 18.75 14.75 18.75C14.0596 18.75 13.5 18.1904 13.5 17.5C13.5 16.8096 14.0596 16.25 14.75 16.25ZM9.25 10.75C9.94036 10.75 10.5 11.3096 10.5 12C10.5 12.6904 9.94036 13.25 9.25 13.25C8.55964 13.25 8 12.6904 8 12C8 11.3096 8.55964 10.75 9.25 10.75ZM14.75 10.75C15.4404 10.75 16 11.3096 16 12C16 12.6904 15.4404 13.25 14.75 13.25C14.0596 13.25 13.5 12.6904 13.5 12C13.5 11.3096 14.0596 10.75 14.75 10.75ZM9.25 5.25C9.94036 5.25 10.5 5.80964 10.5 6.5C10.5 7.19036 9.94036 7.75 9.25 7.75C8.55964 7.75 8 7.19036 8 6.5C8 5.80964 8.55964 5.25 9.25 5.25ZM14.75 5.25C15.4404 5.25 16 5.80964 16 6.5C16 7.19036 15.4404 7.75 14.75 7.75C14.0596 7.75 13.5 7.19036 13.5 6.5C13.5 5.80964 14.0596 5.25 14.75 5.25Z" />
+                    </svg>
+                </div>
+            }
             {children}
         </div>
     );
 };
 
-const ProjectsList = ({ projects }: ProjectsProps) => {
+const ProjectsList = ({ projects, isSearchActive }: ProjectsProps) => {
     const { reorderProjects } = useProjectsStore();
-
+    
     const handleDragEnd = (event: DragEndEvent) => {
         const { active, over } = event;
         if (!over || active.id === over.id) return;
@@ -64,7 +66,7 @@ const ProjectsList = ({ projects }: ProjectsProps) => {
 
                     <div className={style.projects_list}>
                         {projects.map(item =>
-                            <DraggableBlock key={item.id} id={item.id}>
+                            <DraggableBlock key={item.id} id={item.id} stateSearch={!!isSearchActive}>
                                 <ProjectsCard
                                     project={item.label}
                                     links={item.links}
