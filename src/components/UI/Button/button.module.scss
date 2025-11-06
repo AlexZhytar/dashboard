@@ -11,7 +11,7 @@
     line-height: 1;
     gap: 1rem;
     border: 0;
-    padding: 1rem 2.4rem;
+    padding: 0 2.4rem;
     font-weight: $fw-medium;
     transition:
         background-color $transition-time,
@@ -64,6 +64,10 @@
     }
 
     &_addProject {
+        min-height: 3.2rem;
+        padding: 0 1.6rem;
+        gap: .4rem;
+
         svg {
             fill: none;
             stroke: var(--color-gray-500);

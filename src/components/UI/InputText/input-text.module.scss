@@ -1,0 +1,28 @@
+@use '../../../scss/utils/const' as *;
+
+.input {
+    width: 100%;
+    border-radius: .4rem;
+    border: 1px solid var(--color-border-strong);
+    outline: none;
+    font-size: 1.4rem;
+    font-weight: $fw-normal;
+    line-height: 1;
+    color: var(--color-text-high);
+    height: 4rem;
+    padding: 0 1.2rem;
+    transition: border-color $transition-time, box-shadow $transition-time;
+
+    &::placeholder {
+        color: var(--color-text-secondary-60);
+    }
+
+    &:hover {
+        border-color: var(--color-gray-500);
+    }
+
+    &:focus {
+        border-color: var(--color-primary);
+    }
+
+}

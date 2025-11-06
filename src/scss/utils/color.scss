@@ -7,6 +7,7 @@
   --color-gray-430: rgba(60, 60, 67, 0.30);
   --color-gray-460: rgba(60, 60, 67, 0.60);
   --color-gray-500: #8E8E93;
+  --color-gray-600: #D1D1D6;
   --color-green: #36C662;
   --color-orange: #FB913B;
   --color-blue: #3685FA;
@@ -46,4 +47,16 @@
   --color-button-secondary: var(--color-bg-surface);
   --color-button-secondary-hover: var(--color-bg-subtle);
 
+
+  --input-radio-red: #FB4543;
+  --input-radio-orange: #FB913B;
+  --input-radio-brown: #AA8061;
+  --input-radio-yellow: #FBCE38;
+  --input-radio-green: #36C662;
+  --input-radio-mint: #22C6B3;
+  --input-radio-cyan: #30BEE5;
+  --input-radio-blue: #3685FA;
+  --input-radio-indigo: #CC34DB;
+  --input-radio-purple: #6C51EF;
+  --input-radio-pink: #FB3D58;
 }

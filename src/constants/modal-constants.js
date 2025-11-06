@@ -11,7 +11,17 @@ export const modalText = {
       assignee: "Assignee",
       approved: "Approved Hours (h)",
       monthly: "Monthly Plan (h)",
-      links: "Links"
+      links: "Links",
+      everhour: "Everhour ID",
+      clickupLink: "ClickUp Link (project list) ",
+    },
+    placeholders: {
+      name: "Enter project name",
+      approved: "e.g. 120",
+      monthly: "e.g. 80",
+      everhour: "90040100096",
+      clickup: "https://app.clickup.com/1234567/v/l/1234567/1234567",
+      link: "Insert link here"
     }
   }
 }

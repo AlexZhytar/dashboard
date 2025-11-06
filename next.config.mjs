@@ -1,6 +1,13 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-    output: 'export',
+  async rewrites() {
+    return [
+      {
+        source: '/api/:path*',
+        destination: 'https://dashboard-backend.testsofts.com/api/:path*',
+      },
+    ];
+  },
 };
 
 export default nextConfig;

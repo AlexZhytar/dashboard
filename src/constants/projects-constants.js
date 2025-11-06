@@ -1,12 +1,13 @@
 export const projectsDefault = {
     button_settings: 'Settings',
+    projectsEmpty: 'No projects found',
     projectsHead: [
         { title: "Project", class: "project" },
         { title: "Links", class: "links" },
-        { title: "Manager", class: "manager" },
+        { title: "PM", class: "manager" },
         { title: "Hours", class: "hours" },
         { title: "Deadline", class: "deadline" },
-        { title: "ToDo", class: "todo" },
+        { title: "To do", class: "todo" },
         { title: "Actions", class: "actions" }
     ],
     projects: [

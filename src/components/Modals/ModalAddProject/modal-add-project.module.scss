@@ -1,11 +1,19 @@
 @use "../../../scss/utils/const" as *;
+@use "../../../scss/utils/mixin" as *;
 
 .formAddProject {
     width: 100%;
 
     &_inner {
         width: 100%;
-        padding: 3.2rem 4rem;
+        padding: 3.2rem 4rem 11.2rem;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        gap: 2.4rem 0;
+        overflow-y: auto;
+        max-height: 60vh;
+        @include vh-height(max,9rem)
     }
 
     &_bottom {
@@ -14,17 +22,18 @@
         gap: .8rem;
         width: 100%;
         padding: 2rem 4rem;
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background-color: var(--color-bg-surface);
         border-top: 1px solid var(--color-border-strong);
     }
 
     &_field {
-        .field_100 {
-            width: 100%;
-        }
-
-        .field_50 {
-            width: 50%;
-        }
+        display: flex;
+        flex-direction: column;
+        gap: .8rem;
 
         &_caption {
             font-size: 1.3rem;
@@ -32,5 +41,36 @@
             line-height: $lh-138;
             color: var(--color-text-high);
         }
+
+        &_input {
+            width: 100%;
+        }
+
+        &_color {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            gap: .4rem;
+            height: 4rem;
+        }
+
+        &_assignee {
+            display: flex;
+            align-items: center;
+            gap: .8rem;
+            flex-wrap: wrap;
+        }
+    }
+
+    .field_100 {
+        width: 100%;
+    }
+
+    .field_50 {
+        width: calc(50% - 1rem);
+    }
+
+    .field_33 {
+        width: calc(33.333% - 1.4rem);
     }
 }

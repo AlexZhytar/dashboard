@@ -17,12 +17,17 @@ const Projects = () => {
     const {
         projectData,
         setProjectData,
-        hasHydrated
+        hasHydrated,
+        syncProjectsWithDefault
     } = useProjectsStore();
 
     useEffect(() => {
         if (!hasHydrated) return;
-        setProjectData(projectsDefault);
+        if (!projectData.projects || projectData.projects.length === 0) {
+            setProjectData(projectsDefault);
+            return;
+        }
+        syncProjectsWithDefault(projectsDefault.projects);
     }, [hasHydrated, projectsDefault]);
 
     const [search, setSearch] = useState("");
@@ -40,7 +45,7 @@ const Projects = () => {
                 <div className={style.projects_wrapper}>
                     <ProjectsSearch value={search} onChange={setSearch} />
                     <ProjectsSettings />
-                    <ProjectsHead list={projectData.projectsHead} />
+                    <ProjectsHead list={projectsDefault.projectsHead} />
                     <ProjectsList projects={filteredProjects} isSearchActive={useProjectsStore(state => state.isSearchActive)} />
                 </div>
             </Container>

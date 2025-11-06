@@ -15,7 +15,7 @@ const HeaderAddProject = () => {
             data-modal-id={'modal-add-project'}
             onClick={e => setModalID(e.currentTarget.dataset.modalId)}
         >
-            <PlusCircleIcon size={16} />
+            <PlusCircleIcon size={14} />
             {headerDefault.buttonAddProject}
         </Button>
         <Modal animation={'center'}

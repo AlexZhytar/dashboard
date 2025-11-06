@@ -6,6 +6,8 @@ import { DndContext, DragEndEvent } from "@dnd-kit/core";
 import { arrayMove, SortableContext, useSortable, verticalListSortingStrategy } from "@dnd-kit/sortable";
 import { useProjectsStore } from '@/store/useProjects';
 import { DraggableBlockProps, ProjectsProps } from './types';
+import { projectsDefault } from "@/constants";
+import { NoResultsIcon } from "@/components/UI/Icons/NoResultsIcon";
 
 const DraggableBlock = ({ id, children, stateSearch }: DraggableBlockProps) => {
     const { attributes, listeners, transition, isDragging, setNodeRef, transform } = useSortable({
@@ -39,7 +41,7 @@ const DraggableBlock = ({ id, children, stateSearch }: DraggableBlockProps) => {
 
 const ProjectsList = ({ projects, isSearchActive }: ProjectsProps) => {
     const { reorderProjects } = useProjectsStore();
-    
+
     const handleDragEnd = (event: DragEndEvent) => {
         const { active, over } = event;
         if (!over || active.id === over.id) return;
@@ -65,20 +67,30 @@ const ProjectsList = ({ projects, isSearchActive }: ProjectsProps) => {
                 >
 
                     <div className={style.projects_list}>
-                        {projects.map(item =>
-                            <DraggableBlock key={item.id} id={item.id} stateSearch={!!isSearchActive}>
-                                <ProjectsCard
-                                    project={item.label}
-                                    links={item.links}
-                                    color={item.color}
-                                    deadline={item.deadline_at}
-                                    manager={item.manager}
-                                    tracked_hours={item.tracked_hours}
-                                    confirmed_hours={item.confirmed_hours}
-                                    months_hours={item.months_hours}
-                                />
-                            </DraggableBlock>
-                        )}
+                        {
+                            projects.length === 0 && isSearchActive &&
+                            <div className={style.projects_empty}>
+                                <NoResultsIcon size={80} className={style.no_results_icon} />
+                                <span>{projectsDefault.projectsEmpty}</span>
+                            </div>
+                        }
+
+                        {
+                            projects.map(item =>
+                                <DraggableBlock key={item.id} id={item.id} stateSearch={!!isSearchActive}>
+                                    <ProjectsCard
+                                        project={item.label}
+                                        links={item.links}
+                                        color={item.color}
+                                        deadline={item.deadline_at}
+                                        manager={item.manager}
+                                        tracked_hours={item.tracked_hours}
+                                        confirmed_hours={item.confirmed_hours}
+                                        months_hours={item.months_hours}
+                                    />
+                                </DraggableBlock>
+                            )
+                        }
                     </div>
 
 
