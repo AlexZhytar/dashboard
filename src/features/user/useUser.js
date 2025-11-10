@@ -11,7 +11,7 @@ export function useUser() {
       try {
         const res = await fetch( `/api/user/get-user` );
         const data = await res.json();
-        setUser( data.user );
+        setUser( data );
       } catch (error) {
         console.error( 'Error fetching user data: ', error );
       }

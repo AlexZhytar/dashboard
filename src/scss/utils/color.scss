@@ -13,16 +13,16 @@
   --color-blue: #3685FA;
   --color-red: #FB4543;
   --color-high: #000;
-
+  
   /* === BORDERS === */
   --color-border-subtle: var(--color-gray-100);
   --color-border-default: var(--color-gray-200);
   --color-border-strong: var(--color-gray-300);
-
+  
   /* === PRIMARY === */
   --color-primary: #3685FA;
-  --color-primary-hover: #3685FA;
-
+  --color-primary-hover: #5DA9FD;
+  
   /* === TEXT === */
   --color-text-high: #000;
   --color-text-high-80: rgba(0, 0, 0, 0.80);
@@ -34,20 +34,29 @@
   --color-text-muted: #5A5F78;
   --color-text-disabled: #8285a4;
   --color-text-inverse: #ffffff;
-
+  
   /* === BACKGROUND === */
   --color-bg-surface: #ffffff;
   --color-bg-subtle: #F2F2F7;
-
+  
   /* === BUTTON === */
   --color-button-primary: var(--color-primary);
   --color-button-primary-hover: var(--color-primary-hover);
   --color-button-text: var(--color-text-inverse);
-
+  
   --color-button-secondary: var(--color-bg-surface);
   --color-button-secondary-hover: var(--color-bg-subtle);
-
-
+  --color-button-secondary-active: var(--color-gray-300);
+  
+  --color-toast-success-bg: #cdfad8;
+  --color-toast-success-text: #038067;
+  --color-toast-error-bg: #FFF1F0;
+  --color-toast-error-text: #EC0E00;
+  --color-toast-warning-bg: #FFF9EB;
+  --color-toast-warning-text: #DD6002;
+  --color-toast-info-bg: #E5F6FF;
+  --color-toast-info-text: #0486CC;
+  
   --input-radio-red: #FB4543;
   --input-radio-orange: #FB913B;
   --input-radio-brown: #AA8061;

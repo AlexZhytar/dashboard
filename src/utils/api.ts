@@ -1,8 +1,14 @@
+export const API_BASE_URL = "https://dashboard-backend.testsofts.com";
+
 export const api = {
 	getUrl: ( path: string ) => {
-		if ( process.env.NODE_ENV === "development" ) {
-			return `/api${ path }`;
-		}
-		return `https://dashboard-backend.testsofts.com/api${ path }`;
+		return `${ API_BASE_URL }/api${ path }`;
+	},
+	login: () => {
+		return api.getUrl('/employee/login');
+	},
+	getProfile: () => {
+		return api.getUrl('/employee/profile');
 	}
+	
 }

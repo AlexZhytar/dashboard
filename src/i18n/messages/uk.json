@@ -1,0 +1,48 @@
+{
+  "title": "Ласкаво просимо до PM Dashboard",
+  "description": "Увійдіть у свій персональний простір керування проєктами",
+  "global": {
+    "times": {
+      "h": "год",
+      "m": "хв",
+      "s": "с"
+    }
+  },
+  "loginForm": {
+    "title": "Ласкаво просимо до PM Dashboard",
+    "email": "Ел. пошта",
+    "password": "Пароль",
+    "loginButton": "Увійти",
+    "successAuth": "Вхід успішний",
+    "errors": {
+      "loginEmailEmpty": "Поле 'Ел. пошта' не може бути порожньою",
+      "loginEmail": "Некоректна 'Ел. пошта', введіть правильну адресу",
+      "loginPassword": "Пароль повинен містити щонайменше 8 символів",
+      "loginPasswordEmpty": "Поле 'Пароль' не може бути порожнім",
+      "wrongAuth": "Невірний Ел. пошта або пароль"
+    }
+  },
+  "header": {
+    "buttonAddProject": "Додати проект"
+  },
+  "projects": {
+    "search": {
+      "searchProject": "Пошук проєкту",
+      "noResults": "Проєктів не знайдено"
+    },
+    "buttons": {
+      "settings": "Налаштування"
+    },
+    "tableHead": {
+      "project": "Проєкт",
+      "links": "Посилання",
+      "pm": "ПМ",
+      "hours": "Години",
+      "toDo": "Завдання",
+      "actions": "Дії"
+    }
+  },
+  "uiText": {
+    "settings": "Налаштування"
+  }
+}

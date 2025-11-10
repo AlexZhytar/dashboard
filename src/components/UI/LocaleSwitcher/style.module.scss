@@ -1,0 +1,18 @@
+@use "../../../scss/utils/const" as *;
+@use "../../../scss/utils/mixin" as *;
+
+.languageSwitcher {
+  display: flex;
+  align-items: center;
+  gap: .6rem;
+  
+  .button {
+    padding: 0;
+    min-height: 3.2rem;
+    width: 3.2rem;
+    
+    &.active {
+      pointer-events: none;
+    }
+  }
+}

@@ -15,6 +15,7 @@
     gap: 3.6rem;
     border-radius: 1.6rem;
     background-color: var(--color-bg-surface);
+    width: 100%;
     max-width: 47.3rem;
     height: auto;
     padding: 6.4rem;
@@ -24,6 +25,7 @@
     font-size: 2rem;
     font-weight: $fw-semiBold;
     color: var(--color-text-high);
+    text-align: center;
   }
   
   &_logo {
@@ -41,16 +43,23 @@
     display: flex;
     flex-direction: column;
     gap: 2.4rem;
+    position: relative;
     
     .formField {
       width: 100%;
       display: flex;
       flex-direction: column;
       gap: .8rem;
+      
+      label {
+        font-size: 1.4rem;
+        line-height: $lh-145;
+        font-weight: $fw-medium;
+      }
     }
     
     .formSubmit {
-    
+      
     }
   }
 }

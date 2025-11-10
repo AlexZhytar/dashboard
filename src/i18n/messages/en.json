@@ -1,0 +1,48 @@
+{
+  "title": "Welcome to PM Dashboard",
+  "description": "Sign in to your personal project management workspace",
+  "global": {
+    "times": {
+      "h": "h",
+      "m": "m",
+      "s": "s"
+    }
+  },
+  "loginForm": {
+    "title": "Welcome to PM Dashboard",
+    "email": "Email",
+    "password": "Password",
+    "loginButton": "Sign In",
+    "successAuth": "Login successful",
+    "errors": {
+      "loginEmailEmpty": "Email field cannot be empty",
+      "loginEmail": "Invalid email format, please enter a valid address",
+      "loginPassword": "Password must contain at least 8 characters",
+      "loginPasswordEmpty": "Password field cannot be empty",
+      "wrongAuth": "Incorrect email or password"
+    }
+  },
+  "header": {
+    "buttonAddProject": "Add project"
+  },
+  "projects": {
+    "search": {
+      "searchProject": "Search project",
+      "noResults": "No projects found"
+    },
+    "buttons": {
+      "settings": "Settings"
+    },
+    "tableHead": {
+      "project": "Project",
+      "links": "Links",
+      "pm": "PM",
+      "hours": "Hours",
+      "toDo": "To do",
+      "actions": "Actions"
+    }
+  },
+  "uiText": {
+    "settings": "Settings"
+  }
+}

@@ -1,0 +1,63 @@
+@use "../../../scss/utils/const" as *;
+
+.toast {
+  width: 100%;
+  padding: 1rem 1.2rem;
+  border-radius: .4rem;
+  display: flex;
+  gap: .8rem;
+  align-items: flex-start;
+  &:not(:last-of-type) {
+    margin-bottom: .8rem;
+  }
+  
+  svg {
+    fill: transparent;
+    width: 1.4rem;
+    height: 1.4rem;
+  }
+  
+  &.success {
+    background-color: var(--color-toast-success-bg);
+    color: var(--color-toast-success-text);
+    
+    svg {
+      stroke: var(--color-toast-success-text);
+    }
+  }
+  
+  &.error {
+    background-color: var(--color-toast-error-bg);
+    color: var(--color-toast-error-text);
+    
+    svg {
+      stroke: var(--color-toast-error-text);
+    }
+  }
+  
+  &.warning {
+    background-color: var(--color-toast-warning-bg);
+    color: var(--color-toast-warning-text);
+    
+    svg {
+      stroke: var(--color-toast-warning-text);
+    }
+  }
+  
+  &.info {
+    background-color: var(--color-toast-info-bg);
+    color: var(--color-toast-info-text);
+    
+    svg {
+      stroke: var(--color-toast-info-text);
+    }
+  }
+  
+  &_message {
+    flex: 1;
+    font-size: 1.2rem;
+    font-weight: $fw-medium;
+    line-height: $lh-120;
+    margin-top: .1rem;
+  }
+}

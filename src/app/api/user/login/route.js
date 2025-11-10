@@ -1,21 +1,14 @@
 import { NextResponse } from 'next/server';
-import { cookies } from 'next/headers';
-import { config } from "@/constants";
+import { api } from '@/utils';
 
-export async function GET( req ) {
-  const cookieStore = await cookies();
-  const token = cookieStore.get( 'auth_token' )?.value;
-  
-  if ( !token ) {
-    return NextResponse.json( { error: 'Missing token or team_id' }, { status: 400 } );
-  }
-  
-  const res = await fetch( config.API_LOGIN, {
-    method: 'GET',
+export async function POST( req ) {
+  const body = await req.json();
+  const res = await fetch( api.login(), {
+    method: 'POST',
     headers: {
-      Authorization: token,
       'Content-Type': 'application/json',
     },
+    body: JSON.stringify( body ),
   } );
   
   if ( !res.ok ) {
