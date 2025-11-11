@@ -13,9 +13,8 @@ export const Login = () => {
 				<div className={ style.login_logo }>
 					<DashboardIcon size={ 48 }/>
 				</div>
-				<div className={ style.login_caption }>
-					{ t("loginForm.title") }
-				</div>
+				<div className={ style.login_caption }
+					 dangerouslySetInnerHTML={ { __html: t('loginForm.title') } }/>
 				<LoginForm/>
 			</div>
 		</div>

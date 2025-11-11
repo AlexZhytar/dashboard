@@ -9,7 +9,7 @@
     }
   },
   "loginForm": {
-    "title": "Ласкаво просимо до PM Dashboard",
+    "title": "Ласкаво просимо до <br/> PM Dashboard",
     "email": "Ел. пошта",
     "password": "Пароль",
     "loginButton": "Увійти",
@@ -43,6 +43,31 @@
     }
   },
   "uiText": {
-    "settings": "Налаштування"
+    "settings": "Налаштування",
+    "filters": "Фільтри",
+    "save": "Зберегти"
+  },
+  "modals": {
+    "newProject": {
+      "labels": {
+        "projectName": "Назва проєкту",
+        "accentColor": "Акцентний колір",
+        "assignee": "Відповідальний",
+        "approved": "Затверджені години (год)",
+        "monthly": "Місячний план (год)",
+        "everhour": "Everhour ID",
+        "clickUpLink": "Посилання на ClickUp (список проєктів)",
+        "links": "Посилання"
+      }
+    },
+    "settings": {
+      "filters": "Фільтри",
+      "projectManager": "Проєктний менеджер",
+      "tableInfo": "Інформація таблиці",
+      "links": "Посилання",
+      "pm": "ПМ",
+      "hours": "Години",
+      "toDo": "Завдання"
+    }
   }
 }

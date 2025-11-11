@@ -12,7 +12,8 @@ import React from "react";
 
 const inter = Inter({
 	variable: "--font-inter",
-	subsets: [ "latin" ],
+	subsets: [ 'latin', 'cyrillic' ],
+	weight: [ '400', '500', '600', '700' ],
 	display: 'swap'
 });
 
@@ -34,12 +35,19 @@ export const generateStaticParams = () => {
 	return routing.locales.map(( locale ) => ({ locale }));
 }
 
+const fallbackScript = `(function(){try{
+  var m=document.cookie.match('(^|;)\\s*dashboard-theme\\s*=\\s*([^;]+)');
+  var theme = m ? decodeURIComponent(m[2]) : (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+  document.documentElement.setAttribute('data-theme', theme);
+}catch(e){} })();`;
+
 export default async function RootLayout( { children, params }: {
 	children: React.ReactNode;
 	params: Promise<{ locale: string }>
 } ) {
 	const cookieStore = await cookies();
 	const token = !!cookieStore.get('auth_token')?.value;
+	const themeFromCookie = cookieStore.get('dashboard-theme')?.value;
 	
 	const { locale } = await params;
 	if ( !hasLocale(routing.locales, locale) ) {
@@ -48,7 +56,8 @@ export default async function RootLayout( { children, params }: {
 	const messages = await getMessages({ locale });
 	
 	return (
-		<html lang={ locale }>
+		<html lang={ locale } data-theme={ themeFromCookie ?? undefined }>
+		{ !themeFromCookie && <script dangerouslySetInnerHTML={ { __html: fallbackScript } }/> }
 		<body className={ `${ inter.variable }` }>
 		<NextIntlClientProvider locale={ locale } messages={ messages }>
 			<AuthProvider status={ token }>

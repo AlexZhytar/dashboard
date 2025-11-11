@@ -4,7 +4,7 @@
 .header {
   width: 100%;
   background-color: var(--color-bg-surface);
-  border-bottom: 1px solid var(--color-border-subtle);
+  border-bottom: 1px solid var(--color-border-default);
   
   &_wrapper {
     display: flex;
@@ -17,7 +17,6 @@
   &_logo {
     font-size: 1.8rem;
     font-weight: bold;
-    color: #333;
     text-decoration: none;
     margin-right: .8rem;
     
@@ -35,7 +34,7 @@
       
       a {
         font-weight: $fw-semiBold;
-        color: var(--color-text-high);
+        color: var(--color-text-primary);
         display: inline-block;
         line-height: 6.8rem;
         transition: color $transition-time;
@@ -69,19 +68,20 @@
     align-items: center;
     
     .lang {
-      padding-right: 1.2rem;
-      border-right: 1px solid var(--color-border-subtle);
-    }
-    
-    .icon {
-      fill: transparent;
-      stroke: var(--color-gray-500);
+      padding: 0 1.2rem;
+      border-left: 1px solid var(--color-border-default);
+      margin-right: 6rem;
     }
     
     .addProject {
       min-height: 3.2rem;
       padding: 0 1.6rem;
       gap: .4rem;
+      
+      .icon {
+        fill: transparent;
+        stroke: var(--color-gray-100);
+      }
     }
     
     .account {
@@ -89,7 +89,8 @@
       border-radius: 50%;
       width: 3.2rem;
       min-height: 3.2rem;
-      background-color: var(--color-bg-subtle);
+      border-color: var(--color-border-strong);
+      background-color: var(--color-bg-soft);
       
       span {
         font-size: 1.2rem;

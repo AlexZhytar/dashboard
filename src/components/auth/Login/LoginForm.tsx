@@ -110,23 +110,30 @@ export const LoginForm = () => {
 	return (
 		<form noValidate className={ style.login_form } onSubmit={ handleSubmit }>
 			{ loading && <Preloader size={ 'm' } overflow={ true }/> }
-			<div className={ style.formField }>
-				<label> { t("loginForm.email") }</label>
-				<InputEmail value={ formData.loginEmail } name="loginEmail" onChange={ handleChange }/>
-				{ errors.loginEmail && <Toast variant="warning" message={ errors.loginEmail }/> }
-			</div>
-			<div className={ style.formField }>
-				<label> { t("loginForm.password") }</label>
-				<InputText value={ formData.loginPassword } name="loginPassword" onChange={ handleChange }/>
-				{ errors.loginPassword && <Toast variant="warning" message={ errors.loginPassword }/> }
-			</div>
-			<div className={ style.formField }>
-				<Button variant="primary" type="submit">
-					<span>{ t("loginForm.loginButton") }</span>
-				</Button>
-				{ checkAuth && <Toast variant="error" message={ t("loginForm.errors.wrongAuth") }/> }
-				{ authorized && <Toast variant="success" message={ t("loginForm.successAuth") }/> }
-			</div>
+			{ authorized ? <Toast variant="success" message={ t("loginForm.successAuth") }/> : <>
+				<div className={ style.formField }>
+					<label> { t("loginForm.email") }</label>
+					<InputEmail value={ formData.loginEmail }
+								className={ errors.loginEmail ? style.login_error : "" }
+								name="loginEmail"
+								onChange={ handleChange }/>
+					{ errors.loginEmail && <Toast variant="warning" message={ errors.loginEmail }/> }
+				</div>
+				<div className={ style.formField }>
+					<label> { t("loginForm.password") }</label>
+					<InputText value={ formData.loginPassword }
+							   className={ errors.loginEmail ? style.login_error : "" }
+							   name="loginPassword"
+							   onChange={ handleChange }/>
+					{ errors.loginPassword && <Toast variant="warning" message={ errors.loginPassword }/> }
+				</div>
+				<div className={ style.formField }>
+					<Button variant="primary" type="submit">
+						<span>{ t("loginForm.loginButton") }</span>
+					</Button>
+					{ checkAuth && <Toast variant="error" message={ t("loginForm.errors.wrongAuth") }/> }
+				</div>
+			</> }
 		</form>
 	);
 };

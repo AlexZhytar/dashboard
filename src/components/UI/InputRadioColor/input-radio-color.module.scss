@@ -1,116 +1,116 @@
-@use '../../../scss/utils/const' as *;
+@use "../../../scss/utils/const" as *;
 
 .inputRadioColor {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 2.6rem;
-    height: 2.6rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.6rem;
+  height: 2.6rem;
+  border-radius: 50%;
+  overflow: hidden;
+  
+  input {
+    position: absolute;
+    opacity: 0;
+    left: 0;
+    top: 0;
+    pointer-events: none;
+    visibility: hidden;
+    
+    &:checked + .colorIndicator {
+      border-color: var(--color-primary);
+    }
+  }
+  
+  .colorIndicator {
+    position: relative;
+    width: 100%;
+    height: 100%;
     border-radius: 50%;
-    overflow: hidden;
-
-    input {
-        position: absolute;
-        opacity: 0;
-        left: 0;
-        top: 0;
-        pointer-events: none;
-        visibility: hidden;
-
-        &:checked + .colorIndicator {
-            border-color: var(--color-primary);
-        }
+    display: inline-block;
+    border: 2px solid transparent;
+    cursor: pointer;
+    transition: border-color $transition-time;
+    
+    &::before {
+      content: "";
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 1.3rem;
+      height: 1.3rem;
+      border-radius: 50%;
     }
-
-    .colorIndicator {
-        position: relative;
-        width: 100%;
-        height: 100%;
-        border-radius: 50%;
-        display: inline-block;
-        border: 2px solid transparent;
-        cursor: pointer;
-        transition: border-color $transition-time;
-
-        &::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 1.4rem;
-            height: 1.4rem;
-            border-radius: 50%;
-        }
-
-        &:hover {
-            border-color: var(--color-gray-500);
-        }
-
-        &.red {
-            &::before {
-                background-color: var(--input-radio-red);
-            }
-        }
-
-        &.orange {
-            &::before {
-                background-color: var(--input-radio-orange);
-            }
-        }
-
-        &.brown {
-            &::before {
-                background-color: var(--input-radio-brown);
-            }
-        }
-
-        &.yellow {
-            &::before {
-                background-color: var(--input-radio-yellow);
-            }
-        }
-
-        &.green {
-            &::before {
-                background-color: var(--input-radio-green);
-            }
-        }
-
-        &.mint {
-            &::before {
-                background-color: var(--input-radio-mint);
-            }
-        }
-
-        &.cyan {
-            &::before {
-                background-color: var(--input-radio-cyan);
-            }
-        }
-
-        &.blue {
-            &::before {
-                background-color: var(--input-radio-blue);
-            }
-        }
-
-        &.indigo {
-            &::before {
-                background-color: var(--input-radio-indigo);
-            }
-        }
-
-        &.purple {
-            &::before {
-                background-color: var(--input-radio-purple);
-            }
-        }
-
-        &.pink {
-            &::before {
-                background-color: var(--input-radio-pink);
-            }
-        }
+    
+    &:hover {
+      border-color: var(--color-border-default-hover);
     }
+    
+    &.red {
+      &::before {
+        background-color: var(--color-red);
+      }
+    }
+    
+    &.orange {
+      &::before {
+        background-color: var(--color-orange);
+      }
+    }
+    
+    &.brown {
+      &::before {
+        background-color: var(--color-brown);
+      }
+    }
+    
+    &.yellow {
+      &::before {
+        background-color: var(--color-yellow);
+      }
+    }
+    
+    &.green {
+      &::before {
+        background-color: var(--color-green);
+      }
+    }
+    
+    &.mint {
+      &::before {
+        background-color: var(--color-mint);
+      }
+    }
+    
+    &.cyan {
+      &::before {
+        background-color: var(--color-cyan);
+      }
+    }
+    
+    &.blue {
+      &::before {
+        background-color: var(--color-blue);
+      }
+    }
+    
+    &.indigo {
+      &::before {
+        background-color: var(--color-indigo);
+      }
+    }
+    
+    &.purple {
+      &::before {
+        background-color: var(--color-purple);
+      }
+    }
+    
+    &.pink {
+      &::before {
+        background-color: var(--color-pink);
+      }
+    }
+  }
 }

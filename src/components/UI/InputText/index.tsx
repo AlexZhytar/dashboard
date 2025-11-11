@@ -1,7 +1,16 @@
 import style from "./input-text.module.scss";
-import { InputTextProps } from "./types";
+import React from "react";
 
-const InputText = ( { placeholder = '', value, onChange, name, number = false }: InputTextProps ) => {
+interface InputTextProps {
+	placeholder?: string;
+	value: string;
+	onChange: ( e: React.ChangeEvent<HTMLInputElement> ) => void;
+	number?: boolean;
+	name?: string;
+	className?: string;
+}
+
+const InputText = ( { placeholder = '', value, onChange, name, number = false, className = '' }: InputTextProps ) => {
 	let onlyNumb;
 	if ( number ) {
 		onlyNumb = value.replace(/[^0-9]/g, "");
@@ -18,7 +27,7 @@ const InputText = ( { placeholder = '', value, onChange, name, number = false }:
 			value={ number ? onlyNumb : value }
 			onChange={ onChange }
 			name={ name }
-			className={ style.input }
+			className={ `${ style.input } ${ className }` }
 			inputMode={ number ? "numeric" : undefined }
 			pattern={ number ? "[0-9]*" : undefined }
 		/>

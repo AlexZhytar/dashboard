@@ -1,0 +1,48 @@
+@use "../../../scss/utils/const" as *;
+@use "../../../scss/utils/mixin" as *;
+
+.themeSwitcher {
+  display: inline-flex;
+  width: 5.2rem;
+  height: 3.2rem;
+  border-radius: 3rem;
+  background-color: var(--color-bg-soft);
+  position: relative;
+  @include mediaMax(t) {
+    width: 4.4rem;
+    height: 2.8rem;
+  }
+  
+  span {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.8rem;
+    height: 2.8rem;
+    border-radius: 50%;
+    background-color: var(--color-primary);
+    position: absolute;
+    top: 50%;
+    left: .2rem;
+    transform: translateY(-50%);
+    transition: left $transition-time, background-color $transition-time;
+    @include mediaMax(t) {
+      width: 2.4rem;
+      height: 2.4rem;
+    }
+    
+    svg {
+      width: 1.6rem;
+      height: 1.6rem;
+      fill: transparent;
+      stroke: var(--color-static-white);
+    }
+    
+    &.iconDark {
+      left: 2.1rem;
+      @include mediaMax(t) {
+        left: 1.8rem;
+      }
+    }
+  }
+}

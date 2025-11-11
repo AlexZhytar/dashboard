@@ -43,6 +43,31 @@
     }
   },
   "uiText": {
-    "settings": "Settings"
+    "settings": "Settings",
+    "filters": "Filters",
+    "save": "Save"
+  },
+  "modals": {
+    "newProject": {
+      "labels": {
+        "projectName": "Project Name",
+        "accentColor": "Accent Color",
+        "assignee": "Assignee",
+        "approved": "Approved Hours (h)",
+        "monthly": "Monthly Plan (h)",
+        "everhour": "Everhour ID",
+        "clickUpLink": "ClickUp Link (project list)",
+        "links": "Links"
+      }
+    },
+    "settings": {
+      "filters": "Filters",
+      "projectManager": "Project Manager",
+      "tableInfo": "Table Info",
+      "links": "Links",
+      "pm": "PM",
+      "hours": "Hours",
+      "toDo": "To Do"
+    }
   }
 }

@@ -26,6 +26,7 @@
     font-weight: $fw-semiBold;
     color: var(--color-text-high);
     text-align: center;
+    line-height: $lh-120;
   }
   
   &_logo {
@@ -61,5 +62,9 @@
     .formSubmit {
       
     }
+  }
+  
+  &_error {
+    border-color: var(--color-red);
   }
 }

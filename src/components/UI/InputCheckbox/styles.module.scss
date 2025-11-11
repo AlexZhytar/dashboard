@@ -1,0 +1,18 @@
+.checkbox {
+  width: 100%;
+  
+  &_value {
+  
+  }
+  
+  &_mark {
+    width: 3.2rem;
+    height: 2rem;
+    border-radius: 3rem;
+    background-color: var(--color-bg-subtle);
+  }
+  
+  &_input {
+  
+  }
+}

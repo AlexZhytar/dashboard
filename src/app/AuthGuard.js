@@ -8,7 +8,7 @@ const AuthGuard = ( { children } ) => {
   const { isAuthenticated, loading } = useAuth();
   
   if ( loading ) {
-    return <Preloader overflow={ true } size={ 'l' }/>;
+    return <Preloader overflow={ true } size={ 'm' }/>;
   }
   
   return !isAuthenticated ? <Login/> : children;

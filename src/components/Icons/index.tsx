@@ -8,6 +8,8 @@ import { NoResultsIcon } from "./NoResultsIcon";
 import { PlusCircleIcon } from "./PlusCircleIcon";
 import { SearchIcon } from "./SearchIcon";
 import { DashboardIcon } from "./Dashboard";
+import { MoonIcon } from "@/components/Icons/Moon";
+import { SunIcon } from "@/components/Icons/Sun";
 
 export {
 	CalendarIcon,
@@ -19,5 +21,7 @@ export {
 	CloseIcon,
 	PlusCircleIcon,
 	SearchIcon,
-	DashboardIcon
+	DashboardIcon,
+	MoonIcon,
+	SunIcon,
 }

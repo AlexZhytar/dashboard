@@ -1,9 +1,0 @@
-@use '../utils/const';
-
-.icon {
-  transition:
-    fill const.$transition-time,
-    stroke const.$transition-time,
-    transform const.$transition-time,
-    opacity const.$transition-time;
-}

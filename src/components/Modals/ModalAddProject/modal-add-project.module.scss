@@ -2,75 +2,75 @@
 @use "../../../scss/utils/mixin" as *;
 
 .formAddProject {
+  width: 100%;
+  
+  &_inner {
     width: 100%;
-
-    &_inner {
-        width: 100%;
-        padding: 3.2rem 4rem 11.2rem;
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: space-between;
-        gap: 2.4rem 0;
-        overflow-y: auto;
-        max-height: 60vh;
-        @include vh-height(max,9rem)
+    padding: 3.2rem 4rem 11.2rem;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 2.4rem 0;
+    overflow-y: auto;
+    max-height: 60vh;
+    @include vh-height(max, 9rem)
+  }
+  
+  &_bottom {
+    display: flex;
+    justify-content: flex-end;
+    gap: .8rem;
+    width: 100%;
+    padding: 2rem 4rem;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: var(--color-bg-surface);
+    border-top: 1px solid var(--color-border-default);
+  }
+  
+  &_field {
+    display: flex;
+    flex-direction: column;
+    gap: .8rem;
+    
+    &_caption {
+      font-size: 1.3rem;
+      font-weight: $fw-semiBold;
+      line-height: $lh-138;
+      color: var(--color-text-primary);
     }
-
-    &_bottom {
-        display: flex;
-        justify-content: flex-end;
-        gap: .8rem;
-        width: 100%;
-        padding: 2rem 4rem;
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        background-color: var(--color-bg-surface);
-        border-top: 1px solid var(--color-border-strong);
+    
+    &_input {
+      width: 100%;
     }
-
-    &_field {
-        display: flex;
-        flex-direction: column;
-        gap: .8rem;
-
-        &_caption {
-            font-size: 1.3rem;
-            font-weight: $fw-semiBold;
-            line-height: $lh-138;
-            color: var(--color-text-high);
-        }
-
-        &_input {
-            width: 100%;
-        }
-
-        &_color {
-            width: 100%;
-            display: flex;
-            align-items: center;
-            gap: .4rem;
-            height: 4rem;
-        }
-
-        &_assignee {
-            display: flex;
-            align-items: center;
-            gap: .8rem;
-            flex-wrap: wrap;
-        }
+    
+    &_color {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      gap: .4rem;
+      height: 4rem;
     }
-
-    .field_100 {
-        width: 100%;
+    
+    &_assignee {
+      display: flex;
+      align-items: center;
+      gap: .8rem;
+      flex-wrap: wrap;
     }
-
-    .field_50 {
-        width: calc(50% - 1rem);
-    }
-
-    .field_33 {
-        width: calc(33.333% - 1.4rem);
-    }
+  }
+  
+  .field_100 {
+    width: 100%;
+  }
+  
+  .field_50 {
+    width: calc(50% - 1rem);
+  }
+  
+  .field_33 {
+    width: calc(33.333% - 1.4rem);
+  }
 }

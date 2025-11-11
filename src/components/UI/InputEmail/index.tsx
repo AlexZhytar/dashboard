@@ -1,7 +1,15 @@
 import style from "./input-mail.module.scss";
-import { InputMailProps } from "./types";
+import React from "react";
 
-const InputEmail = ( { placeholder = '', value, onChange, name }: InputMailProps ) => {
+interface InputMailProps {
+	placeholder?: string;
+	value: string;
+	onChange: ( e: React.ChangeEvent<HTMLInputElement> ) => void;
+	name?: string;
+	className?: string;
+}
+
+const InputEmail = ( { placeholder = '', value, onChange, name, className = '' }: InputMailProps ) => {
 	return (
 		<input
 			type={ "email" }
@@ -9,7 +17,7 @@ const InputEmail = ( { placeholder = '', value, onChange, name }: InputMailProps
 			value={ value }
 			onChange={ onChange }
 			name={ name }
-			className={ style.input }
+			className={ `${ style.input } ${ className }` }
 		/>
 	);
 };
