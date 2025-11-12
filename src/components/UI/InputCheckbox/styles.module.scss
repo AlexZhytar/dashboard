@@ -1,18 +1,64 @@
+@use "../../../scss/utils/const" as *;
+@use "../../../scss/utils/mixin" as *;
+
 .checkbox {
   width: 100%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   
   &_value {
-  
+    display: inline-block;
+    width: 100%;
+    font-size: 1.4rem;
+    font-weight: $fw-normal;
+    line-height: $lh-142;
   }
   
   &_mark {
+    display: inline-block;
     width: 3.2rem;
     height: 2rem;
     border-radius: 3rem;
-    background-color: var(--color-bg-subtle);
+    background-color: var(--color-bg-soft);
+    position: relative;
+    transition: background-color $transition-time;
+    
+    &::before {
+      @include pseudo-element();
+      left: .3rem;
+      top: .3rem;
+      border-radius: 50%;
+      width: 1.4rem;
+      height: 1.4rem;
+      background-color: var(--color-static-white);
+      transition: transform $transition-time;
+    }
+  }
+  
+  &:hover {
+    .checkbox_mark {
+      background-color: var(--color-border-default);
+    }
+    
+    .checkbox_input:checked ~ .checkbox_mark {
+      background-color: var(--color-primary-hover);
+    }
   }
   
   &_input {
-  
+    position: absolute;
+    width: 0;
+    height: 0;
+    opacity: 0;
+    
+    &:checked ~ .checkbox_mark {
+      background-color: var(--color-primary);
+      
+      &::before {
+        transform: translateX(1.1rem);
+      }
+    }
   }
 }
