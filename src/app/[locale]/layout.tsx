@@ -46,7 +46,7 @@ export default async function RootLayout( { children, params }: {
 	params: Promise<{ locale: string }>
 } ) {
 	const cookieStore = await cookies();
-	const token = !!cookieStore.get('auth_token')?.value;
+	const token = !!cookieStore.get('dash-auth')?.value;
 	const themeFromCookie = cookieStore.get('dashboard-theme')?.value;
 	
 	const { locale } = await params;

@@ -3,20 +3,35 @@ import { useEffect } from "react";
 import { useUserStore } from "@/store/useUserStore";
 
 export function useUser() {
-  const { setUser, user } = useUserStore();
+  const { user, hasFetched, isLoading, setUser, setHasFetched, setIsLoading } = useUserStore();
   
   useEffect( () => {
-    if ( user.length > 0 ) return;
-    const getUser = async () => {
+    if ( hasFetched || isLoading ) return;
+    
+    const fetchUser = async () => {
       try {
-        const res = await fetch( `/api/user/get-user` );
+        setIsLoading( true );
+        const res = await fetch( "/api/user/get-user" );
+        
+        if ( res.status === 401 ) {
+          setUser( null );
+          return;
+        }
+        if ( !res.ok ) throw new Error( "Failed to fetch user" );
+        
         const data = await res.json();
-        setUser( data );
-      } catch (error) {
-        console.error( 'Error fetching user data: ', error );
+        setUser( data?.user ?? data ?? null );
+      } catch (e) {
+        console.error( "❌ fetch user:", e );
+        setUser( null );
+      } finally {
+        setHasFetched( true );
+        setIsLoading( false );
       }
     };
     
-    getUser();
-  }, [] );
+    fetchUser();
+  }, [hasFetched, isLoading, setHasFetched, setIsLoading, setUser] );
+  
+  return { user, isLoading, hasFetched };
 }

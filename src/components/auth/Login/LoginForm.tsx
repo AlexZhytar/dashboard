@@ -2,35 +2,28 @@
 
 import React, { useState } from 'react';
 import style from "./login.module.scss";
-import { delay } from "@/utils";
+import { delay, isValidEmail } from "@/utils";
 import { useUserStore } from "@/store";
 import { Button, InputEmail, InputText, Preloader, Toast } from "@/components/UI";
 import { useTranslations } from "next-intl";
 
+interface loginFormFields {
+	loginEmail: string;
+	loginPassword: string;
+}
+
+interface loginFormState {
+	loginEmail?: string;
+	loginPassword?: string;
+}
+
 export const LoginForm = () => {
-	const [ token, setToken ] = useState('');
 	const [ loading, setLoading ] = useState(false);
 	const { authorized, setAuthorized } = useUserStore();
 	const [ checkAuth, setCheckAuth ] = useState(false);
+	const [ formData, setFormData ] = useState({ loginEmail: "", loginPassword: "" } as loginFormFields);
+	const [ errors, setErrors ] = useState({} as loginFormState);
 	const t = useTranslations();
-	
-	const [ formData, setFormData ] = useState<{
-		loginEmail: string;
-		loginPassword: string;
-	}>({
-		loginEmail: "",
-		loginPassword: "",
-	});
-	
-	const [ errors, setErrors ] = useState<{
-		loginEmail?: string;
-		loginPassword?: string;
-	}>({});
-	
-	const isValidEmail = ( email: string ) => {
-		const re = /^[^\s@]+@[^\s@]+\.[A-Za-z]{2,}$/;
-		return re.test(email);
-	};
 	
 	const handleChange = ( e: React.ChangeEvent<HTMLInputElement> ) => {
 		const { name, value } = e.target;
@@ -86,9 +79,7 @@ export const LoginForm = () => {
 			
 			const data = await response.json();
 			const receivedToken = data.token;
-			setToken(receivedToken);
 			
-			// Збереження токена — використовуємо отриманий токен без очікування setToken
 			await fetch('/api/user/save-token', {
 				method: 'POST',
 				headers: { 'Content-Type': 'application/json' },

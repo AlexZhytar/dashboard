@@ -2,12 +2,21 @@ import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import isEqual from 'lodash.isequal';
 
+const defaultFilters = {
+  links: true,
+  pm: true,
+  hours: true,
+  todo: true,
+};
+
 export const useProjectsStore = create(
   persist(
     ( set, get ) => ({
       projectData: {
         projects: [],
       },
+      filters: { ...defaultFilters },
+      
       hasHydrated: false,
       isSearchActive: false,
       setHasHydrated: ( value ) => set( { hasHydrated: value } ),
@@ -99,12 +108,25 @@ export const useProjectsStore = create(
             }
           }) );
         }
-      }
+      },
+      
+      setFilter: ( key, value ) =>
+        set( ( state ) => ({ filters: { ...state.filters, [key]: value } }) ),
+      
+      toggleFilter: ( key ) =>
+        set( ( state ) => ({ filters: { ...state.filters, [key]: !state.filters[key] } }) ),
+      
+      setAllFilters: ( value ) =>
+        set( { filters: { links: value, pm: value, hours: value, todo: value } } ),
+      
+      resetFilters: () =>
+        set( { filters: { ...defaultFilters } } ),
     }),
     {
       name: 'project-data-storage',
       partialize: ( state ) => ({
-        projectData: state.projectData
+        projectData: state.projectData,
+        filters: state.filters
       }),
       onRehydrateStorage: () => ( state ) => {
         state?.setHasHydrated( true );

@@ -45,7 +45,8 @@
   "uiText": {
     "settings": "Налаштування",
     "filters": "Фільтри",
-    "save": "Зберегти"
+    "save": "Зберегти",
+    "reset": "Скинути"
   },
   "modals": {
     "newProject": {

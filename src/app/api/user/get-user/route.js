@@ -4,7 +4,7 @@ import { api } from "@/utils";
 
 export async function GET( req ) {
   const cookieStore = await cookies();
-  const token = cookieStore.get( 'auth_token' )?.value;
+  const token = cookieStore.get( 'dash-auth' )?.value;
   
   if ( !token ) {
     return NextResponse.json( { error: 'Missing token or team_id' }, { status: 400 } );

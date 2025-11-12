@@ -45,7 +45,8 @@
   "uiText": {
     "settings": "Settings",
     "filters": "Filters",
-    "save": "Save"
+    "save": "Save",
+    "reset": "Reset"
   },
   "modals": {
     "newProject": {

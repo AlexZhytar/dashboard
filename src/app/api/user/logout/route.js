@@ -2,17 +2,17 @@ import { NextResponse } from 'next/server';
 import { serialize } from 'cookie';
 
 export async function POST() {
-  const response = NextResponse.json({ success: true });
+  const response = NextResponse.json( { success: true } );
   
   response.headers.set(
     'Set-Cookie',
-    serialize('auth_token', '', {
+    serialize( 'dash-auth', '', {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
       maxAge: 0,
       path: '/',
       sameSite: 'lax',
-    })
+    } )
   );
   
   return response;

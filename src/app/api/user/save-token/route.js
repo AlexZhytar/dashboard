@@ -8,7 +8,7 @@ export async function POST( req ) {
   const response = NextResponse.json( { success: true } );
   response.headers.set(
     'Set-Cookie',
-    serialize( 'auth_token', token, {
+    serialize( 'dash-auth', token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
       maxAge: 60 * 60 * 24 * 90,

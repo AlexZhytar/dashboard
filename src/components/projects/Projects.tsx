@@ -6,7 +6,7 @@ import style from './projects.module.scss';
 import ProjectsHead from './ProjectsHead';
 import ProjectsList from './ProjectsList';
 import { projectsDefault } from "@/constants";
-import { useProjectsStore, useUserStore } from '@/store';
+import { useProjectsStore } from '@/store';
 import type { ProjectsList as ProjectType } from './ProjectsList/types';
 import ProjectsSettings from './ProjectsSettings';
 import ProjectsSearch from './ProjectsSearch';
@@ -18,8 +18,6 @@ const Projects = () => {
 		hasHydrated,
 		syncProjectsWithDefault
 	} = useProjectsStore();
-	const { user } = useUserStore();
-	console.log(user)
 	
 	useEffect(() => {
 		if ( !hasHydrated ) return;
