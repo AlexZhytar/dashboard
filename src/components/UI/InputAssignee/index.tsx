@@ -1,4 +1,3 @@
-import { getInitials } from "@/utils";
 import style from "./style.module.scss";
 import React from "react";
 
@@ -10,8 +9,6 @@ const InputAssignee = (
 		onChange: ( e: React.ChangeEvent<HTMLInputElement> ) => void,
 		idUser: string
 	} ) => {
-	
-	const initials = getInitials(userName);
 	
 	return (
 		<label className={ style.inputAssignee }>

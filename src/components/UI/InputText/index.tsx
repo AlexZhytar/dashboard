@@ -16,10 +16,6 @@ const InputText = ( { placeholder = '', value, onChange, name, number = false, c
 		onlyNumb = value.replace(/[^0-9]/g, "");
 	}
 	
-	const placeholderCheck = {
-		placeholder: placeholder ?? ''
-	}
-	
 	return (
 		<input
 			type={ "text" }

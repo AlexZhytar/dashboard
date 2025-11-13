@@ -170,7 +170,7 @@ const ModalAddProject = () => {
 			<div className={ style.formAddProject_bottom }>
 				<Button type="button" variant="secondary"
 						data-modal-id={ 'modal-add-project' }
-						onClick={ e => setModalID(null) }>
+						onClick={ () => setModalID(null) }>
 					{ modalText.addProject.buttons.cancel }
 				</Button>
 				<Button type="submit" variant="primary">

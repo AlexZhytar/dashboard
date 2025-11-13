@@ -33,7 +33,7 @@ const ModalSettings = () => {
 		setLocalFilters(( prev ) => ({ ...prev, [key]: !prev[key] }));
 	};
 	
-	const hasAnyFalse = Object.values(localFilters).some(( v ) => v === false);
+	const hasAnyFalse = Object.values(localFilters).some(( v ) => !v);
 	
 	const handleRestoreFilter = () => {
 		setLocalFilters({
