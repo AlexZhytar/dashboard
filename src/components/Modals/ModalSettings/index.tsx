@@ -1,4 +1,4 @@
-import style from "./modal-settings.module.scss";
+import style from "./style.module.scss";
 import { useTranslations } from "next-intl";
 import { Button } from "@/components/UI";
 import React, { useEffect, useState } from "react";

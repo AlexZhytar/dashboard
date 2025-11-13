@@ -1,13 +1,13 @@
 "use client";
 
 import style from "../projects.module.scss";
-import ProjectsCard from "../ProjectsCard";
 import { DndContext, DragEndEvent } from "@dnd-kit/core";
 import { arrayMove, SortableContext, useSortable, verticalListSortingStrategy } from "@dnd-kit/sortable";
 import { useProjectsStore } from '@/store/useProjects';
 import { DraggableBlockProps, ProjectsProps } from './types';
 import { NoResultsIcon } from "@/components/Icons";
 import { useTranslations } from "next-intl";
+import ProjectCard from "../ProjectsCard";
 
 const DraggableBlock = ( { id, children, stateSearch }: DraggableBlockProps ) => {
 	const { attributes, listeners, transition, isDragging, setNodeRef, transform } = useSortable({
@@ -80,11 +80,10 @@ const ProjectsList = ( { projects, isSearchActive }: ProjectsProps ) => {
 						{
 							projects.map(item =>
 								<DraggableBlock key={ item.id } id={ item.id } stateSearch={ !!isSearchActive }>
-									<ProjectsCard
+									<ProjectCard
 										project={ item.label }
 										links={ item.links }
 										color={ item.color }
-										deadline={ item.deadline_at }
 										manager={ item.manager }
 										tracked_hours={ item.tracked_hours }
 										confirmed_hours={ item.confirmed_hours }

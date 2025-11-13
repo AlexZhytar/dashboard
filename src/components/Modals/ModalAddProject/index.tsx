@@ -1,5 +1,6 @@
 import Button from "@/components/UI/Button";
-import style from "./modal-add-project.module.scss";
+import style from "./style.module.scss";
+import modals from "../modal.module.scss";
 import { modalText } from "@/constants"
 import { useUserStore } from "@/store";
 import InputRadioColor from "@/components/UI/InputRadioColor";
@@ -61,11 +62,11 @@ const ModalAddProject = () => {
 	return (
 		<form noValidate className={ style.formAddProject }>
 			<div className={ style.formAddProject_inner }>
-				<div className={ `${ style.formAddProject_field } ${ style.field_50 }` }>
-					<div className={ style.formAddProject_field_caption }>
+				<div className={ `${ modals.field } ${ modals.field_50 }` }>
+					<div className={ modals.field_caption }>
 						{ modalText.addProject.labels.name }
 					</div>
-					<div className={ style.formAddProject_field_input }>
+					<div className={ modals.field_input }>
 						<InputText
 							name="projectLabel"
 							placeholder={ modalText.addProject.placeholders.name }
@@ -73,11 +74,11 @@ const ModalAddProject = () => {
 							onChange={ handleChange }/>
 					</div>
 				</div>
-				<div className={ `${ style.formAddProject_field } ${ style.field_50 }` }>
-					<div className={ style.formAddProject_field_caption }>
+				<div className={ `${ modals.field } ${ modals.field_50 }` }>
+					<div className={ modals.field_caption }>
 						{ modalText.addProject.labels.color }
 					</div>
-					<div className={ style.formAddProject_field_color }>
+					<div className={ modals.field_color }>
 						<InputRadioColor name="projectColor" color="red" onChange={ handleChange }/>
 						<InputRadioColor name="projectColor" color="orange" onChange={ handleChange }/>
 						<InputRadioColor name="projectColor" color="brown" onChange={ handleChange }/>
@@ -91,11 +92,11 @@ const ModalAddProject = () => {
 						<InputRadioColor name="projectColor" color="pink" onChange={ handleChange }/>
 					</div>
 				</div>
-				<div className={ `${ style.formAddProject_field } ${ style.field_100 }` }>
-					<div className={ style.formAddProject_field_caption }>
+				<div className={ `${ modals.field } ${ modals.field_100 }` }>
+					<div className={ modals.field_caption }>
 						{ modalText.addProject.labels.assignee }
 					</div>
-					<div className={ style.formAddProject_field_assignee }>
+					<div className={ modals.field_assignee }>
 						<InputAssignee inputName="projectAssignee-1" userName={ "Dmytro Koval" }
 									   onChange={ handleChange } idUser={ "1" }/>
 						<InputAssignee inputName="projectAssignee-2" userName={ "Dmytro Koval" }
@@ -104,11 +105,11 @@ const ModalAddProject = () => {
 									   onChange={ handleChange } idUser={ "3" }/>
 					</div>
 				</div>
-				<div className={ `${ style.formAddProject_field } ${ style.field_33 }` }>
-					<div className={ style.formAddProject_field_caption }>
+				<div className={ `${ modals.field } ${ modals.field_33 }` }>
+					<div className={ modals.field_caption }>
 						{ modalText.addProject.labels.approved }
 					</div>
-					<div className={ style.formAddProject_field_input }>
+					<div className={ modals.field_input }>
 						<InputText
 							number={ true }
 							name="projectApproved"
@@ -118,11 +119,11 @@ const ModalAddProject = () => {
 						/>
 					</div>
 				</div>
-				<div className={ `${ style.formAddProject_field } ${ style.field_33 }` }>
-					<div className={ style.formAddProject_field_caption }>
+				<div className={ `${ modals.field } ${ modals.field_33 }` }>
+					<div className={ modals.field_caption }>
 						{ modalText.addProject.labels.monthly }
 					</div>
-					<div className={ style.formAddProject_field_input }>
+					<div className={ modals.field_input }>
 						<InputText
 							number={ true }
 							name="projectMonthly"
@@ -132,11 +133,11 @@ const ModalAddProject = () => {
 						/>
 					</div>
 				</div>
-				<div className={ `${ style.formAddProject_field } ${ style.field_33 }` }>
-					<div className={ style.formAddProject_field_caption }>
+				<div className={ `${ modals.field } ${ modals.field_33 }` }>
+					<div className={ modals.field_caption }>
 						{ modalText.addProject.labels.everhour }
 					</div>
-					<div className={ style.formAddProject_field_input }>
+					<div className={ modals.field_input }>
 						<InputText
 							number={ true }
 							name="projectEverhour"
@@ -146,11 +147,11 @@ const ModalAddProject = () => {
 						/>
 					</div>
 				</div>
-				<div className={ `${ style.formAddProject_field } ${ style.field_100 }` }>
-					<div className={ style.formAddProject_field_caption }>
+				<div className={ `${ modals.field } ${ modals.field_100 }` }>
+					<div className={ modals.field_caption }>
 						{ modalText.addProject.labels.clickupLink }
 					</div>
-					<div className={ style.formAddProject_field_input }>
+					<div className={ modals.field_input }>
 						<InputText
 							name="projectClickup"
 							placeholder={ modalText.addProject.placeholders.clickup }
@@ -159,13 +160,13 @@ const ModalAddProject = () => {
 						/>
 					</div>
 				</div>
-				<div className={ `${ style.formAddProject_field } ${ style.field_100 }` }>
-					<div className={ style.formAddProject_field_caption }>
+				<div className={ `${ modals.field } ${ modals.field_100 }` }>
+					<div className={ modals.field_caption }>
 						{ modalText.addProject.labels.links }
 					</div>
 				</div>
-			
 			</div>
+			
 			<div className={ style.formAddProject_bottom }>
 				<Button type="button" variant="secondary"
 						data-modal-id={ 'modal-add-project' }

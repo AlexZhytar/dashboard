@@ -1,5 +1,5 @@
 import { getInitials } from "@/utils";
-import style from "./input-assignee.module.scss";
+import style from "./style.module.scss";
 import React from "react";
 
 const InputAssignee = (

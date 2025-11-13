@@ -1,0 +1,27 @@
+@use "../../../scss/utils/const" as *;
+@use "../../../scss/utils/mixin" as *;
+
+.addToDO {
+  display: flex;
+  flex-direction: column;
+  gap: 2.4rem;
+  padding: 3.2rem 4rem 4rem;
+  overflow-y: auto;
+  @include vh-height(max, 12rem);
+  
+  &_inner {
+    display: flex;
+    flex-direction: column;
+    gap: 2.4rem;
+  }
+}
+
+.modalActions {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 2rem 4rem;
+  gap: .8rem;
+  border-top: 1px solid var(--color-border-default);
+}

@@ -1,4 +1,4 @@
-import style from "./input-radio-color.module.scss";
+import style from "./style.module.scss";
 import React from "react";
 
 const InputRadioColor = ( {

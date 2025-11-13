@@ -1,0 +1,30 @@
+@use "../../../scss/utils/const" as *;
+
+.textarea {
+  width: 100%;
+  min-height: 14rem;
+  padding: 1rem;
+  font-size: 1.4rem;
+  border: .1rem solid var(--color-border-default);
+  color: var(--color-text-primary);
+  border-radius: .4rem;
+  resize: vertical;
+  outline: none;
+  background-color: var(--color-bg-surface);
+  transition: border-color $transition-time;
+  
+  &::placeholder {
+    color: var(--color-text-secondary);
+  }
+  
+  @media (hover: hover) {
+    &:hover {
+      border-color: var(--color-border-default-hover);
+    }
+  }
+  
+  &:focus {
+    border-color: var(--color-primary-active);
+    outline: none;
+  }
+}

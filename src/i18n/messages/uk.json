@@ -46,7 +46,8 @@
     "settings": "Налаштування",
     "filters": "Фільтри",
     "save": "Зберегти",
-    "reset": "Скинути"
+    "reset": "Скинути",
+    "cancel": "Скасувати"
   },
   "modals": {
     "newProject": {
@@ -69,6 +70,32 @@
       "pm": "ПМ",
       "hours": "Години",
       "toDo": "Завдання"
+    },
+    "addToDo": {
+      "title": "Додати завдання",
+      "labels": {
+        "caption": "Назва завдання",
+        "description": "Опис (необов’язково)",
+        "dueDate": "Термін виконання"
+      },
+      "placeholders": {
+        "caption": "Введіть назву тут",
+        "description": "Введіть опис тут"
+      },
+      "datePicker": {
+        "today": "Сьогодні",
+        "tomorrow": "Завтра",
+        "selectDate": "Виберіть дату"
+      },
+      "addButton": "Створити завдання"
+    },
+    "toDoList": {
+      "title": "Список завдань",
+      "tabs": {
+        "upcoming": "Майбутні",
+        "completed": "Виконані"
+      },
+      "addToDoButton": "Додати завдання"
     }
   }
 }

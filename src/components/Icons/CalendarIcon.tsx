@@ -1,20 +1,22 @@
 import React from 'react';
 import { IconProps } from './types';
 
-export const CalendarIcon: React.FC<IconProps> = ({
-    size = 12,
-    className,
-}) => (
-    <svg
-        width={size}
-        height={size}
-        viewBox="0 0 12 12"
-        xmlns="http://www.w3.org/2000/svg"
-        className={className}
-    >
-        <path d="M3 1.75C3 1.33579 3.33579 1 3.75 1C4.16421 1 4.5 1.33579 4.5 1.75V3H3V1.75Z" />
-        <path d="M7.5 1.75C7.5 1.33579 7.83579 1 8.25 1C8.66421 1 9 1.33579 9 1.75V3H7.5V1.75Z" />
-        <path d="M11 9C11 10.1046 10.1046 11 9 11H3C1.89543 11 1 10.1046 1 9V6.5H11V9ZM9 3C10.1046 3 11 3.89543 11 5H1C1 3.89543 1.89543 3 3 3H9Z" />
-
-    </svg>
+export const CalendarIcon: React.FC<IconProps> = ( {
+	size = 16,
+	className,
+} ) => (
+	<svg
+		width={ size }
+		height={ size }
+		viewBox="0 0 16 16"
+		xmlns="http://www.w3.org/2000/svg"
+		className={ className }
+	>
+		<path
+			d="M13 3C14.1046 3 15 3.89543 15 5L15 12L14.9893 12.2041C14.8938 13.1457 14.1457 13.8938 13.2041 13.9893L13 14L3 14L2.7959 13.9893C1.85435 13.8938 1.1062 13.1457 1.01074 12.2041L1 12L1 5C1 3.89543 1.89543 3 3 3L13 3ZM3 4.5C2.72386 4.5 2.5 4.72386 2.5 5L2.5 12C2.5 12.2761 2.72386 12.5 3 12.5L13 12.5C13.2761 12.5 13.5 12.2761 13.5 12L13.5 5C13.5 4.72386 13.2761 4.5 13 4.5L3 4.5Z"/>
+		<circle cx="8" cy="8.75" r="1.25"/>
+		<path d="M4 0.75C4 0.335786 4.33579 0 4.75 0C5.16421 0 5.5 0.335786 5.5 0.75L5.5 3L4 3L4 0.75Z"/>
+		<path d="M10.5 0.75C10.5 0.335786 10.8358 0 11.25 0C11.6642 0 12 0.335786 12 0.75V3L10.5 3V0.75Z"/>
+	
+	</svg>
 );

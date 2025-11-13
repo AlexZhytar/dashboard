@@ -222,3 +222,60 @@
     }
   }
 }
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: .8rem;
+  
+  &.field_100 {
+    width: 100%;
+  }
+  
+  &.field_50 {
+    width: calc(50% - 1rem);
+  }
+  
+  &.field_33 {
+    width: calc(33.333% - 1.4rem);
+  }
+  
+  &_caption {
+    font-size: 1.3rem;
+    font-weight: $fw-semiBold;
+    line-height: $lh-138;
+    color: var(--color-text-primary);
+  }
+  
+  &_input {
+    width: 100%;
+  }
+  
+  &_color {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: .4rem;
+    height: 4rem;
+  }
+  
+  &_assignee {
+    display: flex;
+    align-items: center;
+    gap: .8rem;
+    flex-wrap: wrap;
+  }
+  
+  &_date {
+    display: flex;
+    align-items: center;
+    gap: .8rem;
+    
+    button {
+      svg {
+        stroke: transparent;
+        fill: var(--color-input-hover);
+      }
+    }
+  }
+}

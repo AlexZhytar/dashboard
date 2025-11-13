@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { ButtonProps } from './types';
-import style from "./button.module.scss";
+import style from "./style.module.scss";
 
 const Button: React.FC<ButtonProps> = ( {
 	variant = 'primary',

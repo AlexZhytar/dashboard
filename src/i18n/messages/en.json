@@ -46,7 +46,8 @@
     "settings": "Settings",
     "filters": "Filters",
     "save": "Save",
-    "reset": "Reset"
+    "reset": "Reset",
+    "cancel": "Cancel"
   },
   "modals": {
     "newProject": {
@@ -69,6 +70,32 @@
       "pm": "PM",
       "hours": "Hours",
       "toDo": "To Do"
+    },
+    "addToDo": {
+      "title": "Add a To Do",
+      "labels": {
+        "caption": "To Do name",
+        "description": "Description (optional)",
+        "dueDate": "Due date"
+      },
+      "placeholders": {
+        "caption": "Type name here",
+        "description": "Type description here"
+      },
+      "datePicker": {
+        "today": "Today",
+        "tomorrow": "Tomorrow",
+        "selectDate": "Select date"
+      },
+      "addButton": "Create a To Do"
+    },
+    "toDoList": {
+      "title": "To-Do List",
+      "tabs": {
+        "upcoming": "Upcoming",
+        "completed": "Completed"
+      },
+      "addToDoButton": "Add a To Do"
     }
   }
 }

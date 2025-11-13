@@ -1,4 +1,4 @@
-import style from "./styles.module.scss";
+import style from "./style.module.scss";
 import React from "react";
 
 interface InputCheckboxProps {

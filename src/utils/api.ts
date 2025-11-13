@@ -9,6 +9,9 @@ export const api = {
 	},
 	getProfile: () => {
 		return api.getUrl('/employee/profile');
+	},
+	getManagers: () => {
+		return api.getUrl('/management/employees');
 	}
 	
 }

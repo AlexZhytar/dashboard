@@ -1,21 +1,20 @@
 export type LinkCard = {
-    url: string;
-    icon: string;
-    label: string;
+	url: string;
+	icon: string;
+	label: string;
 }
 
 export type ManagerCard = {
-    name: string;
-    user_id: number;
+	name: string;
+	user_id: number;
 }
 
 export type PropsCard = {
-    project: string;
-    color: string;
-    deadline: number,
-    manager: ManagerCard[];
-    links: LinkCard[];
-    confirmed_hours: number,
-    months_hours: number,
-    tracked_hours: number,
+	project: string;
+	color: string;
+	manager: ManagerCard[];
+	links: LinkCard[];
+	confirmed_hours: number,
+	months_hours: number,
+	tracked_hours: number,
 }

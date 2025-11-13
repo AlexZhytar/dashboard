@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import Container from '../layout/Container';
 import style from './projects.module.scss';
 import ProjectsHead from './ProjectsHead';
@@ -10,6 +10,10 @@ import { useProjectsStore } from '@/store';
 import type { ProjectsList as ProjectType } from './ProjectsList/types';
 import ProjectsSettings from './ProjectsSettings';
 import ProjectsSearch from './ProjectsSearch';
+import { Modal } from "@/components/Modals";
+import ModalAddToDo from "@/components/Modals/ModalAddToDo";
+import { useTranslations } from "next-intl";
+import ModalToDoList from "@/components/Modals/ModalToDoList";
 
 const Projects = () => {
 	const {
@@ -18,6 +22,8 @@ const Projects = () => {
 		hasHydrated,
 		syncProjectsWithDefault
 	} = useProjectsStore();
+	
+	const t = useTranslations();
 	
 	useEffect(() => {
 		if ( !hasHydrated ) return;
@@ -48,6 +54,14 @@ const Projects = () => {
 								  isSearchActive={ useProjectsStore(state => state.isSearchActive) }/>
 				</div>
 			</Container>
+			
+			<Modal id={ 'addToDO' } title={ t('modals.addToDo.title') } animation={ 'center' }>
+				<ModalAddToDo/>
+			</Modal>
+			
+			<Modal id={ 'toDoList' } title={ t('modals.toDoList.title') } animation={ 'right' }>
+				<ModalToDoList/>
+			</Modal>
 		</div>
 	);
 }

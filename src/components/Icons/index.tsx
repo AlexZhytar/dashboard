@@ -10,6 +10,7 @@ import { SearchIcon } from "./SearchIcon";
 import { DashboardIcon } from "./Dashboard";
 import { MoonIcon } from "@/components/Icons/Moon";
 import { SunIcon } from "@/components/Icons/Sun";
+import { PlusIcon } from "@/components/Icons/PlusIcon";
 
 export {
 	CalendarIcon,
@@ -24,4 +25,5 @@ export {
 	DashboardIcon,
 	MoonIcon,
 	SunIcon,
+	PlusIcon
 }

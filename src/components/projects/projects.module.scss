@@ -352,6 +352,7 @@
   
   .todo {
     width: max-content;
+    flex: 1;
     
     &_block {
       width: 100%;
@@ -360,20 +361,28 @@
     }
   }
   
-  .deadline {
-    width: 8rem;
+  .actions {
+    min-width: 20rem;
+    margin-left: auto;
     
     &_block {
-      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      gap: .4rem;
+      position: relative;
+      z-index: 1;
+    }
+    
+    &_button {
+      padding: 0;
+      width: 2.4rem;
+      height: 2.4rem;
+      min-height: 2.4rem;
       
-      span {
-        font-size: 1.2rem;
-        font-weight: $fw-medium;
-        line-height: 1;
-        display: inline-block;
-        padding: .4rem .4rem;
-        border-radius: .4rem;
-        background-color: var(--color-bg-subtle);
+      svg {
+        fill: transparent;
+        stroke: var(--color-text-secondary);
       }
     }
   }

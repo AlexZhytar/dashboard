@@ -1,0 +1,24 @@
+@use "../../../scss/utils/mixin" as *;
+
+.todoList {
+  width: 100%;
+  padding: 2rem;
+  overflow-y: auto;
+  @include vh-height(max, 12.9rem);
+}
+
+.modalActions {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  border-top: 1px solid var(--color-border-default);
+  
+  .submit {
+    width: 100%;
+  }
+}
