@@ -3,6 +3,7 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import Container from '../layout/Container';
 import style from './projects.module.scss';
+import modals from '../Modals/modal.module.scss';
 import ProjectsHead from './ProjectsHead';
 import ProjectsList from './ProjectsList';
 import { projectsDefault } from "@/constants";
@@ -59,7 +60,8 @@ const Projects = () => {
 				<ModalAddToDo/>
 			</Modal>
 			
-			<Modal id={ 'toDoList' } title={ t('modals.toDoList.title') } animation={ 'right' }>
+			<Modal id={ 'toDoList' } className={ modals.todoList } title={ t('modals.toDoList.title') }
+				   animation={ 'right' }>
 				<ModalToDoList/>
 			</Modal>
 		</div>

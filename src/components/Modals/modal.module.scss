@@ -221,6 +221,17 @@
       }
     }
   }
+  
+  &.todoList {
+    .modal {
+      &_inner {
+        max-width: 50rem;
+      }
+      &_head {
+        text-align: center;
+      }
+    }
+  }
 }
 
 .field {

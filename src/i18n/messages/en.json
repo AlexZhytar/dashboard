@@ -95,7 +95,8 @@
         "upcoming": "Upcoming",
         "completed": "Completed"
       },
-      "addToDoButton": "Add a To Do"
+      "addToDoButton": "Add a To Do",
+      "noToDos": "No To-Dos available"
     }
   }
 }

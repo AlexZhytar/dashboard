@@ -95,7 +95,8 @@
         "upcoming": "Майбутні",
         "completed": "Виконані"
       },
-      "addToDoButton": "Додати завдання"
+      "addToDoButton": "Додати завдання",
+      "noToDos": "Завдань немає"
     }
   }
 }
