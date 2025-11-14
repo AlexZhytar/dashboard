@@ -272,10 +272,53 @@
     gap: .8rem;
     
     button {
+      position: relative;
+      
       svg {
         stroke: transparent;
         fill: var(--color-input-hover);
       }
+    }
+    
+    &_block {
+      position: relative;
+      margin-left: 3.2rem;
+      
+      &::before {
+        content: "";
+        position: absolute;
+        left: -2rem;
+        height: 100%;
+        width: 1px;
+        background-color: var(--color-border-default);
+      }
+    }
+    
+    &_picker {
+      position: absolute;
+      left: 0;
+      bottom: 110%;
+      background-color: var(--color-static-white);
+      border-radius: .8rem;
+      padding: .8rem;
+      box-shadow: 0 1px 1px -0.5px rgba(0, 0, 0, 0.04), 0 3px 3px -1.5px rgba(0, 0, 0, 0.04), 0 6px 6px -3px rgba(0, 0, 0, 0.04), 0 12px 12px -6px rgba(0, 0, 0, 0.04), 0 0 0 1px rgba(39, 39, 42, 0.10);
+      
+      [data-theme="dark"] & {
+        background-color: var(--color-bg-soft);
+      }
+    }
+    
+    .dateAdded {
+      background-color: var(--color-primary);
+      color: var(--color-static-white);
+      
+      svg {
+        fill: var(--color-static-white);
+      }
+    }
+    
+    .dateActive {
+      border-color: var(--color-primary);
     }
   }
 }
