@@ -1,84 +1,85 @@
 import style from "./style.module.scss";
 import { useTranslations } from "next-intl";
 import { Button } from "@/components/UI";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import InputCheckbox from "@/components/UI/InputCheckbox";
 import { useProjectsStore, useUserStore } from "@/store";
 
 type FilterKey = "links" | "pm" | "hours" | "todo";
-type LocalFilters = Record<FilterKey, boolean>;
+type FiltersState = Record<FilterKey, boolean>;
+
+const DEFAULT_FILTERS: FiltersState = {
+	links: true,
+	pm: true,
+	hours: true,
+	todo: true
+};
+
+const FILTER_CONFIG: { key: FilterKey; labelKey: string }[] = [
+	{ key: "links", labelKey: "modals.settings.links" },
+	{ key: "pm", labelKey: "modals.settings.pm" },
+	{ key: "hours", labelKey: "modals.settings.hours" },
+	{ key: "todo", labelKey: "modals.settings.toDo" }
+];
+
+const mapStoreToLocal = ( filters: Partial<FiltersState> | null | undefined ): FiltersState => ({
+	links: filters?.links ?? DEFAULT_FILTERS.links,
+	pm: filters?.pm ?? DEFAULT_FILTERS.pm,
+	hours: filters?.hours ?? DEFAULT_FILTERS.hours,
+	todo: filters?.todo ?? DEFAULT_FILTERS.todo
+});
 
 const ModalSettings = () => {
 	const t = useTranslations();
 	const { setModalID } = useUserStore();
 	const { filters, setFilter } = useProjectsStore();
 	
-	const [ localFilters, setLocalFilters ] = useState<LocalFilters>({
-		links: true,
-		pm: true,
-		hours: true,
-		todo: true,
-	});
+	const [ localFilters, setLocalFilters ] = useState<FiltersState>(() =>
+		mapStoreToLocal(filters)
+	);
 	
 	useEffect(() => {
-		setLocalFilters({
-			links: Boolean(filters?.links),
-			pm: Boolean(filters?.pm),
-			hours: Boolean(filters?.hours),
-			todo: Boolean(filters?.todo),
-		});
+		setLocalFilters(mapStoreToLocal(filters));
 	}, [ filters ]);
 	
-	const handleLocalToggle = ( key: FilterKey ) => {
-		setLocalFilters(( prev ) => ({ ...prev, [key]: !prev[key] }));
-	};
+	const handleLocalToggle = useCallback(( key: FilterKey ) => {
+		setLocalFilters(prev => ({
+			...prev,
+			[key]: !prev[key]
+		}));
+	}, []);
 	
-	const hasAnyFalse = Object.values(localFilters).some(( v ) => !v);
+	const hasAnyFalse = useMemo(
+		() => Object.values(localFilters).some(v => !v),
+		[ localFilters ]
+	);
 	
-	const handleRestoreFilter = () => {
-		setLocalFilters({
-			links: true,
-			pm: true,
-			hours: true,
-			todo: true,
-		});
-	};
+	const handleRestoreFilter = useCallback(() => {
+		setLocalFilters(DEFAULT_FILTERS);
+	}, []);
 	
-	const handleSaveFilters = () => {
-		(Object.keys(localFilters) as FilterKey[]).forEach(( key ) => {
+	const handleSaveFilters = useCallback(() => {
+		(Object.keys(localFilters) as FilterKey[]).forEach(key => {
 			setFilter(key, localFilters[key]);
 		});
 		setModalID(null);
-	}
+	}, [ localFilters, setFilter, setModalID ]);
 	
-	return (<>
+	return (
+		<>
 			<div className={ style.modalSettings }>
 				<div className={ style.settingsBlock }>
 					<div className={ style.settingsBlock_title }>
 						{ t("modals.settings.filters") }
 					</div>
 					<div className={ style.settingsBlock_filter }>
-						<div className={ style.filterCaption }>{ t("modals.settings.projectManager") }</div>
+						<div className={ style.filterCaption }>
+							{ t("modals.settings.projectManager") }
+						</div>
 						<div className={ style.filterList }>
-							{/*<InputAssignee inputName={ "filter-manager" }*/ }
-							{/*			   userName={ "All" }*/ }
-							{/*			   onChange={ }*/ }
-							{/*			   idUser={ 'user-1' }/>*/ }
-							{/*<InputAssignee inputName={ "filter-manager" }*/ }
-							{/*			   userName={ "Dmytro Koval" }*/ }
-							{/*			   onChange={ }*/ }
-							{/*			   idUser={ 'user-2' }/>*/ }
-							{/*<InputAssignee inputName={ "filter-manager" }*/ }
-							{/*			   userName={ "Anna Mantrova" }*/ }
-							{/*			   onChange={ }*/ }
-							{/*			   idUser={ 'user-3' }/>*/ }
-							{/*<InputAssignee inputName={ "filter-manager" }*/ }
-							{/*			   userName={ "Heorhii Popov" }*/ }
-							{/*			   onChange={ }*/ }
-							{/*			   idUser={ 'user-4' }/>*/ }
+							{/* фільтр по PM */ }
 						</div>
 					</div>
-				
 				</div>
 				
 				<div className={ style.settingsBlock }>
@@ -86,22 +87,15 @@ const ModalSettings = () => {
 						{ t("modals.settings.tableInfo") }
 					</div>
 					<div className={ style.settingsBlock_filter }>
-						<InputCheckbox value={ t("modals.settings.links") }
-									   inputName="table-info"
-									   checked={ localFilters.links }
-									   onChange={ () => handleLocalToggle("links") }/>
-						<InputCheckbox value={ t("modals.settings.pm") }
-									   inputName="table-info"
-									   checked={ localFilters.pm }
-									   onChange={ () => handleLocalToggle("pm") }/>
-						<InputCheckbox value={ t("modals.settings.hours") }
-									   inputName="table-info"
-									   checked={ localFilters.hours }
-									   onChange={ () => handleLocalToggle("hours") }/>
-						<InputCheckbox value={ t("modals.settings.toDo") }
-									   inputName="table-info"
-									   checked={ localFilters.todo }
-									   onChange={ () => handleLocalToggle("todo") }/>
+						{ FILTER_CONFIG.map(( { key, labelKey } ) => (
+							<InputCheckbox
+								key={ key }
+								value={ t(labelKey) }
+								inputName="table-info"
+								checked={ localFilters[key] }
+								onChange={ () => handleLocalToggle(key) }
+							/>
+						)) }
 					</div>
 					
 					{ hasAnyFalse && (
@@ -109,16 +103,20 @@ const ModalSettings = () => {
 							<span>{ t("uiText.reset") }</span>
 						</Button>
 					) }
-				
 				</div>
 			</div>
+			
 			<div className={ style.modalActions }>
-				<Button variant="primary" onClick={ handleSaveFilters } className={ style.submit }>
+				<Button
+					variant="primary"
+					onClick={ handleSaveFilters }
+					className={ style.submit }
+				>
 					<span>{ t("uiText.save") }</span>
 				</Button>
 			</div>
 		</>
 	);
-}
+};
 
 export default ModalSettings;

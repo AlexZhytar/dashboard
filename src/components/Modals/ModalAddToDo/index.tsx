@@ -1,5 +1,5 @@
-import React, { useEffect, useRef, useState } from 'react';
-import style from './style.module.scss';
+import React, { useCallback, useEffect, useRef, useState } from "react";
+import style from "./style.module.scss";
 import modals from "../modal.module.scss";
 import { useLocale, useTranslations } from "next-intl";
 import { Button, InputText, Textarea } from "@/components/UI";
@@ -9,68 +9,64 @@ import { DayPicker } from "react-day-picker";
 import { enUS, uk } from "react-day-picker/locale";
 import "react-day-picker/style.css";
 
+const startOfDay = ( date: Date ) => {
+	const d = new Date(date);
+	d.setHours(0, 0, 0, 0);
+	return d;
+};
+
+const isSameDay = ( a?: Date, b?: Date ) => {
+	if ( !a || !b ) return false;
+	return startOfDay(a).getTime() === startOfDay(b).getTime();
+};
+
 const ModalAddToDo = () => {
-	const current = useLocale();
-	const [ name, setName ] = useState("");
-	const [ desc, setDesc ] = useState("");
+	const localeCode = useLocale();
 	const t = useTranslations();
 	const { setModalID } = useUserStore();
+	
+	const [ caption, setCaption ] = useState("");
+	const [ desc, setDesc ] = useState("");
 	const [ selectedDate, setSelectedDate ] = useState<Date>();
 	const [ openCalendar, setOpenCalendar ] = useState(false);
+	
 	const dateBlockRef = useRef<HTMLDivElement | null>(null);
 	
-	const handleSelectDate = ( date: Date | undefined ) => {
+	const locale = localeCode === "uk" ? uk : enUS;
+	
+	const today = new Date();
+	const tomorrow = new Date(today.getFullYear(), today.getMonth(), today.getDate() + 1);
+	
+	const handleSelectDate = useCallback(( date: Date | undefined ) => {
+		if ( !date ) return;
 		setSelectedDate(date);
 		setOpenCalendar(false);
-	};
+	}, []);
 	
-	const isToday = ( date: Date | undefined ) => {
-		if ( !date ) return false;
-		
-		const d = new Date(date);
-		const today = new Date();
-		
-		d.setHours(0, 0, 0, 0);
-		today.setHours(0, 0, 0, 0);
-		
-		return d.getTime() === today.getTime();
-	};
-	
-	const isTomorrow = ( date?: Date ) => {
-		if ( !date ) return false;
-		
-		const d = new Date(date);
-		const tomorrow = new Date();
-		
-		d.setHours(0, 0, 0, 0);
-		tomorrow.setHours(0, 0, 0, 0);
-		tomorrow.setDate(tomorrow.getDate() + 1);
-		
-		return d.getTime() === tomorrow.getTime();
-	};
-	
-	const setToday = () => {
+	const handleSetToday = useCallback(() => {
 		setSelectedDate(new Date());
-	};
+	}, []);
 	
-	const setTomorrow = () => {
+	const handleSetTomorrow = useCallback(() => {
 		const d = new Date();
 		d.setDate(d.getDate() + 1);
 		setSelectedDate(d);
-	};
+	}, []);
 	
 	useEffect(() => {
-		function handleClickOutside( e: MouseEvent ) {
+		if ( !openCalendar ) return;
+		
+		const handleClickOutside = ( e: MouseEvent ) => {
 			if ( !dateBlockRef.current ) return;
 			
 			if ( !dateBlockRef.current.contains(e.target as Node) ) {
 				setOpenCalendar(false);
 			}
-		}
+		};
 		
 		document.addEventListener("mousedown", handleClickOutside);
 		return () => document.removeEventListener("mousedown", handleClickOutside);
-	}, []);
+	}, [ openCalendar ]);
 	
 	return (
 		<>
@@ -82,10 +78,11 @@ const ModalAddToDo = () => {
 						</div>
 						<div className={ modals.field_input }>
 							<InputText
-								name="projectClickup"
+								name="caption" // було "projectClickup" — копіпаст, виправив під суть поля
 								placeholder={ t("modals.addToDo.placeholders.caption") }
-								value={ name }
-								onChange={ ( e ) => setName(e.target.value) }/>
+								value={ caption }
+								onChange={ ( e ) => setCaption(e.target.value) }
+							/>
 						</div>
 					</div>
 					
@@ -109,52 +106,60 @@ const ModalAddToDo = () => {
 						</div>
 						
 						<div className={ modals.field_date }>
-							<Button variant={ 'secondary' }
-									className={ isToday(selectedDate) ? modals.dateActive : '' }
-									onClick={ setToday }>
+							<Button
+								variant="secondary"
+								className={ isSameDay(selectedDate, today) ? modals.dateActive : "" }
+								onClick={ handleSetToday }
+							>
 								<span>{ t("modals.addToDo.datePicker.today") }</span>
 							</Button>
-							<Button variant={ 'secondary' }
-									className={ isTomorrow(selectedDate) ? modals.dateActive : '' }
-									onClick={ setTomorrow }>
+							
+							<Button
+								variant="secondary"
+								className={ isSameDay(selectedDate, tomorrow) ? modals.dateActive : "" }
+								onClick={ handleSetTomorrow }
+							>
 								<span>{ t("modals.addToDo.datePicker.tomorrow") }</span>
 							</Button>
 							
 							<div className={ modals.field_date_block } ref={ dateBlockRef }>
-								<Button variant={ 'secondary' }
-										className={ selectedDate ? modals.dateAdded : '' }
-										onClick={ () => setOpenCalendar(( prev ) => !prev) }
+								<Button
+									variant="secondary"
+									className={ selectedDate ? modals.dateAdded : "" }
+									onClick={ () => setOpenCalendar(( prev ) => !prev) }
 								>
 									<CalendarIcon size={ 16 }/>
 									<span>
-									{ !selectedDate ? t("modals.addToDo.datePicker.selectDate") : selectedDate.toLocaleDateString() }
-								</span>
+										{ !selectedDate
+											? t("modals.addToDo.datePicker.selectDate")
+											: selectedDate.toLocaleDateString() }
+									</span>
 								</Button>
-								{
-									openCalendar && (
-										<>
-											<div className={ modals.field_date_picker }>
-												<DayPicker
-													mode="single"
-													disabled={ { before: new Date() } }
-													selected={ selectedDate }
-													onSelect={ handleSelectDate }
-													locale={ current === "uk" ? uk : enUS }
-													startMonth={ new Date() }
-												/>
-											</div>
-										</>
-									)
-								}
+								
+								{ openCalendar && (
+									<div className={ modals.field_date_picker }>
+										<DayPicker
+											mode="single"
+											disabled={ { before: startOfDay(today) } }
+											selected={ selectedDate }
+											onSelect={ handleSelectDate }
+											locale={ locale }
+											startMonth={ today }
+										/>
+									</div>
+								) }
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
+			
 			<div className={ style.modalActions }>
-				<Button variant="secondary"
-						onClick={ () => setModalID(null) }
-						className={ style.cancel }>
+				<Button
+					variant="secondary"
+					onClick={ () => setModalID(null) }
+					className={ style.cancel }
+				>
 					<span>{ t("uiText.cancel") }</span>
 				</Button>
 				<Button variant="primary" className={ style.submit }>

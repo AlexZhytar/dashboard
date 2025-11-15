@@ -2,8 +2,10 @@ import { useEffect, useState } from "react";
 
 export function useManagers() {
   const [managers, setManagers] = useState( [] );
+  const [loadManagers, setLoadManagers] = useState( false );
   
   useEffect( () => {
+    setLoadManagers( true );
     const fetchManagers = async () => {
       try {
         const res = await fetch( "/api/user/get-user" );
@@ -15,17 +17,18 @@ export function useManagers() {
         
         const data = await res.json();
         setManagers( data );
+        setLoadManagers( false )
         
       } catch (e) {
         console.error( "❌ fetch user:", e );
         
       } finally {
-      
+        setLoadManagers( false )
       }
     };
     
     fetchManagers();
   }, [] );
   
-  return { managers };
+  return { managers, loadManagers };
 }
