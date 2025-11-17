@@ -1,5 +1,5 @@
 import Modal from "@/components/Modals/Modal";
 import ModalSettings from "@/components/Modals/ModalSettings";
-import ModalAddProject from "./ModalAddProject";
+import ModalProject from "./ModalProject";
 
-export { Modal, ModalSettings, ModalAddProject };
+export { Modal, ModalSettings, ModalProject };

@@ -1,33 +1,5 @@
-export const modalText = {
-  addProject: {
-    buttons: {
-      submit: "Add Project",
-      cancel: "Cancel",
-      addLink: "Add Link"
-    },
-    labels: {
-      name: "Project Name",
-      color: "Accent Color",
-      assignee: "Assignee",
-      approved: "Approved Hours (h)",
-      monthly: "Monthly Plan (h)",
-      links: "Links",
-      everhour: "Everhour ID",
-      clickupLink: "ClickUp Link (project list) ",
-    },
-    placeholders: {
-      name: "Enter project name",
-      approved: "e.g. 120",
-      monthly: "e.g. 80",
-      everhour: "90040100096",
-      clickup: "https://app.clickup.com/1234567/v/l/1234567/1234567",
-      link: "Insert link here"
-    }
-  }
-}
-
 export const modalAnimations = {
-  init(variants) {
+  init( variants ) {
     return {
       initial: 'initial',
       animate: 'animate',
@@ -35,7 +7,7 @@ export const modalAnimations = {
       variants
     }
   },
-
+  
   fadeModal() {
     return {
       initial: { opacity: 0, },
@@ -43,7 +15,7 @@ export const modalAnimations = {
       exit: { opacity: 0, }
     }
   },
-
+  
   slideModalCenter() {
     return {
       initial: { scale: 0 },
@@ -51,7 +23,7 @@ export const modalAnimations = {
       exit: { scale: .5 }
     }
   },
-
+  
   slideModalRight() {
     return {
       initial: { x: "100%", },
@@ -59,7 +31,7 @@ export const modalAnimations = {
       exit: { x: "100%", }
     }
   },
-
+  
   slideModalLeft() {
     return {
       initial: { x: "-100%", },
@@ -67,7 +39,7 @@ export const modalAnimations = {
       exit: { x: "-100%", }
     }
   },
-
+  
   slideModalTop() {
     return {
       initial: { y: "-100%", },
@@ -75,7 +47,7 @@ export const modalAnimations = {
       exit: { y: "-100%", }
     }
   },
-
+  
   slideModalBot() {
     return {
       initial: { y: "100%", },

@@ -47,19 +47,35 @@
     "filters": "Filters",
     "save": "Save",
     "reset": "Reset",
-    "cancel": "Cancel"
+    "cancel": "Cancel",
+    "submit": "Submit",
+    "createProject": "Create Project",
+    "createToDo": "Create To Do",
+    "todoList": "To-Do List",
+    "editProject": "Edit Project",
+    "deleteProject": "Delete Project"
   },
   "modals": {
     "newProject": {
+      "title": "New Project",
       "labels": {
         "projectName": "Project Name",
         "accentColor": "Accent Color",
         "assignee": "Assignee",
         "approved": "Approved Hours (h)",
         "monthly": "Monthly Plan (h)",
+        "tracked": "Tracked Hours",
         "everhour": "Everhour ID",
         "clickUpLink": "ClickUp Link (project list)",
         "links": "Links"
+      },
+      "placeholders": {
+        "projectName": "example: Martal",
+        "approved": "e.g., 120",
+        "monthly": "e.g., 40",
+        "everhour": "90040100096",
+        "clickUpLink": "https://app.clickup.com/4586252/v/l/li/901212678550",
+        "links": "Insert link here"
       }
     },
     "settings": {
@@ -97,6 +113,9 @@
       },
       "addToDoButton": "Add a To Do",
       "noToDos": "No To-Dos available"
+    },
+    "editProject": {
+      "title": "Edit Project"
     }
   }
 }

@@ -3,14 +3,15 @@ export const projectsDefault = {
     {
       label: 'Noobar',
       id: "project-1",
-      color: '#5761D4',
+      color: 'red',
       confirmed_hours: 0,
       months_hours: 0,
       tracked_hours: 0,
+      everhour_id: "",
       deadline_at: 1766620800000,
       created_at: 0,
-      manager: [
-        { user_id: 11, name: "Anna Mantrova" }
+      managers: [
+        { id: 11, first_name: "Anna", last_name: "Mantrova" }
       ],
       links: [
         { url: '/', icon: '/icon/clickup.svg', label: "Clickup" },
@@ -23,15 +24,16 @@ export const projectsDefault = {
     {
       label: 'Elengroup',
       id: "project-2",
-      color: '#0C3',
+      color: 'green',
       confirmed_hours: 0,
       months_hours: 0,
       tracked_hours: 0,
+      everhour_id: "",
       deadline_at: 1762041600000,
-      manager: [
-        { user_id: 11, name: "Anna Mantrova" },
-        { user_id: 8, name: "Dmytro Koval" },
-        { user_id: 12, name: "Heorhii Popov" }
+      managers: [
+        { id: 11, first_name: "Anna", last_name: "Mantrova" },
+        { id: 8, first_name: "Dmytro", last_name: "Koval" },
+        { id: 12, first_name: "Heorhii", last_name: "Popov" }
       ],
       links: [
         { url: '/', icon: '/icon/clickup.svg', label: "Clickup" },
@@ -41,14 +43,15 @@ export const projectsDefault = {
     {
       label: 'Dewalt',
       id: "project-3",
-      color: 'rgba(243, 89, 111, 0.50)',
-      confirmed_hours: 0,
-      months_hours: 0,
-      tracked_hours: 0,
+      color: 'cyan',
+      confirmed_hours: 80,
+      months_hours: 25,
+      tracked_hours: 5,
+      everhour_id: 150967812,
       deadline_at: 0,
       created_at: 0,
-      manager: [
-        { user_id: 12, name: "Heorhii Popov" }
+      managers: [
+        { id: 12, first_name: "Heorhii", last_name: "Popov" }
       ],
       links: [
         { url: '/', icon: '/icon/clickup.svg', label: "Clickup" },
@@ -57,14 +60,15 @@ export const projectsDefault = {
     {
       label: 'Prostir',
       id: "project-4",
-      color: '#6C51EF',
-      confirmed_hours: 0,
-      months_hours: 0,
-      tracked_hours: 0,
+      color: 'brown',
+      confirmed_hours: 10,
+      months_hours: 10,
+      tracked_hours: 10,
+      everhour_id: "",
       deadline_at: 0,
       created_at: 0,
-      manager: [
-        { user_id: 12, name: "Heorhii Popov" }
+      managers: [
+        { id: 8, first_name: "Dmytro", last_name: "Koval" }
       ],
       links: [
         { url: '/', icon: '/icon/clickup.svg', label: "Clickup" },
@@ -73,14 +77,15 @@ export const projectsDefault = {
     {
       label: 'Poelle',
       id: "project-5",
-      color: '#6C51EF',
-      confirmed_hours: 0,
-      months_hours: 0,
+      color: 'purple',
+      confirmed_hours: 120,
+      months_hours: 36,
       tracked_hours: 0,
+      everhour_id: "",
       deadline_at: 0,
       created_at: 0,
-      manager: [
-        { user_id: 12, name: "Heorhii Popov" }
+      managers: [
+        { id: 12, first_name: "Heorhii", last_name: "Popov" }
       ],
       links: [
         { url: '/', icon: '/icon/clickup.svg', label: "Clickup" },
@@ -89,14 +94,17 @@ export const projectsDefault = {
     {
       label: 'Martal',
       id: "project-6",
-      color: '#6C51EF',
-      confirmed_hours: 0,
+      color: 'yellow',
+      confirmed_hours: 45,
       months_hours: 0,
       tracked_hours: 0,
+      everhour_id: "",
       deadline_at: 0,
       created_at: 0,
-      manager: [
-        { user_id: 12, name: "Heorhii Popov" }
+      managers: [
+        { id: 11, first_name: "Anna", last_name: "Mantrova" },
+        { id: 8, first_name: "Dmytro", last_name: "Koval" },
+        { id: 12, first_name: "Heorhii", last_name: "Popov" }
       ],
       links: [
         { url: '/', icon: '/icon/clickup.svg', label: "Clickup" },

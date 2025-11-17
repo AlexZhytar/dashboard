@@ -11,6 +11,10 @@ import { DashboardIcon } from "./Dashboard";
 import { MoonIcon } from "@/components/Icons/Moon";
 import { SunIcon } from "@/components/Icons/Sun";
 import { PlusIcon } from "@/components/Icons/PlusIcon";
+import { FilterIcon } from "@/components/Icons/FilterIcon";
+import { TableCogIcon } from "@/components/Icons/TableCogIcon";
+import { DotsIcon } from "@/components/Icons/DotsIcon";
+import { RemoveIcon } from "@/components/Icons/RemoveIcon";
 
 export {
 	CalendarIcon,
@@ -25,5 +29,9 @@ export {
 	DashboardIcon,
 	MoonIcon,
 	SunIcon,
-	PlusIcon
+	PlusIcon,
+	FilterIcon,
+	TableCogIcon,
+	DotsIcon,
+	RemoveIcon
 }

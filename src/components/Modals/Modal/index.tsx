@@ -1,11 +1,20 @@
 "use client";
 
 import { AnimatePresence, motion as m } from "motion/react";
-import { modalAnimations } from "@/constants";
+import { modalAnimations } from "../modal-animations";
 import { useUserStore } from "@/store/useUserStore";
-import { ModalProps } from '../types';
 import style from "../modal.module.scss";
+import { ReactNode } from "react";
 
+type ModalAnimation = 'top' | 'right' | 'bottom' | 'left' | 'center';
+
+type ModalProps = {
+	animation?: ModalAnimation;
+	title?: string;
+	id: string;
+	children: ReactNode;
+	className?: string;
+};
 
 const Modal = ( { animation, id, children, title, className = '' }: ModalProps ) => {
 	const { modalID, setModalID } = useUserStore();

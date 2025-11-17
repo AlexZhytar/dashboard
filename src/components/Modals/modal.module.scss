@@ -243,6 +243,10 @@
     width: 100%;
   }
   
+  &.field_66 {
+    width: calc(66.667% - .7rem);
+  }
+  
   &.field_50 {
     width: calc(50% - 1rem);
   }

@@ -5,16 +5,19 @@ export type LinkCard = {
 }
 
 export type ManagerCard = {
-	name: string;
-	user_id: number;
+	first_name: string;
+	last_name: string;
+	id: number;
 }
 
 export type PropsCard = {
+	project_id: string;
 	project: string;
 	color: string;
-	manager: ManagerCard[];
+	managers: ManagerCard[];
 	links: LinkCard[];
 	confirmed_hours: number,
 	months_hours: number,
 	tracked_hours: number,
+	callbacks?: ( projectId: string ) => void;
 }

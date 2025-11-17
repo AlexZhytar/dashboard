@@ -4,10 +4,36 @@ import style from "../projects.module.scss";
 import { DndContext, DragEndEvent } from "@dnd-kit/core";
 import { arrayMove, SortableContext, useSortable, verticalListSortingStrategy } from "@dnd-kit/sortable";
 import { useProjectsStore } from '@/store/useProjects';
-import { DraggableBlockProps, ProjectsProps } from './types';
 import { NoResultsIcon } from "@/components/Icons";
 import { useTranslations } from "next-intl";
 import ProjectCard from "../ProjectsCard";
+import { Modal, ModalProject } from "@/components/Modals";
+import modals from "@/components/Modals/modal.module.scss";
+import React, { ReactNode, useState } from "react";
+import { useUserStore } from "@/store";
+import { LinkCard, ManagerCard } from "../ProjectsCard/types"
+
+export type DraggableBlockProps = {
+	id: string | number;
+	children: ReactNode;
+	stateSearch: boolean;
+}
+
+export type ProjectsListType = {
+	id: string;
+	label: string,
+	color: string,
+	confirmed_hours: number,
+	months_hours: number,
+	tracked_hours: number,
+	links: LinkCard[],
+	managers: ManagerCard[]
+}
+
+export type ProjectsProps = {
+	projects: ProjectsListType[];
+	isSearchActive?: boolean;
+}
 
 const DraggableBlock = ( { id, children, stateSearch }: DraggableBlockProps ) => {
 	const { attributes, listeners, transition, isDragging, setNodeRef, transform } = useSortable({
@@ -42,7 +68,10 @@ const DraggableBlock = ( { id, children, stateSearch }: DraggableBlockProps ) =>
 
 const ProjectsList = ( { projects, isSearchActive }: ProjectsProps ) => {
 	const { reorderProjects } = useProjectsStore();
+	const { setModalID, modalID } = useUserStore();
 	const t = useTranslations();
+	const [ popupID, setPopupID ] = useState<string>('');
+	const [ project, setProject ] = useState([] as any);
 	
 	const handleDragEnd = ( event: DragEndEvent ) => {
 		const { active, over } = event;
@@ -59,6 +88,14 @@ const ProjectsList = ( { projects, isSearchActive }: ProjectsProps ) => {
 		const newOrder = arrayMove(projects, oldIndex, newIndex);
 		reorderProjects(newOrder.map(card => card.id));
 	};
+	
+	const getProjectID = ( e: string ) => {
+		if ( !e ) return;
+		setPopupID(e);
+		const projectID = projects.find(project => project.id === e);
+		setProject(projectID);
+		setModalID(e);
+	}
 	
 	return (
 		<>
@@ -81,13 +118,15 @@ const ProjectsList = ( { projects, isSearchActive }: ProjectsProps ) => {
 							projects.map(item =>
 								<DraggableBlock key={ item.id } id={ item.id } stateSearch={ !!isSearchActive }>
 									<ProjectCard
+										project_id={ item.id }
 										project={ item.label }
 										links={ item.links }
 										color={ item.color }
-										manager={ item.manager }
+										managers={ item.managers }
 										tracked_hours={ item.tracked_hours }
 										confirmed_hours={ item.confirmed_hours }
 										months_hours={ item.months_hours }
+										callbacks={ getProjectID }
 									/>
 								</DraggableBlock>
 							)
@@ -97,6 +136,11 @@ const ProjectsList = ( { projects, isSearchActive }: ProjectsProps ) => {
 				
 				</SortableContext>
 			</DndContext>
+			
+			<Modal id={ popupID } className={ modals.editProject } title={ t('modals.editProject.title') }
+				   animation={ 'center' }>
+				<ModalProject mode="edit" project={ project }/>
+			</Modal>
 		</>
 	
 	);

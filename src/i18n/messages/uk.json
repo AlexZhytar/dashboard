@@ -47,19 +47,35 @@
     "filters": "Фільтри",
     "save": "Зберегти",
     "reset": "Скинути",
-    "cancel": "Скасувати"
+    "cancel": "Скасувати",
+    "submit": "Відправити",
+    "createProject": "Створити проєкт",
+    "createToDo": "Створити завдання",
+    "todoList": "Список завдань",
+    "editProject": "Редагувати проєкт",
+    "deleteProject": "Видалити проєкт"
   },
   "modals": {
     "newProject": {
+      "title": "Новий проєкт",
       "labels": {
         "projectName": "Назва проєкту",
         "accentColor": "Акцентний колір",
         "assignee": "Відповідальний",
         "approved": "Затверджені години (год)",
         "monthly": "Місячний план (год)",
+        "tracked": "Відстежені години",
         "everhour": "Everhour ID",
         "clickUpLink": "Посилання на ClickUp (список проєктів)",
         "links": "Посилання"
+      },
+      "placeholders": {
+        "projectName": "приклад: Martal",
+        "approved": "наприклад, 120",
+        "monthly": "наприклад, 40",
+        "everhour": "90040100096",
+        "clickUpLink": "https://app.clickup.com/4586252/v/l/li/901212678550",
+        "links": "Вставте посилання тут"
       }
     },
     "settings": {
@@ -97,6 +113,9 @@
       },
       "addToDoButton": "Додати завдання",
       "noToDos": "Завдань немає"
+    },
+    "editProject": {
+      "title": "Редагувати проєкт"
     }
   }
 }

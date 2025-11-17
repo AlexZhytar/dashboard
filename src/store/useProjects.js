@@ -84,7 +84,7 @@ export const useProjectsStore = create(
             updated = true;
           }
           else {
-            const keysToCheck = ['label', 'color', 'confirmed_hours', 'months_hours', 'tracked_hours', 'deadline_at', 'manager', 'links'];
+            const keysToCheck = ['label', 'color', 'confirmed_hours', 'months_hours', 'tracked_hours', 'deadline_at', 'managers', 'links', 'everhour'];
             let changed = false;
             for ( const key of keysToCheck ) {
               if ( JSON.stringify( exist[key] ) !== JSON.stringify( def[key] ) ) {

@@ -5,10 +5,9 @@ import Container from '../layout/Container';
 import style from './projects.module.scss';
 import modals from '../Modals/modal.module.scss';
 import ProjectsHead from './ProjectsHead';
-import ProjectsList from './ProjectsList';
+import ProjectsList, { ProjectsListType } from './ProjectsList';
 import { projectsDefault } from "@/constants";
 import { useProjectsStore } from '@/store';
-import type { ProjectsList as ProjectType } from './ProjectsList/types';
 import ProjectsSettings from './ProjectsSettings';
 import ProjectsSearch from './ProjectsSearch';
 import { Modal } from "@/components/Modals";
@@ -39,7 +38,7 @@ const Projects = () => {
 	
 	const filteredProjects = useMemo(() => {
 		if ( !search.trim() ) return projectData.projects;
-		return projectData.projects.filter(( project: ProjectType ) =>
+		return projectData.projects.filter(( project: ProjectsListType ) =>
 			project.label.toLowerCase().includes(search.toLowerCase())
 		);
 	}, [ search, projectData.projects ]);

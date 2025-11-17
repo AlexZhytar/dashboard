@@ -1,7 +1,7 @@
 "use client";
 
 import { Button } from "@/components/UI";
-import { Modal, ModalAddProject } from '@/components/Modals';
+import { Modal, ModalProject } from '@/components/Modals';
 import { useUserStore } from '@/store';
 import { PlusCircleIcon } from "@/components/Icons";
 import style from './header.module.scss';
@@ -22,8 +22,8 @@ const HeaderAddProject = () => {
 		</Button>
 		<Modal animation={ 'center' }
 			   id="modal-add-project"
-			   title='New Project'>
-			<ModalAddProject/>
+			   title={ t("modals.newProject.title") }>
+			<ModalProject mode="create"/>
 		</Modal>
 	</>);
 }
