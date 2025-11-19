@@ -1,40 +1,49 @@
 export const API_BASE_URL = "https://dashboard-backend.testsofts.com";
 
+const getUrl = ( path: string ): string => {
+	return `${ API_BASE_URL }/api${ path }`;
+};
+
 export const api = {
-	// GET requests
-	getUrl: ( path: string ) => {
-		return `${ API_BASE_URL }/api${ path }`;
-	},
-	login: (): string => {
-		return api.getUrl('/employee/login');
-	},
-	getProfile: (): string => {
-		return api.getUrl('/employee/profile');
-	},
-	getManagers: (): string => {
-		return api.getUrl('/management/employees');
-	},
-	getUserProjects: ( manager_id: { manager_id: number } ) => {
-		return api.getUrl(`/management/projects?&employee_id=${ manager_id }`);
-	},
-	getProjectTodos: ( project_id: { project_id: number } ) => {
-		return api.getUrl(`/management/projects_todos?project_id=${ project_id }`);
-	},
-	getUserProjectTodos: ( project_id: { project_id: number }, manager_id: { manager_id: number } ) => {
-		return api.getUrl(`/management/projects_todos?project_id=${ project_id }&employee_id=${ manager_id }`);
+	// Auth / user
+	login: (): string => getUrl("/employee/login"),
+	
+	getProfile: (): string => getUrl("/employee/profile"),
+	
+	// Employees / managers
+	getManagers: (): string => getUrl("/management/employees"),
+	
+	// Projects
+	getUserProjects: ( employeeId: number ): string => {
+		return getUrl(`/management/projects?employee_id=${ employeeId }`);
 	},
 	
-	// POST requests
+	// Todos
+	getProjectTodos: ( projectId: number ): string => {
+		return getUrl(`/management/projects_todos?project_id=${ projectId }`);
+	},
+	
+	getUserProjectTodos: ( projectId: number, employeeId: number ): string => {
+		return getUrl(
+			`/management/projects_todos?project_id=${ projectId }&employee_id=${ employeeId }`
+		);
+	},
+	
+	// Project mutations
 	createProject: (): string => {
-		return api.getUrl('/management/projects/create');
+		return getUrl("/management/projects/create");
 	},
-	updateProject: ( project_id: { project_id: number } ) => {
-		return api.getUrl(`/management/projects/update/${ project_id }`);
+	
+	updateProject: ( projectId: number ): string => {
+		return getUrl(`/management/projects/update/${ projectId }`);
 	},
-	createProjectTodo: ( id: { id: number } ) => {
-		return api.getUrl(`/management/projects_todos/${ id }/create`);
+	
+	// Todo mutations
+	createProjectTodo: ( projectId: number ): string => {
+		return getUrl(`/management/projects_todos/${ projectId }/create`);
 	},
-	updateProjectTodo: ( project_id: { project_id: number }, todo_id: { todo_id: number } ) => {
-		return api.getUrl(`/management/projects_todos/${ project_id }/update/${ todo_id }`);
+	
+	updateProjectTodo: ( projectId: number, todoId: number ): string => {
+		return getUrl(`/management/projects_todos/${ projectId }/update/${ todoId }`);
 	}
-}
+};
