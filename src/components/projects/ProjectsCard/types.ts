@@ -10,12 +10,22 @@ export type ManagerCard = {
 	id: number;
 }
 
+export type Todos = {
+	id: number;
+	timestamp: number;
+	completed: boolean;
+	pinned: boolean
+	text: string;
+	label: string;
+}
+
 export type PropsCard = {
 	project_id: string;
 	project: string;
 	color: string;
 	managers: ManagerCard[];
 	links: LinkCard[];
+	todos?: Todos[];
 	confirmed_hours: number,
 	months_hours: number,
 	tracked_hours: number,

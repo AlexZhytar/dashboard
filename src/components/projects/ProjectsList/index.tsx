@@ -11,7 +11,7 @@ import { Modal, ModalProject } from "@/components/Modals";
 import modals from "@/components/Modals/modal.module.scss";
 import React, { ReactNode, useState } from "react";
 import { useUserStore } from "@/store";
-import { LinkCard, ManagerCard } from "../ProjectsCard/types"
+import { LinkCard, ManagerCard, Todos } from "../ProjectsCard/types"
 
 export type DraggableBlockProps = {
 	id: string | number;
@@ -27,7 +27,8 @@ export type ProjectsListType = {
 	months_hours: number,
 	tracked_hours: number,
 	links: LinkCard[],
-	managers: ManagerCard[]
+	managers: ManagerCard[],
+	todos: Todos[],
 }
 
 export type ProjectsProps = {
@@ -126,6 +127,7 @@ const ProjectsList = ( { projects, isSearchActive }: ProjectsProps ) => {
 										tracked_hours={ item.tracked_hours }
 										confirmed_hours={ item.confirmed_hours }
 										months_hours={ item.months_hours }
+										todos={ item.todos }
 										callbacks={ getProjectID }
 									/>
 								</DraggableBlock>
@@ -137,7 +139,9 @@ const ProjectsList = ( { projects, isSearchActive }: ProjectsProps ) => {
 				</SortableContext>
 			</DndContext>
 			
-			<Modal id={ popupID } className={ modals.editProject } title={ t('modals.editProject.title') }
+			<Modal id={ popupID }
+				   className={ modals.editProject }
+				   title={ t('modals.editProject.title') }
 				   animation={ 'center' }>
 				<ModalProject mode="edit" project={ project }/>
 			</Modal>

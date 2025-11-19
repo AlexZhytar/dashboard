@@ -15,6 +15,9 @@ import { FilterIcon } from "@/components/Icons/FilterIcon";
 import { TableCogIcon } from "@/components/Icons/TableCogIcon";
 import { DotsIcon } from "@/components/Icons/DotsIcon";
 import { RemoveIcon } from "@/components/Icons/RemoveIcon";
+import { TextLeftIcon } from "@/components/Icons/TextLeftIcon";
+import { PinIcon } from "@/components/Icons/PinIcon";
+import { FlagIcon } from "@/components/Icons/FlagIcon";
 
 export {
 	CalendarIcon,
@@ -33,5 +36,8 @@ export {
 	FilterIcon,
 	TableCogIcon,
 	DotsIcon,
-	RemoveIcon
+	RemoveIcon,
+	TextLeftIcon,
+	PinIcon,
+	FlagIcon
 }

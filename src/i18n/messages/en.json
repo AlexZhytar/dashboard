@@ -53,7 +53,10 @@
     "createToDo": "Create To Do",
     "todoList": "To-Do List",
     "editProject": "Edit Project",
-    "deleteProject": "Delete Project"
+    "deleteProject": "Delete Project",
+    "today": "Today",
+    "tomorrow": "Tomorrow",
+    "noToDos": "No To-Dos available"
   },
   "modals": {
     "newProject": {

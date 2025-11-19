@@ -20,6 +20,48 @@ export const projectsDefault = {
         { url: '/', icon: '/icon/google-drive.svg', label: "Leads" },
         { url: '/', icon: '/icon/excel.svg', label: "Sheet" },
       ],
+      todos: [
+        {
+          id: 2,
+          timestamp: 1763596800000,
+          completed: false,
+          pinned: false,
+          label: "Set up project management tools",
+          text: "Configure ClickUp for task tracking and team collaboration."
+        },
+        {
+          id: 3,
+          timestamp: 1766448000000,
+          completed: false,
+          pinned: true,
+          label: "Prepare initial project documentation",
+          text: ""
+        },
+        {
+          id: 11,
+          timestamp: 1763510400000,
+          completed: false,
+          pinned: true,
+          label: "Create a comprehensive project brief outlining objectives, scope, and deliverables. Create a comprehensive project brief outlining objectives, scope, and deliverables.",
+          text: "Create a comprehensive project brief outlining objectives, scope, and deliverables."
+        },
+        {
+          id: 12,
+          timestamp: 1763510400000,
+          completed: false,
+          pinned: false,
+          label: "Create a comprehensive project brief outlining objectives, scope, and deliverables. Create a comprehensive project brief outlining objectives, scope, and deliverables.",
+          text: "Create a comprehensive project brief outlining objectives, scope, and deliverables."
+        },
+        {
+          id: 15,
+          timestamp: 1763510400000,
+          completed: false,
+          pinned: false,
+          label: "Create a comprehensive project brief outlining objectives, scope, and deliverables. Create a comprehensive project brief outlining objectives, scope, and deliverables.",
+          text: "Create a comprehensive project brief outlining objectives, scope, and deliverables."
+        },
+      ]
     },
     {
       label: 'Elengroup',
@@ -39,6 +81,7 @@ export const projectsDefault = {
         { url: '/', icon: '/icon/clickup.svg', label: "Clickup" },
         { url: '/', icon: '/icon/telegram.svg', label: "Chat" },
       ],
+      todos: []
     },
     {
       label: 'Dewalt',
@@ -56,6 +99,32 @@ export const projectsDefault = {
       links: [
         { url: '/', icon: '/icon/clickup.svg', label: "Clickup" },
       ],
+      todos: [
+        {
+          id: 2,
+          timestamp: 1763596800000,
+          completed: false,
+          pinned: true,
+          label: "Set up project management tools",
+          text: "Configure ClickUp for task tracking and team collaboration."
+        },
+        {
+          id: 3,
+          timestamp: 1766448000000,
+          completed: false,
+          pinned: true,
+          label: "Prepare initial project documentation",
+          text: ""
+        },
+        {
+          id: 15,
+          timestamp: 1763510400000,
+          completed: false,
+          pinned: true,
+          label: "Create a comprehensive project brief outlining objectives, scope, and deliverables. Create a comprehensive project brief outlining objectives, scope, and deliverables.",
+          text: "Create a comprehensive project brief outlining objectives, scope, and deliverables."
+        },
+      ]
     },
     {
       label: 'Prostir',

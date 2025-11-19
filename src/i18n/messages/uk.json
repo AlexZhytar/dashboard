@@ -53,7 +53,10 @@
     "createToDo": "Створити завдання",
     "todoList": "Список завдань",
     "editProject": "Редагувати проєкт",
-    "deleteProject": "Видалити проєкт"
+    "deleteProject": "Видалити проєкт",
+    "today": "Сьогодні",
+    "tomorrow": "Завтра",
+    "noToDos": "Завдань немає"
   },
   "modals": {
     "newProject": {
