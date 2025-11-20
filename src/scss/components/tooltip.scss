@@ -1,14 +1,15 @@
 @use "../../scss/utils/const" as *;
 
 .tooltip {
-  background: var(--color-bg-inverse) !important;
-  color: var(--color-text-inverse) !important;
+  background: var(--color-bg-soft) !important;
+  color: var(--color-text-primary) !important;
   font-size: 1.2rem !important;
   font-weight: $fw-medium !important;
   padding: .6rem 1rem !important;
   letter-spacing: .325px;
-  z-index: 10 !important;
-  box-shadow: 4px 0px 10px rgba(0, 0, 0, 0.1) !important;
+  z-index: 100 !important;
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.08) !important;
+  pointer-events: auto !important;
 }
 
 .react-tooltip__show {

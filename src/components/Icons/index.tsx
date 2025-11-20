@@ -18,6 +18,7 @@ import { RemoveIcon } from "@/components/Icons/RemoveIcon";
 import { TextLeftIcon } from "@/components/Icons/TextLeftIcon";
 import { PinIcon } from "@/components/Icons/PinIcon";
 import { FlagIcon } from "@/components/Icons/FlagIcon";
+import { PencilIcon } from "@/components/Icons/PencilIcon";
 
 export {
 	CalendarIcon,
@@ -39,5 +40,6 @@ export {
 	RemoveIcon,
 	TextLeftIcon,
 	PinIcon,
-	FlagIcon
+	FlagIcon,
+	PencilIcon
 }

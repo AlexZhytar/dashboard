@@ -119,6 +119,14 @@
     },
     "editProject": {
       "title": "Edit Project"
+    },
+    "deleteProject": {
+      "title": "Delete Project",
+      "message": "To confirm the removal of the project, <br/> please type in the field below:",
+      "confirmButton": "Confirm",
+      "cancelButton": "Cancel",
+      "inputPlaceholder": "Enter text to confirm",
+      "confirmText": "DELETE"
     }
   }
 }

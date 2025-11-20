@@ -19,6 +19,11 @@ export type Todos = {
 	label: string;
 }
 
+export interface CallbackPayload {
+	modalType: string;
+	project_id: string;
+}
+
 export type PropsCard = {
 	project_id: string;
 	project: string;
@@ -29,5 +34,5 @@ export type PropsCard = {
 	confirmed_hours: number,
 	months_hours: number,
 	tracked_hours: number,
-	callbacks?: ( projectId: string ) => void;
+	callbacks?: ( payload: CallbackPayload ) => void;
 }

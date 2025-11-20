@@ -1,4 +1,6 @@
-import React, { useState } from 'react';
+"use client";
+
+import React, { useEffect, useRef, useState } from 'react';
 import style from '../projects.module.scss';
 import { PropsCard, Todos } from './types';
 import ProjectCardLinks from './ProjectCardLinks';
@@ -6,12 +8,17 @@ import ProjectCardManager from './ProjectCardManager';
 import ProjectCardHours from "@/components/projects/ProjectsCard/ProjectCardHours";
 import { useProjectsStore, useUserStore } from "@/store";
 import { Button } from "@/components/UI";
-import { DotsIcon, PlusIcon, RemoveIcon } from "@/components/Icons";
+import { DotsIcon, PencilIcon, PlusIcon, RemoveIcon } from "@/components/Icons";
 import { ListIcon } from "@/components/Icons/List";
 import { Tooltip } from "react-tooltip";
 import { useTranslations } from "next-intl";
 import ToDoCard from "@/components/toDo/ToDoCard";
 import { useUuid } from "@/hooks";
+
+interface CardCallbacks {
+	modalType: string;
+	project_id: string;
+}
 
 const ProjectCard: React.FC<PropsCard> = ( {
 	project_id,
@@ -27,22 +34,36 @@ const ProjectCard: React.FC<PropsCard> = ( {
 } ) => {
 	const { filters } = useProjectsStore();
 	const { setModalID } = useUserStore();
-	const [ moreList, setMoreList ] = useState(false);
 	const t = useTranslations();
-	const uuID = useUuid();
+	const [ isOpen, setIsOpen ] = useState(false);
+	const wrapperRef = useRef<HTMLDivElement>(null);
+	const { uuid } = useUuid();
 	
 	const editProject = ( e: React.MouseEvent<HTMLButtonElement, MouseEvent>, ) => {
 		const id = e.currentTarget.dataset.projectId || '';
-		setMoreList(false);
+		const modalType = e.currentTarget.dataset.modalType || '';
 		
-		if ( callbacks ) {
-			callbacks(id);
-		}
+		setIsOpen(false);
+		
+		callbacks?.({
+			modalType,
+			project_id: id
+		});
 	}
 	
-	const toggleMoreList = () => {
-		setMoreList(!moreList);
-	}
+	useEffect(() => {
+		const handleClickOutside = ( e: MouseEvent ) => {
+			if ( wrapperRef.current && !wrapperRef.current.contains(e.target as Node) ) {
+				setIsOpen(false);
+			}
+		};
+		
+		document.addEventListener("mousedown", handleClickOutside);
+		
+		return () => {
+			document.removeEventListener("mousedown", handleClickOutside);
+		};
+	}, []);
 	
 	const todoEmpty = () => {
 		return (
@@ -100,7 +121,7 @@ const ProjectCard: React.FC<PropsCard> = ( {
 	
 	return (
 		<>
-			<div className={ style.projects_card }>
+			<div className={ style.projects_card } onMouseLeave={ () => setIsOpen(false) }>
 				<div className={ style.projects_card_color }
 					 style={ { backgroundColor: !color || color === '' ? 'var(--color-green)' : color } }/>
 				<div className={ style.project }>
@@ -208,32 +229,42 @@ const ProjectCard: React.FC<PropsCard> = ( {
 							</Tooltip>
 						</Button>
 						
-						<div className={ style.actions_block_more }>
+						<div className={ style.actions_block_more } ref={ wrapperRef }>
 							<Button type={ 'button' }
-									onClick={ toggleMoreList }
-									className={ `${ style.btnMore } ${ moreList ? style.btnMore_active : '' }` }
+									id={ `list-${ uuid }` }
+									onMouseEnter={ () => setIsOpen(true) }
+									className={ `${ style.btnMore } ` }
 									variant={ 'secondary' }>
 								<DotsIcon/>
 							</Button>
-							{
-								moreList && (
-									<div className={ style.moreList }>
-										<Button type={ 'button' }
-												className={ `${ style.moreList_remove }` }
-												data-project-id={ project_id }
-												variant={ 'clear' }>
-											<RemoveIcon/>
-										</Button>
-										<Button type={ 'button' }
-												className={ `${ style.moreList_edit }` }
-												data-project-id={ project_id }
-												onClick={ e => editProject(e) }
-												variant={ 'clear' }>
-											<span>{ t("uiText.editProject") }</span>
-										</Button>
-									</div>
-								)
-							}
+							
+							<Tooltip anchorSelect={ `#list-${ uuid }` }
+									 className={ `tooltip` }
+									 offset={ 2 }
+									 isOpen={ isOpen }
+									 place={ "left" }>
+								<div className={ style.moreList }>
+									<Button type={ 'button' }
+											className={ `${ style.moreList_remove }` }
+											data-project-id={ project_id }
+											data-modal-type={ 'delete' }
+											onClick={ e => editProject(e) }
+											variant={ 'secondary' }>
+										<RemoveIcon size={ 14 }/>
+										<span>{ t("uiText.deleteProject") }</span>
+									</Button>
+									<Button type={ 'button' }
+											className={ `${ style.moreList_edit }` }
+											data-project-id={ project_id }
+											data-modal-type={ 'edit' }
+											onClick={ e => editProject(e) }
+											variant={ 'primary' }>
+										<PencilIcon size={ 14 }/>
+										<span>{ t("uiText.editProject") }</span>
+									</Button>
+								</div>
+							</Tooltip>
+						
 						</div>
 					</div>
 				</div>

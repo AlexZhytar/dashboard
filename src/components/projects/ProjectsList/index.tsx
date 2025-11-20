@@ -11,7 +11,8 @@ import { Modal, ModalProject } from "@/components/Modals";
 import modals from "@/components/Modals/modal.module.scss";
 import React, { ReactNode, useState } from "react";
 import { useUserStore } from "@/store";
-import { LinkCard, ManagerCard, Todos } from "../ProjectsCard/types"
+import { CallbackPayload, LinkCard, ManagerCard, Todos } from "../ProjectsCard/types"
+import ModalRemoveProject from "@/components/Modals/ModalRemoveProject";
 
 export type DraggableBlockProps = {
 	id: string | number;
@@ -29,6 +30,7 @@ export type ProjectsListType = {
 	links: LinkCard[],
 	managers: ManagerCard[],
 	todos: Todos[],
+	callbacks?: CallbackPayload;
 }
 
 export type ProjectsProps = {
@@ -71,8 +73,8 @@ const ProjectsList = ( { projects, isSearchActive }: ProjectsProps ) => {
 	const { reorderProjects } = useProjectsStore();
 	const { setModalID, modalID } = useUserStore();
 	const t = useTranslations();
-	const [ popupID, setPopupID ] = useState<string>('');
 	const [ project, setProject ] = useState([] as any);
+	const [ modalState, setModalState ] = useState({} as CallbackPayload);
 	
 	const handleDragEnd = ( event: DragEndEvent ) => {
 		const { active, over } = event;
@@ -90,13 +92,21 @@ const ProjectsList = ( { projects, isSearchActive }: ProjectsProps ) => {
 		reorderProjects(newOrder.map(card => card.id));
 	};
 	
-	const getProjectID = ( e: string ) => {
-		if ( !e ) return;
-		setPopupID(e);
-		const projectID = projects.find(project => project.id === e);
-		setProject(projectID);
-		setModalID(e);
-	}
+	const handleProjectAction = ( action: CallbackPayload ) => {
+		if ( !action ) return;
+		
+		setModalState(action);
+		
+		const project = projects.find(
+			p => p.id === action.project_id
+		);
+		
+		if ( project ) {
+			setProject(project);
+		}
+		
+		setModalID(`${ action.modalType }-${ action.project_id }`);
+	};
 	
 	return (
 		<>
@@ -128,7 +138,7 @@ const ProjectsList = ( { projects, isSearchActive }: ProjectsProps ) => {
 										confirmed_hours={ item.confirmed_hours }
 										months_hours={ item.months_hours }
 										todos={ item.todos }
-										callbacks={ getProjectID }
+										callbacks={ handleProjectAction }
 									/>
 								</DraggableBlock>
 							)
@@ -139,11 +149,18 @@ const ProjectsList = ( { projects, isSearchActive }: ProjectsProps ) => {
 				</SortableContext>
 			</DndContext>
 			
-			<Modal id={ popupID }
+			<Modal id={ `edit-${ modalState.project_id }` }
 				   className={ modals.editProject }
 				   title={ t('modals.editProject.title') }
 				   animation={ 'center' }>
 				<ModalProject mode="edit" project={ project }/>
+			</Modal>
+			
+			<Modal id={ `delete-${ modalState.project_id }` }
+				   className={ modals.removeProject }
+				   title={ t('modals.deleteProject.title') }
+				   animation={ 'center' }>
+				<ModalRemoveProject project_name={ project.label }/>
 			</Modal>
 		</>
 	
