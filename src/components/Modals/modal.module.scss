@@ -244,6 +244,15 @@
       }
     }
   }
+  
+  &.modalUser {
+    .modal_close {
+      &::before, &::after {
+        background-color: var(--color-static-white);
+      }
+    }
+    
+  }
 }
 
 .field {

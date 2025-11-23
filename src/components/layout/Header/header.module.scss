@@ -1,6 +1,12 @@
 @use "../../../scss/utils/const" as *;
 @use "../../../scss/utils/mixin" as *;
 
+@property --angle {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+
 .header {
   width: 100%;
   background-color: var(--color-bg-surface);
@@ -51,12 +57,6 @@
           opacity: 0;
           transition: opacity $transition-time;
         }
-        
-        // &.active {
-        //     &::after {
-        //         opacity: 1;
-        //     }
-        // }
       }
     }
   }
@@ -64,23 +64,93 @@
   &_actions {
     display: flex;
     margin-left: auto;
-    gap: 1.2rem;
+    gap: 3.2rem;
     align-items: center;
+    position: relative;
+    
+    &::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      width: 100%;
+      height: .1rem;
+      background-color: var(--color-border-default);
+      top: 50%;
+      translate: 0 -50%;
+      z-index: 0;
+    }
     
     .lang {
-      padding: 0 1.2rem;
-      border-left: 1px solid var(--color-border-default);
-      margin-right: 6rem;
+      z-index: 1;
+      position: relative;
     }
     
     .addProject {
-      min-height: 3.2rem;
+      min-height: 3.6rem;
       padding: 0 1.6rem;
       gap: .4rem;
+      position: relative;
+      z-index: 1;
+      
+      &::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        border-radius: .2rem;
+        background: var(--color-bg-surface);
+        z-index: 1;
+        transition: all $transition-time;
+      }
+      
+      @media (hover: hover) {
+        &:hover {
+          &::before {
+            background-color: var(--color-gray-600);
+          }
+        }
+      }
+      
+      &_border {
+        position: absolute;
+        height: 100%;
+        width: 100%;
+        border-radius: 0;
+        top: 50%;
+        left: 50%;
+        translate: -50% -50%;
+        z-index: 0;
+        
+        &::after, &::before {
+          content: "";
+          position: absolute;
+          height: calc(100% + .2rem);
+          width: calc(100% + .2rem);
+          padding: 3px;
+          border-radius: .4rem;
+          top: 50%;
+          left: 50%;
+          translate: -50% -50%;
+          background-image: conic-gradient(from var(--angle), red, blue, green, pink, yellow, aqua, red);
+          animation: 5s rotate linear infinite;
+        }
+        
+        &::before {
+          opacity: .5;
+          
+          [data-theme="dark"] & {
+            filter: blur(5px);
+          }
+        }
+      }
       
       .icon {
         fill: transparent;
         stroke: var(--color-gray-100);
+        position: relative;
+        z-index: 2;
       }
     }
     
@@ -89,15 +159,76 @@
       border-radius: 50%;
       width: 3.2rem;
       min-height: 3.2rem;
+      height: 3.2rem;
+      border-width: 0;
       border-color: var(--color-border-strong);
       background-color: var(--color-bg-soft);
       position: relative;
-      overflow: hidden;
+      z-index: 2;
+      
+      &_border {
+        position: absolute;
+        height: 100%;
+        width: 100%;
+        border-radius: 50%;
+        top: 50%;
+        left: 50%;
+        translate: -50% -50%;
+        z-index: 0;
+        
+        &::after, &::before {
+          content: "";
+          position: absolute;
+          height: calc(100% + .2rem);
+          width: calc(100% + .2rem);
+          padding: 3px;
+          border-radius: 20px;
+          top: 50%;
+          left: 50%;
+          translate: -50% -50%;
+          background-image: conic-gradient(from var(--angle), red, blue, green, pink, yellow, aqua, red);
+          animation: 5s rotate linear infinite;
+        }
+        
+        &::before {
+          opacity: 0.5;
+          
+          [data-theme="dark"] & {
+            filter: blur(5px);
+          }
+        }
+      }
       
       span {
+        background-color: var(--color-bg-soft);
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
         font-size: 1.2rem;
         font-weight: $fw-semiBold;
+        z-index: 1;
+        transition: all $transition-time;
+      }
+      
+      @media (hover: hover) {
+        &:hover {
+          span {
+            background-color: var(--color-gray-500);
+          }
+        }
       }
     }
+  }
+}
+
+@keyframes rotate {
+  from {
+    --angle: 0deg;
+  }
+  to {
+    --angle: 360deg;
   }
 }

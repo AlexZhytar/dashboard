@@ -10,10 +10,8 @@ import { projectsDefault } from "@/constants";
 import { useProjectsStore } from '@/store';
 import ProjectsSettings from './ProjectsSettings';
 import ProjectsSearch from './ProjectsSearch';
-import { Modal } from "@/components/Modals";
-import ModalAddToDo from "@/components/Modals/ModalAddToDo";
+import { Modal, ModalToDo, ModalToDoList } from "@/components/Modals";
 import { useTranslations } from "next-intl";
-import ModalToDoList from "@/components/Modals/ModalToDoList";
 
 const Projects = () => {
 	const {
@@ -56,7 +54,7 @@ const Projects = () => {
 			</Container>
 			
 			<Modal id={ 'addToDO' } title={ t('modals.addToDo.title') } animation={ 'center' }>
-				<ModalAddToDo/>
+				<ModalToDo/>
 			</Modal>
 			
 			<Modal id={ 'toDoList' } className={ modals.todoList } title={ t('modals.toDoList.title') }

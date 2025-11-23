@@ -56,7 +56,10 @@
     "deleteProject": "Delete Project",
     "today": "Today",
     "tomorrow": "Tomorrow",
-    "noToDos": "No To-Dos available"
+    "noToDos": "No To-Dos available",
+    "account": "Account",
+    "logout": "Logout",
+    "profile": "Profile"
   },
   "modals": {
     "newProject": {

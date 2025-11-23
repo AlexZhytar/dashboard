@@ -56,7 +56,10 @@
     "deleteProject": "Видалити проєкт",
     "today": "Сьогодні",
     "tomorrow": "Завтра",
-    "noToDos": "Завдань немає"
+    "noToDos": "Завдань немає",
+    "account": "Обліковий запис",
+    "logout": "Вийти",
+    "profile": "Профіль"
   },
   "modals": {
     "newProject": {

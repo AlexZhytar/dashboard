@@ -8,9 +8,17 @@
   border-radius: 3rem;
   background-color: var(--color-bg-soft);
   position: relative;
+  z-index: 2;
+  transition: background-color $transition-time, border-color $transition-time;
   @include mediaMax(t) {
     width: 4.4rem;
     height: 2.8rem;
+  }
+  
+  @media (hover: hover) {
+    &:hover {
+      background-color: var(--color-gray-500);
+    }
   }
   
   span {
@@ -20,7 +28,7 @@
     width: 2.8rem;
     height: 2.8rem;
     border-radius: 50%;
-    background-color: var(--color-primary);
+    background-color: var(--color-blue);
     position: absolute;
     top: 50%;
     left: .2rem;

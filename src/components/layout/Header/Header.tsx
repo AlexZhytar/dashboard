@@ -7,6 +7,7 @@ import HeaderAccount from "./HeaderAccount";
 import { DashboardIcon } from "@/components/Icons";
 import LocaleSwitcher from "../LocaleSwitcher";
 import ThemeSwitcher from "../ThemeSwitcher";
+import React from "react";
 
 const menu = [
 	{ title: "Dashboard", href: '/' }
@@ -24,9 +25,9 @@ const Header = () => {
 						<HeaderMenu menu={ menu }/>
 					</div>
 					<div className={ style.header_actions }>
+						<HeaderAddProject/>
 						<ThemeSwitcher/>
 						<LocaleSwitcher className={ style.lang }/>
-						<HeaderAddProject/>
 						<HeaderAccount/>
 					</div>
 				</div>

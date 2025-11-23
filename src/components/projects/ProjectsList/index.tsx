@@ -7,12 +7,11 @@ import { useProjectsStore } from '@/store/useProjects';
 import { NoResultsIcon } from "@/components/Icons";
 import { useTranslations } from "next-intl";
 import ProjectCard from "../ProjectsCard";
-import { Modal, ModalProject } from "@/components/Modals";
+import { Modal, ModalProject, ModalRemoveProject } from "@/components/Modals";
 import modals from "@/components/Modals/modal.module.scss";
 import React, { ReactNode, useState } from "react";
 import { useUserStore } from "@/store";
 import { CallbackPayload, LinkCard, ManagerCard, Todos } from "../ProjectsCard/types"
-import ModalRemoveProject from "@/components/Modals/ModalRemoveProject";
 
 export type DraggableBlockProps = {
 	id: string | number;

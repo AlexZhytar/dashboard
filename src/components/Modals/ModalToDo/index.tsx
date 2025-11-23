@@ -20,7 +20,7 @@ const isSameDay = ( a?: Date, b?: Date ) => {
 	return startOfDay(a).getTime() === startOfDay(b).getTime();
 };
 
-const ModalAddToDo = () => {
+const ModalToDo = () => {
 	const localeCode = useLocale();
 	const t = useTranslations();
 	const { setModalID } = useUserStore();
@@ -170,4 +170,4 @@ const ModalAddToDo = () => {
 	);
 };
 
-export default ModalAddToDo;
+export default ModalToDo;

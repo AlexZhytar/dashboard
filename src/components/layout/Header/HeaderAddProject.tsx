@@ -6,6 +6,7 @@ import { useUserStore } from '@/store';
 import { PlusCircleIcon } from "@/components/Icons";
 import style from './header.module.scss';
 import { useTranslations } from "next-intl";
+import React from "react";
 
 const HeaderAddProject = () => {
 	const { setModalID } = useUserStore();
@@ -17,8 +18,9 @@ const HeaderAddProject = () => {
 				data-modal-id={ 'modal-add-project' }
 				onClick={ e => setModalID(e.currentTarget.dataset.modalId) }
 		>
+			<div className={ style.addProject_border }></div>
 			<PlusCircleIcon size={ 14 } className={ style.icon }/>
-			{ t("header.buttonAddProject") }
+			<span>{ t("header.buttonAddProject") }</span>
 		</Button>
 		<Modal animation={ 'center' }
 			   id="modal-add-project"

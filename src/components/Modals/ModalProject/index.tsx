@@ -62,8 +62,6 @@ const ModalProject = ( { project, mode }: ModalProjectProps ) => {
 	const { managers, loadManagers } = useManagers();
 	const t = useTranslations();
 	
-	console.log(managers)
-	
 	const rawManagers = managers;
 	const assignedManagers: managersType = Array.isArray(rawManagers)
 		? rawManagers

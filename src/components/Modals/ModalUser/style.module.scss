@@ -1,0 +1,90 @@
+@use "../../../scss/utils/mixin" as *;
+@use "../../../scss/utils/const" as *;
+
+.userContent {
+  width: 100%;
+  overflow-y: auto;
+  @include vh-height(max, 8.1rem);
+  
+  .userInfo {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: .6rem;
+    padding: 3rem 0;
+    position: relative;
+    
+    .background {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      border-radius: 0;
+      overflow: hidden;
+      
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        filter: blur(3px) brightness(0.7);
+        transform: scale(1.1);
+      }
+    }
+    
+    .avatar {
+      width: 12rem;
+      height: 12rem;
+      border-radius: 50%;
+      overflow: hidden;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      position: relative;
+      z-index: 1;
+      margin-bottom: 2rem;
+      
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+    }
+    
+    .name {
+      width: 100%;
+      text-align: center;
+      font-size: 2.2rem;
+      line-height: $lh-120;
+      position: relative;
+      z-index: 1;
+      color: var(--color-static-white);
+    }
+    
+    .email {
+      width: 100%;
+      text-align: center;
+      font-size: 1.6rem;
+      line-height: $lh-120;
+      color: var(--color-static-white);
+      opacity: .6;
+      position: relative;
+      z-index: 1;
+    }
+  }
+}
+
+.actions {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  border-top: 1px solid var(--color-border-default);
+  
+  .submit {
+    width: 100%;
+  }
+}
