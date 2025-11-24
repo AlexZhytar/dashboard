@@ -1,6 +1,12 @@
 @use "../../scss/utils/const" as *;
 @use "../../scss/utils/mixin" as *;
 
+@property --angle {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+
 .projects {
   width: 100%;
   background-color: var(--color-bg-subtle);
@@ -344,6 +350,40 @@
       justify-content: flex-end;
     }
     
+    &_border {
+      display: none;
+      position: absolute;
+      height: 100%;
+      width: 100%;
+      border-radius: 50%;
+      top: 50%;
+      left: 50%;
+      translate: -50% -50%;
+      z-index: 0;
+      
+      &::after, &::before {
+        content: "";
+        position: absolute;
+        height: calc(100% + .2rem);
+        width: calc(100% + .2rem);
+        padding: 3px;
+        border-radius: 20px;
+        top: 50%;
+        left: 50%;
+        translate: -50% -50%;
+        background-image: conic-gradient(from var(--angle), red, blue, green, pink, yellow, aqua, red);
+        animation: 5s rotate linear infinite;
+      }
+      
+      &::before {
+        opacity: 0.5;
+        
+        [data-theme="dark"] & {
+          filter: blur(5px);
+        }
+      }
+    }
+    
     &_user {
       display: inline-flex;
       align-items: center;
@@ -351,15 +391,16 @@
       width: 3.4rem;
       height: 3.4rem;
       border-radius: 50%;
-      border: 1px solid var(--color-border-strong);
-      background-color: var(--color-bg-soft);
       position: relative;
       cursor: pointer;
       transition: border-color $transition-time;
       
       &:hover {
-        border-color: var(--color-primary);
         z-index: 2;
+        
+        .pm_border {
+          display: block;
+        }
       }
       
       &:not(&:nth-of-type(1)) {
@@ -367,10 +408,19 @@
       }
       
       span {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
+        width: 100%;
+        z-index: 1;
         font-size: 1.2rem;
         font-weight: $fw-semiBold;
         line-height: 100%;
         margin-top: .1rem;
+        border: 1px solid var(--color-border-strong);
+        background-color: var(--color-bg-soft);
+        border-radius: 50%;
       }
     }
     
@@ -473,5 +523,14 @@
         stroke: var(--color-text-secondary);
       }
     }
+  }
+}
+
+@keyframes rotate {
+  from {
+    --angle: 0deg;
+  }
+  to {
+    --angle: 360deg;
   }
 }

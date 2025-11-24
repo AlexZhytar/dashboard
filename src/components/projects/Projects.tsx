@@ -10,8 +10,9 @@ import { projectsDefault } from "@/constants";
 import { useProjectsStore } from '@/store';
 import ProjectsSettings from './ProjectsSettings';
 import ProjectsSearch from './ProjectsSearch';
-import { Modal, ModalToDo, ModalToDoList } from "@/components/Modals";
+import { Modal, ModalToDo, ModalToDoList, ModalUser } from "@/components/Modals";
 import { useTranslations } from "next-intl";
+import { useManagers } from "@/features/employees";
 
 const Projects = () => {
 	const {
@@ -22,6 +23,7 @@ const Projects = () => {
 	} = useProjectsStore();
 	
 	const t = useTranslations();
+	const { managers } = useManagers();
 	
 	useEffect(() => {
 		if ( !hasHydrated ) return;
@@ -60,6 +62,12 @@ const Projects = () => {
 			<Modal id={ 'toDoList' } className={ modals.todoList } title={ t('modals.toDoList.title') }
 				   animation={ 'right' }>
 				<ModalToDoList/>
+			</Modal>
+			
+			<Modal id={ "modal-pm" }
+				   className={ modals.modalUser }
+				   animation={ "right" }>
+				<ModalUser userInfo={ managers[0] }/>
 			</Modal>
 		</div>
 	);
