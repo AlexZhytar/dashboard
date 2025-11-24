@@ -6,10 +6,26 @@ import Image from "next/image";
 import { useUser } from "@/features/user";
 import { useUserStore } from "@/store";
 
-const ModalUser = () => {
+interface UserList {
+	id: number;
+	first_name: string;
+	last_name: string;
+	email: string;
+	avatar_url: string | null;
+	created_at: string;
+	updated_at: string;
+}
+
+interface ModalUserProps {
+	userInfo: UserList;
+}
+
+const ModalUser = ( { userInfo }: ModalUserProps ) => {
 	const t = useTranslations();
 	const { user } = useUser();
 	const { setModalID } = useUserStore();
+	
+	if ( !userInfo ) return;
 	
 	const handleLogout = async () => {
 		setModalID(null);
@@ -25,12 +41,12 @@ const ModalUser = () => {
 						<Image src="/images/bg-profile.jpg" alt="Background" fill/>
 					</div>
 					<div className={ style.avatar }>
-						<Image src={ user.avatar_url ? user.avatar_url : '/images/no-photo.webp' } width={ 100 }
+						<Image src={ userInfo.avatar_url ? userInfo.avatar_url : '/images/no-photo.webp' } width={ 100 }
 							   height={ 100 }
-							   alt={ `${ user.first_name } ${ user.last_name }` }/>
+							   alt={ `${ userInfo.first_name } ${ userInfo.last_name }` }/>
 					</div>
-					<div className={ style.name }>{ user.first_name } { user.last_name }</div>
-					<div className={ style.email }>{ user.email }</div>
+					<div className={ style.name }>{ userInfo.first_name } { userInfo.last_name }</div>
+					<div className={ style.email }>{ userInfo.email }</div>
 				</div>
 				
 				<div className={ style.userDetails }>

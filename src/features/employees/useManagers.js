@@ -8,7 +8,7 @@ export function useManagers() {
     setLoadManagers( true );
     const fetchManagers = async () => {
       try {
-        const res = await fetch( "/api/user/get-user" );
+        const res = await fetch( "/api/employees/get-managers" );
         
         if ( res.status === 401 ) {
           return;
@@ -16,7 +16,7 @@ export function useManagers() {
         if ( !res.ok ) throw new Error( "Failed to fetch user" );
         
         const data = await res.json();
-        setManagers( data );
+        setManagers( data.data );
         setLoadManagers( false )
         
       } catch (e) {

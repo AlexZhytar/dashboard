@@ -29,7 +29,7 @@ const HeaderAccount = () => {
 			<Modal id={ "modal-user" }
 				   className={ modal.modalUser }
 				   animation={ "right" }>
-				<ModalUser/>
+				<ModalUser userInfo={ user }/>
 			</Modal>
 		</>
 	);
