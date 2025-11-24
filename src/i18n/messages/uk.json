@@ -130,6 +130,9 @@
       "cancelButton": "Скасувати",
       "inputPlaceholder": "Введіть текст для підтвердження",
       "confirmText": "ВИДАЛИТИ"
+    },
+    "user": {
+      "notFound": "Користувача не знайдено"
     }
   }
 }

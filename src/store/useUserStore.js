@@ -1,5 +1,6 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
+import { number } from "motion";
 
 export const useUserStore = create(
   persist(
@@ -24,6 +25,9 @@ export const useUserStore = create(
       
       team: [],
       setTeam: ( team ) => set( { team } ),
+      
+      managerID: number,
+      setManagerID: ( managerID ) => set( { managerID } ),
       
       authEverhour: false,
       setAuthEverhour: ( authEverhour ) => set( { authEverhour } ),

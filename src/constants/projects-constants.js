@@ -11,7 +11,7 @@ export const projectsDefault = {
       deadline_at: 1766620800000,
       created_at: 0,
       managers: [
-        { id: 11, first_name: "Anna", last_name: "Mantrova" }
+        { id: 1, first_name: "Anna", last_name: "Mantrova" }
       ],
       links: [
         { url: '/', icon: '/icon/clickup.svg', label: "Clickup" },

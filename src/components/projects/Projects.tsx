@@ -7,12 +7,15 @@ import modals from '../Modals/modal.module.scss';
 import ProjectsHead from './ProjectsHead';
 import ProjectsList, { ProjectsListType } from './ProjectsList';
 import { projectsDefault } from "@/constants";
-import { useProjectsStore } from '@/store';
+import { useProjectsStore, useUserStore } from '@/store';
 import ProjectsSettings from './ProjectsSettings';
 import ProjectsSearch from './ProjectsSearch';
 import { Modal, ModalToDo, ModalToDoList, ModalUser } from "@/components/Modals";
 import { useTranslations } from "next-intl";
 import { useManagers } from "@/features/employees";
+import { UserList } from "@/components/Modals/ModalUser";
+
+type ManagerArrayType = UserList;
 
 const Projects = () => {
 	const {
@@ -23,7 +26,8 @@ const Projects = () => {
 	} = useProjectsStore();
 	
 	const t = useTranslations();
-	const { managers } = useManagers();
+	const { managers } = useManagers() as { managers: ManagerArrayType[] };
+	const { managerID } = useUserStore();
 	
 	useEffect(() => {
 		if ( !hasHydrated ) return;
@@ -42,6 +46,9 @@ const Projects = () => {
 			project.label.toLowerCase().includes(search.toLowerCase())
 		);
 	}, [ search, projectData.projects ]);
+	
+	const getClickedManager = managers.filter(manager => manager.id === managerID);
+	console.log(getClickedManager)
 	
 	return (
 		<div className={ style.projects }>
@@ -64,10 +71,10 @@ const Projects = () => {
 				<ModalToDoList/>
 			</Modal>
 			
-			<Modal id={ "modal-pm" }
+			<Modal id={ `manager-${ managerID }` }
 				   className={ modals.modalUser }
 				   animation={ "right" }>
-				<ModalUser userInfo={ managers[0] }/>
+				<ModalUser userInfo={ getClickedManager[0] }/>
 			</Modal>
 		</div>
 	);

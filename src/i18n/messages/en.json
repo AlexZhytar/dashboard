@@ -130,6 +130,9 @@
       "cancelButton": "Cancel",
       "inputPlaceholder": "Enter text to confirm",
       "confirmText": "DELETE"
+    },
+    "user": {
+      "notFound": "User not found"
     }
   }
 }

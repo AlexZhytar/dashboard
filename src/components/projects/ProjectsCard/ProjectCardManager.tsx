@@ -9,15 +9,15 @@ import { useUserStore } from "@/store";
 
 const ProjectCardManager = ( { first_name, last_name, id }: ManagerCard ) => {
 	const initials = getInitials(`${ first_name } ${ last_name }`);
-	const { setModalID } = useUserStore();
+	const { setModalID, setManagerID } = useUserStore();
 	
 	const handleClick = ( e: React.MouseEvent<HTMLDivElement, MouseEvent> ) => {
 		e.stopPropagation();
-		setModalID("modal-pm");
+		setManagerID(id);
+		setModalID(`manager-${ id }`);
 	}
 	
-	return <div data-user={ id }
-				id={ `manager-${ id }` }
+	return <div id={ `manager-${ id }` }
 				onClick={ handleClick }
 				className={ style.pm_user }>
 		<div className={ style.pm_border }></div>

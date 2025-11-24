@@ -5,8 +5,9 @@ import { useTranslations } from "next-intl";
 import Image from "next/image";
 import { useUser } from "@/features/user";
 import { useUserStore } from "@/store";
+import { NoResultsIcon } from "@/components/Icons";
 
-interface UserList {
+export interface UserList {
 	id: number;
 	first_name: string;
 	last_name: string;
@@ -25,7 +26,16 @@ const ModalUser = ( { userInfo }: ModalUserProps ) => {
 	const { user } = useUser();
 	const { setModalID } = useUserStore();
 	
-	if ( !userInfo ) return;
+	const noUser = () => {
+		return (<div className={ style.noUser }>
+				<NoResultsIcon size={ 80 }/>
+				<span>{ t("modals.user.notFound") }</span>
+			</div>
+		);
+	}
+	
+	if ( !userInfo ) return noUser();
+	const userProfile = user && user.id === userInfo.id;
 	
 	const handleLogout = async () => {
 		setModalID(null);
@@ -54,13 +64,17 @@ const ModalUser = ( { userInfo }: ModalUserProps ) => {
 				</div>
 			</div>
 			<div className={ style.actions }>
-				<Button
-					onClick={ handleLogout }
-					variant="primary"
-					className={ style.submit }
-				>
-					<span>{ t("uiText.logout") }</span>
-				</Button>
+				{
+					userProfile && (
+						<Button
+							onClick={ handleLogout }
+							variant="primary"
+							className={ style.submit }
+						>
+							<span>{ t("uiText.logout") }</span>
+						</Button>
+					)
+				}
 			</div>
 		</>
 	);
