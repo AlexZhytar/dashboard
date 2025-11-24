@@ -25,6 +25,7 @@ const Header = () => {
 						<HeaderMenu menu={ menu }/>
 					</div>
 					<div className={ style.header_actions }>
+						<div className={ style.header_actions_line }></div>
 						<HeaderAddProject/>
 						<ThemeSwitcher/>
 						<LocaleSwitcher className={ style.lang }/>

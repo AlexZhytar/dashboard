@@ -23,6 +23,51 @@
       height: 100%;
       border-radius: 0;
       overflow: hidden;
+      --stripes: repeating-linear-gradient(
+          100deg,
+          black 0%,
+          black 7%,
+          transparent 10%,
+          transparent 12%,
+          black 16%
+      );
+      
+      --rainbow: repeating-linear-gradient(
+          100deg,
+          var(--color-blue) 5%,
+          var(--color-green) 10%,
+          var(--color-indigo) 15%,
+          var(--color-mint) 20%,
+          var(--color-blue) 30%
+      );
+      
+      &::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-image: var(--stripes), var(--rainbow);
+        background-size: 400%, 200%;
+        background-position: 50% 50%, 50% 50%;
+        filter: blur(20px) brightness(.7);
+        transform: scale(1.5) rotate(-5deg);
+        animation: smoothBg 60s linear infinite;
+      }
+      
+      &::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background-image: var(--stripes), var(--rainbow);
+        background-size: 200%, 100%;
+        animation: smoothBg 60s linear infinite;
+        mask-image: radial-gradient(ellipse at 100% 0%, var(--color-bg-surface) 2%, transparent 100%);
+        transform: scale(1.3) rotate(5deg);
+        filter: blur(20px) brightness(.7);
+        z-index: 1;
+      }
       
       img {
         width: 100%;
@@ -30,6 +75,7 @@
         object-fit: cover;
         filter: blur(3px) brightness(0.7);
         transform: scale(1.1);
+        display: none;
       }
     }
     
@@ -55,6 +101,7 @@
       text-align: center;
       font-size: 2.2rem;
       line-height: $lh-120;
+      font-weight: $fw-semiBold;
       position: relative;
       z-index: 1;
       color: var(--color-static-white);
@@ -63,10 +110,11 @@
     .email {
       width: 100%;
       text-align: center;
-      font-size: 1.6rem;
+      font-size: 1.4rem;
       line-height: $lh-120;
+      font-weight: $fw-light;
       color: var(--color-static-white);
-      opacity: .6;
+      opacity: .7;
       position: relative;
       z-index: 1;
     }
@@ -86,5 +134,14 @@
   
   .submit {
     width: 100%;
+  }
+}
+
+@keyframes smoothBg {
+  from {
+    background-position: 50% 50%, 50% 50%;
+  }
+  to {
+    background-position: 350% 50%, 350% 50%;
   }
 }
