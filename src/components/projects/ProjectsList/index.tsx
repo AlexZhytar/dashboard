@@ -3,6 +3,7 @@
 import style from "../projects.module.scss";
 import { DndContext, DragEndEvent } from "@dnd-kit/core";
 import { arrayMove, SortableContext, useSortable, verticalListSortingStrategy } from "@dnd-kit/sortable";
+import { restrictToParentElement, restrictToVerticalAxis } from "@dnd-kit/modifiers";
 import { useProjectsStore } from '@/store/useProjects';
 import { NoResultsIcon } from "@/components/Icons";
 import { useTranslations } from "next-intl";
@@ -45,8 +46,8 @@ const DraggableBlock = ( { id, children, stateSearch }: DraggableBlockProps ) =>
 	const styleDraggable = {
 		transform: transform
 			? `translate(0px, ${ transform.y }px) scale(1, 1)`
-			: "translate(0px, 0px) scale(1, 1)",
-		transition: transition,
+			: `translate(0px, 0px) scale(1, 1)`,
+		transition,
 		zIndex: isDragging ? 999 : undefined,
 	};
 	return (
@@ -109,7 +110,8 @@ const ProjectsList = ( { projects, isSearchActive }: ProjectsProps ) => {
 	
 	return (
 		<>
-			<DndContext onDragEnd={ handleDragEnd }>
+			<DndContext onDragEnd={ handleDragEnd }
+						modifiers={ [ restrictToVerticalAxis, restrictToParentElement ] }>
 				<SortableContext
 					items={ projects.map(( block ) => block.id.toString()) }
 					strategy={ verticalListSortingStrategy }
