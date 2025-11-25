@@ -30,12 +30,11 @@ const ThemeSwitcher = () => {
 	useEffect(() => {
 		const root = document.documentElement;
 		root.dataset.theme = darkTheme ? "dark" : "light";
-		
 		setCookie("dashboard-theme", darkTheme ? "dark" : "light", 365);
 		setHydrated(true);
 	}, [ darkTheme ]);
 	
-	if ( !hydrated ) return <div className={ style.themeSwitcher }><Preloader size={ 's' }/></div>;
+	if ( !hydrated ) return <div className={ style.themeSwitcher }><Preloader overflow={ false } size={ 's' }/></div>;
 	
 	return (
 		<button

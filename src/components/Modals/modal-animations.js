@@ -18,9 +18,9 @@ export const modalAnimations = {
   
   slideModalCenter() {
     return {
-      initial: { scale: 0 },
+      initial: { scale: 1.2 },
       animate: { scale: 1 },
-      exit: { scale: .5 }
+      exit: { scale: .9 }
     }
   },
   

@@ -8,6 +8,7 @@
   border-radius: 3rem;
   background-color: var(--color-bg-surface);
   position: relative;
+  overflow: hidden;
   z-index: 2;
   border: 1px solid var(--color-border-default);
   transition: background-color $transition-time, border-color $transition-time;

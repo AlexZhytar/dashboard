@@ -27,7 +27,6 @@ const ModalToDoList = () => {
 				</div>
 				
 				<div className={ style.todoList_body }>
-					
 					<div className={ style.todoList_body_empty }>
 						<NoResultsIcon size={ 80 } className={ style.no_results_icon }/>
 						<span>{ t("modals.toDoList.noToDos") }</span>

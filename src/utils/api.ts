@@ -14,16 +14,16 @@ export const api = {
 	getManagers: (): string => getUrl("/management/employees"),
 	
 	// Projects
-	getUserProjects: ( employeeId: number ): string => {
+	getUserProjects: ( employeeId: string ): string => {
 		return getUrl(`/management/projects?employee_id=${ employeeId }`);
 	},
 	
 	// Todos
-	getProjectTodos: ( projectId: number ): string => {
+	getProjectTodos: ( projectId: string ): string => {
 		return getUrl(`/management/projects_todos?project_id=${ projectId }`);
 	},
 	
-	getUserProjectTodos: ( projectId: number, employeeId: number ): string => {
+	getUserProjectTodos: ( projectId: string, employeeId: string ): string => {
 		return getUrl(
 			`/management/projects_todos?project_id=${ projectId }&employee_id=${ employeeId }`
 		);
@@ -34,16 +34,16 @@ export const api = {
 		return getUrl("/management/projects/create");
 	},
 	
-	updateProject: ( projectId: number ): string => {
+	updateProject: ( projectId: string ): string => {
 		return getUrl(`/management/projects/update/${ projectId }`);
 	},
 	
 	// Todo mutations
-	createProjectTodo: ( projectId: number ): string => {
+	createProjectTodo: ( projectId: string ): string => {
 		return getUrl(`/management/projects_todos/${ projectId }/create`);
 	},
 	
-	updateProjectTodo: ( projectId: number, todoId: number ): string => {
+	updateProjectTodo: ( projectId: string, todoId: string ): string => {
 		return getUrl(`/management/projects_todos/${ projectId }/update/${ todoId }`);
 	}
 };
