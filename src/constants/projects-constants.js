@@ -32,7 +32,7 @@ export const projectsDefault = {
         {
           id: 3,
           timestamp: 1766448000000,
-          completed: false,
+          completed: true,
           pinned: true,
           label: "Prepare initial project documentation",
           text: ""

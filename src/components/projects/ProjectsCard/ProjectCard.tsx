@@ -15,11 +15,6 @@ import { useTranslations } from "next-intl";
 import ToDoCard from "@/components/toDo/ToDoCard";
 import { useUuid } from "@/hooks";
 
-interface CardCallbacks {
-	modalType: string;
-	project_id: string;
-}
-
 const ProjectCard: React.FC<PropsCard> = ( {
 	project_id,
 	project,
@@ -32,7 +27,7 @@ const ProjectCard: React.FC<PropsCard> = ( {
 	months_hours,
 	callbacks
 } ) => {
-	const { filters } = useProjectsStore();
+	const { filters, setProjectID } = useProjectsStore();
 	const { setModalID } = useUserStore();
 	const t = useTranslations();
 	const [ isOpen, setIsOpen ] = useState(false);
@@ -49,6 +44,12 @@ const ProjectCard: React.FC<PropsCard> = ( {
 			modalType,
 			project_id: id
 		});
+	}
+	
+	const handleOpenTodoList = ( e: React.MouseEvent<HTMLButtonElement> ) => {
+		e.preventDefault();
+		setProjectID(project_id);
+		setModalID('toDoList');
 	}
 	
 	useEffect(() => {
@@ -100,6 +101,7 @@ const ProjectCard: React.FC<PropsCard> = ( {
 		};
 		
 		return todos
+			.filter(todo => !todo.completed)
 			.slice()
 			.sort(( a, b ) => {
 				const dayA = getDayPriority(a.timestamp);
@@ -217,7 +219,7 @@ const ProjectCard: React.FC<PropsCard> = ( {
 						</Button>
 						<Button type={ 'button' }
 								id={ 'button-toDoList' }
-								onClick={ () => setModalID('toDoList') }
+								onClick={ e => handleOpenTodoList(e) }
 								className={ `${ style.actions_button }` }
 								variant={ 'secondary' }>
 							<ListIcon/>

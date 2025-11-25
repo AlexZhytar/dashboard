@@ -37,7 +37,8 @@ const ToDoCard = ( {
 	}
 	
 	return (
-		<div className={ style.todoCard + ' ' + style[`${ variant }`] }>
+		<div
+			className={ style.todoCard + ' ' + style[`${ variant }`] + (completed ? ` ${ style.completed }` : '') }>
 			<label className={ style.label }>
 				<input className={ style.input } onChange={ onChange } checked={ completed } type="checkbox"/>
 				<span className={ style.checkmark }></span>

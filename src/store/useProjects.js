@@ -35,6 +35,9 @@ export const useProjectsStore = create(
         }) );
       },
       
+      projectID: null,
+      setProjectID: ( id ) => set( { projectID: id } ),
+      
       updateProjects: ( newProjects ) =>
         set( ( state ) => ({
           projectData: {

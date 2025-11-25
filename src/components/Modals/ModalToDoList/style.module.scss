@@ -1,4 +1,5 @@
 @use "../../../scss/utils/mixin" as *;
+@use "../../../scss/utils/const" as *;
 
 .todoList {
   width: 100%;
@@ -30,21 +31,38 @@
   
   &_body {
     height: calc(100% - 4rem);
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 2rem 0;
+  }
+  
+  &_caption {
+    font-size: 1.2rem;
+    font-weight: $fw-medium;
+    line-height: $lh-138;
+    color: var(--color-text-secondary);
+  }
+  
+  &_empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+    justify-content: center;
+    min-height: 100%;
+    color: var(--color-gray-300);
+    padding: 5rem 0;
     
-    &_empty {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 2rem;
-      justify-content: center;
-      min-height: 100%;
-      color: var(--color-gray-300);
-      padding: 5rem 0;
-      
-      .no_results_icon {
-        fill: var(--color-gray-300);
-      }
+    .no_results_icon {
+      fill: var(--color-gray-300);
     }
+  }
+  
+  &_items {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
   }
 }
 

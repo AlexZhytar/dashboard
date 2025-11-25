@@ -48,7 +48,6 @@ const Projects = () => {
 	}, [ search, projectData.projects ]);
 	
 	const getClickedManager = managers.filter(manager => manager.id === managerID);
-	console.log(getClickedManager)
 	
 	return (
 		<div className={ style.projects }>

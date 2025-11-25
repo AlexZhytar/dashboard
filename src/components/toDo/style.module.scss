@@ -164,4 +164,28 @@
       }
     }
   }
+  
+  &.completed {
+    .todo {
+      text-decoration: line-through;
+    }
+    
+    .checkmark {
+      background-color: var(--color-primary);
+      border-color: var(--color-primary);
+      position: relative;
+      
+      &::after {
+        content: "";
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        width: .4rem;
+        height: .7rem;
+        border: solid var(--color-static-white);
+        border-width: 0 1px 1px 0;
+        transform: translate(-50%, -60%) rotate(45deg);
+      }
+    }
+  }
 }
