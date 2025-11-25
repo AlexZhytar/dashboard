@@ -49,6 +49,7 @@ const DraggableBlock = ( { id, children, stateSearch }: DraggableBlockProps ) =>
 			: `translate(0px, 0px) scale(1, 1)`,
 		transition,
 		zIndex: isDragging ? 999 : undefined,
+		boxShadow: isDragging ? `0px 0px 6px rgba(0, 0, 0, 0.15)` : undefined,
 	};
 	return (
 		<div
