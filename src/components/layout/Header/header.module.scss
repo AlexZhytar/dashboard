@@ -85,6 +85,7 @@
         left: -100%;
         background-image: conic-gradient(from var(--angle), red, blue, green, pink, yellow, aqua, red);
         animation: slideOut 6s ease-in-out infinite;
+        opacity: .7;
       }
     }
     
@@ -149,7 +150,7 @@
           left: 50%;
           translate: -50% -50%;
           background-image: radial-gradient(circle at 30% 30%, transparent, var(--color-border-default)),
-          linear-gradient(var(--color-green), var(--color-bg-inverse), var(--color-primary));
+          linear-gradient(var(--color-green), var(--color-border-default), var(--color-primary));
           animation: circleMove 6s linear infinite;
           z-index: 2;
         }
