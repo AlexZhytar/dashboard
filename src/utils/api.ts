@@ -14,6 +14,10 @@ export const api = {
 	getManagers: (): string => getUrl("/management/employees"),
 	
 	// Projects
+	getProjects: (): string => {
+		return getUrl(`/management/projects`);
+	},
+	
 	getUserProjects: ( employeeId: string ): string => {
 		return getUrl(`/management/projects?employee_id=${ employeeId }`);
 	},

@@ -34,7 +34,7 @@ const Modal = ( { animation, id, children, title, className = '' }: ModalProps )
 		<AnimatePresence>
 			{ id === modalID && (
 				<m.div
-					transition={ { duration: .5 } }
+					transition={ { duration: .3 } }
 					{ ...modalAnimations.init(modalAnimations.fadeModal()) }
 					onClick={ toggleModal }
 					id={ id }

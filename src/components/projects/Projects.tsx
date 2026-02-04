@@ -49,6 +49,8 @@ const Projects = () => {
 	
 	const getClickedManager = managers.filter(manager => manager.id === managerID);
 	
+	console.log(managers)
+	
 	return (
 		<div className={ style.projects }>
 			<Container>

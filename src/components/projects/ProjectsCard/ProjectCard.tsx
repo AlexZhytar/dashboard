@@ -241,7 +241,7 @@ const ProjectCard: React.FC<PropsCard> = ( {
 							</Button>
 							
 							<Tooltip anchorSelect={ `#list-${ uuid }` }
-									 className={ `tooltip` }
+									 className={ `tooltip ${ isOpen ? 'active' : '' }` }
 									 offset={ 2 }
 									 isOpen={ isOpen }
 									 place={ "left" }>

@@ -11,6 +11,7 @@
   width: 100%;
   background-color: var(--color-bg-subtle);
   padding: 2rem 0;
+  overflow: hidden;
   
   &_wrapper {
     display: flex;
@@ -210,6 +211,7 @@
   
   .project {
     width: 10.8rem;
+    flex-shrink: 0;
     
     &_block {
       position: relative;
@@ -222,6 +224,7 @@
   
   .links {
     width: 20rem;
+    flex-shrink: 0;
     
     &_block {
       width: 100%;
@@ -281,6 +284,7 @@
   
   .hours {
     width: 6rem;
+    flex-shrink: 0;
     
     &_block {
       width: 100%;
@@ -340,6 +344,7 @@
   
   .pm {
     width: 10rem;
+    flex-shrink: 0;
     
     &_block {
       width: 100%;
@@ -427,8 +432,8 @@
   }
   
   .todo {
-    max-width: calc(100% - 83rem);
     flex: 1;
+    min-width: 0;
     
     &_block {
       width: 100%;
@@ -451,9 +456,10 @@
   }
   
   .actions {
-    min-width: 20rem;
+    width: 12rem;
     margin-left: auto;
     z-index: 100;
+    flex-shrink: 0;
     
     &_block {
       display: flex;

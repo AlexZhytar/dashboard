@@ -9,7 +9,10 @@
   letter-spacing: .325px;
   z-index: 100 !important;
   box-shadow: 0 0 4px rgba(0, 0, 0, 0.08) !important;
-  pointer-events: auto !important;
+  
+  &.active {
+    pointer-events: auto !important;
+  }
 }
 
 .react-tooltip__show {
