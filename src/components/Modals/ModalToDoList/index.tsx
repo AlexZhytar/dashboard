@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import style from './style.module.scss';
 import { Button } from "@/components/UI";
 import { useLocale, useTranslations } from "next-intl";
 import { useProjectsStore, useUserStore } from "@/store";
 import { NoResultsIcon } from "@/components/Icons";
-import { Todos } from "@/components/projects/ProjectsCard/types";
+import { Todos } from "@/components/projects/types";
 import ToDoCard from "@/components/toDo/ToDoCard";
 import { pluralizeEn, pluralizeUa } from "@/utils";
 
@@ -16,18 +16,30 @@ interface Project {
 const ModalToDoList = () => {
 	const t = useTranslations();
 	const { setModalID } = useUserStore();
-	const [ activeTab, setActiveTab ] = useState<'upcoming' | 'completed'>('upcoming');
-	const { projectData, projectID } = useProjectsStore();
 	const locale = useLocale();
 	
-	const getProjectTodos = projectData.projects.find(( project: Project ) => project.id === projectID)?.todos;
+	const [ activeTab, setActiveTab ] = useState<'upcoming' | 'completed'>('upcoming');
+	const projects = useProjectsStore(( s ) => s.projects);
+	const activeProjectId = useProjectsStore(( s ) => s.activeProjectId);
 	
-	const completedTodos = [] as Todos[];
-	const upcomingTodos = [] as Todos[];
-	getProjectTodos?.forEach(( todo: Todos ) => {
-		if ( todo.completed ) completedTodos.push(todo);
-		else upcomingTodos.push(todo);
-	});
+	const getProjectTodos = useMemo(() => {
+		if ( !activeProjectId ) return [];
+		const p = projects.find(( x ) => String(x.id) === String(activeProjectId));
+		return (p?.todos ?? []) as Todos[];
+	}, [ projects, activeProjectId ]);
+	
+	
+	const { upcomingTodos, completedTodos } = useMemo(() => {
+		const completed: Todos[] = [];
+		const upcoming: Todos[] = [];
+		
+		getProjectTodos.forEach(( todo ) => {
+			if ( todo.completed ) completed.push(todo);
+			else upcoming.push(todo);
+		});
+		
+		return { upcomingTodos: upcoming, completedTodos: completed };
+	}, [ getProjectTodos ]);
 	
 	const pluralizeCountTodo = ( count: number ) => {
 		if ( count === 0 ) return;
