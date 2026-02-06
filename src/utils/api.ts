@@ -18,6 +18,12 @@ export const api = {
 	createProject: (): string => {
 		return getUrl("/ws/projects/create");
 	},
+	updateProject: ( projectId: string ): string => {
+		return getUrl(`/ws/projects/update?project_id=${ encodeURIComponent(projectId) }`);
+	},
+	deleteProject: (projectId: string): string => {
+		return getUrl(`/ws/projects/delete?project_id=${ encodeURIComponent(projectId) }`);
+	},
 	
 	// all users global token
 	getUsers: (): string => getUrl("/ws/users"),
@@ -32,17 +38,13 @@ export const api = {
 	
 	// Todos
 	getProjectTodos: ( projectId: string ): string => {
-		return getUrl(`/management/projects_todos?project_id=${ projectId }`);
+		return getUrl(`/ws/todos?project_id=${ projectId }`);
 	},
 	
 	getUserProjectTodos: ( projectId: string, employeeId: string ): string => {
 		return getUrl(
 			`/management/projects_todos?project_id=${ projectId }&employee_id=${ employeeId }`
 		);
-	},
-	
-	updateProject: ( projectId: string ): string => {
-		return getUrl(`/management/projects/update/${ projectId }`);
 	},
 	
 	// Todo mutations

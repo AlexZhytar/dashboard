@@ -46,3 +46,13 @@
 .color {
   background-color: var(--color-bg-subtle);
 }
+
+.text {
+  color: var(--color-text-primary);
+  position: absolute;
+  top: 60%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  opacity: .7;
+  font-size: 1.2rem;
+}

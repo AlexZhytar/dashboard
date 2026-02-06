@@ -6,10 +6,11 @@ type Props = {
 	overflow?: boolean,
 	color?: string,
 	position?: 'absolute' | 'fixed',
-	customClass?: string
+	customClass?: string,
+	text?: string
 }
 
-const Preloader = ( { size = 'm', overflow, color, position = 'absolute', customClass }: Props ) => {
+const Preloader = ( { size = 'm', overflow, color, position = 'absolute', customClass, text }: Props ) => {
 	const over = overflow ? styles.overflow : styles.alpha;
 	
 	let preloaderSize = {
@@ -30,7 +31,9 @@ const Preloader = ( { size = 'm', overflow, color, position = 'absolute', custom
     ${ positionStyle && positionStyle[position] }
     ${ customClass ?? '' }` }
 			 style={ { backgroundColor: color ? styles.color : '' } }
-		/>
+		>
+			{ text && <span className={ styles.text }>{ text }</span> }
+		</div>
 	);
 };
 
