@@ -22,22 +22,22 @@ const Projects = () => {
 	
 	const projectOrder = useProjectsStore(( s ) => s.projectOrder);
 	const isSearchActive = useProjectsStore(( s ) => s.isSearchActive);
-	const pmUserIds = useProjectsStore(( s ) => s.pmUserIds); // ✅ так краще (селектором)
+	const pmUserIds = useProjectsStore(( s ) => s.pmUserIds);
 	
 	const [ search, setSearch ] = useState("");
 	
-	const { managerID } = useUserStore();
+	const { pmID } = useUserStore();
 	
 	const order = projectOrder ?? [];
 	
 	const orderedProjects = useMemo(() => {
-		const byId = new Map(projects.map(( p ) => [ String(p.id), p ]));
+		const byId = new Map(projects.map(( p ) => [ p.id, p ]));
 		
 		const ordered = order
-			.map(( id ) => byId.get(String(id)))
+			.map(( id ) => byId.get(id))
 			.filter(Boolean) as typeof projects;
 		
-		const rest = projects.filter(( p ) => !order.includes(String(p.id)));
+		const rest = projects.filter(( p ) => !order.includes(p.id));
 		
 		return [ ...ordered, ...rest ];
 	}, [ projects, order ]);
@@ -47,13 +47,13 @@ const Projects = () => {
 		
 		// 1) Фільтр по PM (assigned_users з role.slug === "pm")
 		if ( pmUserIds && pmUserIds.length > 0 ) {
-			const pmSet = new Set(pmUserIds.map(String));
+			const pmSet = new Set(pmUserIds.map(Number));
 			
 			list = list.filter(( p ) =>
 				Array.isArray((p as any).assigned_users) &&
 				(p as any).assigned_users.some(( u: any ) => {
 					const isPm = u?.role?.slug === "pm";
-					return isPm && pmSet.has(String(u.id));
+					return isPm && pmSet.has(Number(u.id));
 				})
 			);
 		}
@@ -67,7 +67,7 @@ const Projects = () => {
 		return list;
 	}, [ orderedProjects, pmUserIds, search ]);
 	
-	const getClickedManager = users.filter(( m ) => m.id === managerID);
+	const getClickedPM = users.filter(( m ) => m.id === pmID);
 	
 	return (
 		<div className={ style.projects }>
@@ -93,8 +93,8 @@ const Projects = () => {
 				<ModalToDoList/>
 			</Modal>
 			
-			<Modal id={ `manager-${ managerID }` } className={ modals.modalUser } animation={ "right" }>
-				<ModalUser userInfo={ getClickedManager[0] }/>
+			<Modal id={ `pm-${ pmID }` } className={ modals.modalUser } animation={ "right" }>
+				<ModalUser userInfo={ getClickedPM[0] }/>
 			</Modal>
 		</div>
 	);

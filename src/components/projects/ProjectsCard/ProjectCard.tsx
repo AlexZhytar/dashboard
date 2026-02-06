@@ -43,13 +43,14 @@ const ProjectCard: React.FC<PropsCard> = ( {
 		
 		callbacks?.({
 			modalType,
-			project_id: String(id),
+			project_id: id,
 		});
 	}
 	
 	const handleOpenTodoList = ( e: React.MouseEvent<HTMLButtonElement> ) => {
 		e.preventDefault();
-		setActiveProjectId(String(id));
+		console.log(id)
+		setActiveProjectId(id);
 		setModalID("toDoList");
 	}
 	

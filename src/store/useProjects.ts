@@ -2,7 +2,7 @@ import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import { PropsCard } from "@/components/projects/types";
 
-type Project = PropsCard;
+type Project = Omit<PropsCard, "id"> & { id: number };
 
 const defaultFilters = {
 	links: true,
@@ -11,31 +11,20 @@ const defaultFilters = {
 	todo: true,
 };
 
-function isSameProject( a: any, b: any ) {
-	if ( a === b ) return true;
-	if ( !a || !b ) return false;
-	if ( a.id !== b.id ) return false;
-	
-	// shallow compare (достатньо для API → UI)
-	const aKeys = Object.keys(a);
-	const bKeys = Object.keys(b);
-	
-	if ( aKeys.length !== bKeys.length ) return false;
-	
-	for ( const key of aKeys ) {
-		if ( a[key] !== b[key] ) return false;
-	}
-	
-	return true;
-}
+const toId = ( v: unknown ): number => Number(v);
+
+const normalizeProjects = ( incoming: PropsCard[] ): Project[] =>
+	incoming
+		.map(( p ) => ({ ...p, id: toId(p.id) }))
+		.filter(( p ) => Number.isFinite(p.id));
 
 type State = {
 	projects: Project[];
-	projectOrder: string[];
+	projectOrder: number[];
 	filters: typeof defaultFilters;
 	
-	activeProjectId: string | null;
-	setActiveProjectId: ( id: string | null ) => void;
+	activeProjectId: number | null;
+	setActiveProjectId: ( id: number | null ) => void;
 	
 	hasHydrated: boolean;
 	isSearchActive: boolean;
@@ -44,19 +33,20 @@ type State = {
 	error: string | null;
 	lastFetchedAt: number | null;
 	
-	pmUserIds: string[];                 // вибрані PM (IDs)
-	setPmUserIds: ( ids: string[] ) => void;
-	togglePmUserId: ( id: string ) => void;
+	pmUserIds: number[];
+	setPmUserIds: ( ids: Array<number | string> ) => void;
+	togglePmUserId: ( id: number | string ) => void;
 	resetPmUsers: () => void;
 	
 	setHasHydrated: ( v: boolean ) => void;
 	setSearchActive: ( v: boolean ) => void;
 	
-	setProjects: ( incoming: Project[] ) => void;
+	setProjects: ( incoming: PropsCard[] ) => void;
 	getOrderedProjects: () => Project[];
-	mergeProjects: ( incoming: Project[] ) => void;
-	setProjectOrder: ( ids: string[] ) => void;
-	reorderProjects: ( orderedIds: string[] ) => void;
+	mergeProjects: ( incoming: PropsCard[] ) => void;
+	
+	setProjectOrder: ( ids: Array<number | string> ) => void;
+	reorderProjects: ( orderedIds: Array<number | string> ) => void;
 	
 	fetchProjects: () => Promise<void>;
 	
@@ -74,7 +64,8 @@ export const useProjectsStore = create<State>()(
 			filters: { ...defaultFilters },
 			
 			activeProjectId: null,
-			setActiveProjectId: ( id ) => set({ activeProjectId: id }),
+			setActiveProjectId: ( id ) =>
+				set({ activeProjectId: id === null ? null : toId(id) }),
 			
 			hasHydrated: false,
 			isSearchActive: false,
@@ -82,11 +73,12 @@ export const useProjectsStore = create<State>()(
 			loading: false,
 			error: null,
 			lastFetchedAt: null,
+			
 			pmUserIds: [],
-			setPmUserIds: ( ids ) => set({ pmUserIds: ids.map(String) }),
+			setPmUserIds: ( ids ) => set({ pmUserIds: ids.map(toId) }),
 			togglePmUserId: ( id ) =>
 				set(( state ) => {
-					const sid = String(id);
+					const sid = toId(id);
 					return state.pmUserIds.includes(sid)
 						? { pmUserIds: state.pmUserIds.filter(( x ) => x !== sid) }
 						: { pmUserIds: [ ...state.pmUserIds, sid ] };
@@ -96,55 +88,56 @@ export const useProjectsStore = create<State>()(
 			setHasHydrated: ( value ) => set({ hasHydrated: value }),
 			setSearchActive: ( value ) => set({ isSearchActive: value }),
 			
-			setProjectOrder: ( ids ) => set({ projectOrder: ids }),
+			setProjectOrder: ( ids ) => set({ projectOrder: ids.map(toId) }),
 			
 			reorderProjects: ( orderedIds ) => {
-				set({ projectOrder: orderedIds });
+				set({ projectOrder: orderedIds.map(toId) });
 			},
 			
-			setProjects: ( incoming ) => {
-				// 1) оновили дані
+			setProjects: ( incomingRaw ) => {
+				const incoming = normalizeProjects(incomingRaw);
+				
 				set({ projects: incoming });
 				
-				const incomingIds = new Set(incoming.map(p => String(p.id)));
+				const incomingIds = new Set(incoming.map(( p ) => p.id));
 				const currentOrder = get().projectOrder || [];
 				
-				const cleanedOrder = currentOrder.filter(id => incomingIds.has(id));
-				const newIds = incoming
-					.map(p => String(p.id))
-					.filter(id => !cleanedOrder.includes(id));
+				const cleanedOrder = currentOrder.filter(( id ) => incomingIds.has(id));
+				const newIds = incoming.map(( p ) => p.id).filter(( id ) => !cleanedOrder.includes(id));
 				
 				const nextOrder = [ ...cleanedOrder, ...newIds ];
 				
-				if ( nextOrder.length !== currentOrder.length || nextOrder.some(( id, i ) => id !== currentOrder[i]) ) {
+				if (
+					nextOrder.length !== currentOrder.length ||
+					nextOrder.some(( id, i ) => id !== currentOrder[i])
+				) {
 					set({ projectOrder: nextOrder });
 				}
 			},
 			
 			getOrderedProjects: () => {
 				const { projects, projectOrder } = get();
-				const byId = new Map(projects.map(p => [ p.id, p ]));
+				const byId = new Map<number, Project>(projects.map(( p ) => [ p.id, p ]));
 				
 				const ordered = (projectOrder || [])
-					.map(id => byId.get(id))
+					.map(( id ) => byId.get(id))
 					.filter(Boolean) as Project[];
 				
-				const rest = projects.filter(p => !(projectOrder || []).includes(p.id));
+				const rest = projects.filter(( p ) => !(projectOrder || []).includes(p.id));
 				
 				return [ ...ordered, ...rest ];
 			},
 			
-			// merge за id: оновлює існуючі + додає нові
-			mergeProjects: ( incoming ) => {
-				const incomingIds = new Set(incoming.map(p => p.id));
-				const current = get().projects || [];
+			mergeProjects: ( incomingRaw ) => {
+				const incoming = normalizeProjects(incomingRaw);
+				const incomingIds = new Set(incoming.map(( p ) => p.id));
 				
-				// оновлення/додавання
-				const map = new Map(current.map(p => [ p.id, p ]));
+				const current = get().projects || [];
+				const map = new Map<number, Project>(current.map(( p ) => [ p.id, p ]));
+				
 				for ( const p of incoming ) map.set(p.id, p);
 				
-				// видалення тих, яких нема на сервері
-				const merged = Array.from(map.values()).filter(p => incomingIds.has(p.id));
+				const merged = Array.from(map.values()).filter(( p ) => incomingIds.has(p.id));
 				
 				set({ projects: merged });
 			},
@@ -165,15 +158,14 @@ export const useProjectsStore = create<State>()(
 					if ( !res.ok ) throw new Error("Failed to fetch projects");
 					
 					const json = await res.json();
-					const incoming: Project[] =
+					const raw: PropsCard[] =
 						Array.isArray(json.data)
 							? json.data
 							: Array.isArray(json.data?.projects)
 								? json.data.projects
 								: [];
 					
-					// якщо хочеш завжди перезаписувати — викликай setProjects(incoming)
-					get().setProjects(incoming);
+					get().setProjects(raw);
 					
 					set({ lastFetchedAt: Date.now() });
 				} catch ( e: any ) {

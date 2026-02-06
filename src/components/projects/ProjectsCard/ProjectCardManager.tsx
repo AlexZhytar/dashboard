@@ -9,21 +9,21 @@ import { UserItem } from "@/features/types";
 
 const ProjectCardManager = ( { first_name, last_name, id }: UserItem ) => {
 	const initials = getInitials(`${ first_name } ${ last_name }`);
-	const { setModalID, setManagerID } = useUserStore();
+	const { setModalID, setPmID } = useUserStore();
 	
 	const handleClick = ( e: React.MouseEvent<HTMLDivElement, MouseEvent> ) => {
 		e.stopPropagation();
-		setManagerID(id);
-		setModalID(`manager-${ id }`);
+		setPmID(id);
+		setModalID(`pm-${ id }`);
 	}
 	
-	return <div id={ `manager-${ id }` }
+	return <div id={ `pm-${ id }` }
 				onClick={ handleClick }
 				className={ style.pm_user }>
 		<div className={ style.pm_border }></div>
 		<span>{ initials }</span>
 		
-		<Tooltip anchorSelect={ `#manager-${ id }` }
+		<Tooltip anchorSelect={ `#pm-${ id }` }
 				 className={ `tooltip` }
 				 offset={ 12 }
 				 place={ "top" }>

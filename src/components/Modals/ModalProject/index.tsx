@@ -11,7 +11,7 @@ import { PropsCard } from "@/components/projects/types";
 import type { UserItem } from "@/features/types";
 
 interface FormState {
-	projectID: string;
+	projectID: number;
 	projectName: string;
 	projectColor: string;
 	projectEverhour: string;
@@ -47,7 +47,7 @@ const toNumber = ( v: string ) => {
 
 const ModalProject = ( { project, mode }: ModalProjectProps ) => {
 	const { setModalID } = useUserStore();
-	const { users, loadUsers } = useUsers(); // ✅ users має бути UserItem[]
+	const { users, loadUsers } = useUsers();
 	const t = useTranslations();
 	
 	// ✅ завжди масив
@@ -56,7 +56,7 @@ const ModalProject = ( { project, mode }: ModalProjectProps ) => {
 	const [ formData, setFormData ] = useState<FormState>(() => {
 		if ( !project || mode === "create" ) {
 			return {
-				projectID: "",
+				projectID: 0,
 				projectName: "",
 				projectColor: "",
 				projectEverhour: "",
@@ -68,7 +68,7 @@ const ModalProject = ( { project, mode }: ModalProjectProps ) => {
 		}
 		
 		return {
-			projectID: String(project.id),
+			projectID: Number(project.id),
 			projectName: project.label,
 			projectColor: project.color,
 			projectApproved: Number(project.confirmed_hours) || 0,
@@ -76,7 +76,7 @@ const ModalProject = ( { project, mode }: ModalProjectProps ) => {
 			projectTracked: Number(project.tracked_hours) || 0,
 			projectEverhour: project.everhour_id ?? "",
 			projectManagers: (project.assigned_users ?? []).map(( a: any ) => ({
-				id: String(a.id),
+				id: a.id,
 				first_name: a.first_name,
 				last_name: a.last_name,
 			})),
@@ -88,18 +88,18 @@ const ModalProject = ( { project, mode }: ModalProjectProps ) => {
 		
 		// ✅ чекбокси асайні
 		if ( type === "checkbox" && dataset.userId ) {
-			const userId = String(dataset.userId);
+			const userId = Number(dataset.userId);
 			const firstName = dataset.firstName || "";
 			const lastName = dataset.lastName || "";
 			
 			setFormData(( prev ) => {
-				const exists = prev.projectManagers.some(( a ) => String(a.id) === userId);
+				const exists = prev.projectManagers.some(( a ) => (a.id) === userId);
 				
 				const nextManagers: UserItem[] = checked
 					? exists
 						? prev.projectManagers
 						: [ ...prev.projectManagers, { id: userId, first_name: firstName, last_name: lastName } ]
-					: prev.projectManagers.filter(( a ) => String(a.id) !== userId);
+					: prev.projectManagers.filter(( a ) => (a.id) !== userId);
 				
 				return { ...prev, projectManagers: nextManagers };
 			});

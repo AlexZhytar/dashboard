@@ -11,10 +11,11 @@ export type UserInfo = {
 	id: number | string;
 	first_name: string;
 	last_name: string;
-	email?: string;            // ⬅ optional
+	email?: string;
 	avatar_url?: string | null;
 	created_at?: string;
 	updated_at?: string;
+	[key: string]: any;
 };
 
 interface ModalUserProps {
@@ -38,7 +39,7 @@ const ModalUser = ( { userInfo }: ModalUserProps ) => {
 	if ( !userInfo ) return noUser();
 	const fullName = `${ userInfo.first_name } ${ userInfo.last_name }`.trim();
 	const avatarSrc = userInfo?.avatar_url ?? "/images/no-photo.webp";
-	const userProfile = user && String(user.id) === String(userInfo.id);
+	const userProfile = user && (user.id) === (userInfo.id);
 	
 	const handleLogout = async () => {
 		setModalID(null);

@@ -22,7 +22,7 @@ export interface CallbackPayload {
 }
 
 export type PropsCard = {
-	id: string;
+	id: number;
 	label: string;
 	color: string;
 	assigned_users: UserItem[];
@@ -36,7 +36,7 @@ export type PropsCard = {
 }
 
 export type DraggableBlockProps = {
-	id: string | number;
+	id: number;
 	children: ReactNode;
 	stateSearch: boolean;
 }

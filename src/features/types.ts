@@ -3,7 +3,7 @@ interface UserRole {
 }
 
 export interface UserItem {
-	id: string | number;
+	id: number;
 	first_name: string;
 	last_name: string;
 	role?: UserRole;

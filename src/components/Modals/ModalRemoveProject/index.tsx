@@ -4,11 +4,11 @@ import { Button, InputText, Toast } from "@/components/UI";
 import { useTranslations } from "next-intl";
 import { useUserStore } from "@/store";
 
-interface ModalRemoveProject {
+interface MRP {
 	project_name: string;
 }
 
-const ModalRemoveProject = ( { project_name }: ModalRemoveProject ) => {
+const ModalRemoveProject = ( { project_name }: MRP ) => {
 	const [ input, setInput ] = React.useState('');
 	const t = useTranslations();
 	const { setModalID } = useUserStore();

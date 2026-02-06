@@ -64,9 +64,9 @@ const ProjectsList = ( { projects, isSearchActive }: ProjectsProps ) => {
 		const activeId = String(active.id);
 		const overId = String(over.id);
 		
-		const ids = projects.map(p => String(p.id)); // ВАЖЛИВО: по поточному списку
-		const oldIndex = ids.indexOf(activeId);
-		const newIndex = ids.indexOf(overId);
+		const ids = projects.map(p => p.id);
+		const oldIndex = ids.indexOf(Number(activeId));
+		const newIndex = ids.indexOf(Number(overId));
 		
 		if ( oldIndex === -1 || newIndex === -1 ) return;
 		
@@ -75,7 +75,7 @@ const ProjectsList = ( { projects, isSearchActive }: ProjectsProps ) => {
 	};
 	
 	const handleProjectAction = ( action: CallbackPayload ) => {
-		const p = projects.find(x => String(x.id) === String(action.project_id));
+		const p = projects.find(x => String(x.id) === (action.project_id));
 		setSelectedProject(p);
 		setModalID(`${ action.modalType }-${ action.project_id }`);
 	};

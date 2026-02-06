@@ -45,9 +45,8 @@ const ModalSettings = () => {
 		mapStoreToLocal(filters)
 	);
 	
-	// ✅ якщо пусто => "All"
-	const [ localPMIds, setLocalPMIds ] = useState<string[]>(() =>
-		(pmUserIds ?? []).map(String)
+	const [ localPMIds, setLocalPMIds ] = useState<number[]>(() =>
+		(pmUserIds ?? []).map(Number)
 	);
 	
 	useEffect(() => {
@@ -55,7 +54,7 @@ const ModalSettings = () => {
 	}, [ filters ]);
 	
 	useEffect(() => {
-		setLocalPMIds((pmUserIds ?? []).map(String));
+		setLocalPMIds((pmUserIds ?? []).map(Number));
 	}, [ pmUserIds ]);
 	
 	const handleLocalToggle = useCallback(( key: FilterKey ) => {
@@ -68,11 +67,10 @@ const ModalSettings = () => {
 	const isAllPMChecked = useMemo(() => localPMIds.length === 0, [ localPMIds ]);
 	
 	const handleSelectAllPM = useCallback(() => {
-		// All => показуємо всіх, зберігаємо як пустий масив
 		setLocalPMIds([]);
 	}, []);
 	
-	const togglePM = useCallback(( id: string ) => {
+	const togglePM = useCallback(( id: number ) => {
 		setLocalPMIds(( prev ) =>
 			prev.includes(id) ? prev.filter(( x ) => x !== id) : [ ...prev, id ]
 		);
@@ -92,9 +90,7 @@ const ModalSettings = () => {
 			setFilter(key, localFilters[key]);
 		});
 		
-		// ✅ [] означає "All"
 		setPmUserIds(localPMIds);
-		
 		setModalID(null);
 	}, [ localFilters, localPMIds, setFilter, setPmUserIds, setModalID ]);
 	
@@ -117,7 +113,7 @@ const ModalSettings = () => {
 						</div>
 						
 						<div className={ style.filterList }>
-							{/* ✅ ALL */ }
+							{/* ALL */ }
 							<InputAssignee
 								key="all"
 								inputName="projectAssignee-all"
@@ -129,7 +125,7 @@ const ModalSettings = () => {
 							/>
 							
 							{ pmUsers.map(( user ) => {
-								const id = String(user.id);
+								const id = user.id;
 								const checked = localPMIds.includes(id);
 								
 								return (

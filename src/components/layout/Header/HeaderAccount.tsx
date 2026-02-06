@@ -8,12 +8,10 @@ import { useUser } from "@/features/user";
 import { getInitials } from "@/utils";
 import { useUserStore } from "@/store";
 import { Modal, ModalUser } from "@/components/Modals";
-import { useTranslations } from "next-intl";
 
 const HeaderAccount = () => {
 	const { user, isLoading } = useUser();
 	const { setModalID } = useUserStore();
-	const t = useTranslations();
 	
 	return (
 		<>

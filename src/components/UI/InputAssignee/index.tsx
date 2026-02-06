@@ -9,7 +9,7 @@ const InputAssignee = (
 		last_name: string,
 		checked?: boolean,
 		onChange: ( e: React.ChangeEvent<HTMLInputElement> ) => void,
-		idUser: string
+		idUser: string | number
 	} ) => {
 	
 	return (

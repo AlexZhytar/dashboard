@@ -16,7 +16,7 @@ const HeaderAddProject = () => {
 		<Button variant="secondary" type="button"
 				className={ style.addProject }
 				data-modal-id={ 'modal-add-project' }
-				onClick={ e => setModalID(e.currentTarget.dataset.modalId) }
+				onClick={ e => setModalID(e.currentTarget.dataset.modalId ?? null) }
 		>
 			<div className={ style.addProject_border }></div>
 			<PlusCircleIcon size={ 14 } className={ style.icon }/>
