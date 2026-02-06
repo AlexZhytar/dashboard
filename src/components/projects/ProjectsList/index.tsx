@@ -114,7 +114,7 @@ const ProjectsList = ( { projects, isSearchActive }: ProjectsProps ) => {
 			
 			<Modal id={ `delete-${ selectedProject?.id ?? "" }` } className={ modals.removeProject }
 				   title={ t("modals.deleteProject.title") } animation="center">
-				<ModalRemoveProject project_name={ selectedProject?.label || "" }/>
+				<ModalRemoveProject projectID={ Number(selectedProject?.id) } project_name={ selectedProject?.label || "" }/>
 			</Modal>
 		</>
 	);
