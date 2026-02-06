@@ -1,26 +1,34 @@
-export const API_BASE_URL = "https://dashboard-backend.testsofts.com";
+export const API_BASE_URL = "https://n8n.testsofts.com/webhook/dashboard";
 
 const getUrl = ( path: string ): string => {
-	return `${ API_BASE_URL }/api${ path }`;
+	return `${ API_BASE_URL }/v1${ path }`;
 };
 
 export const api = {
 	// Auth / user
-	login: (): string => getUrl("/employee/login"),
+	login: (): string => getUrl("/ws/auth/login"),
+	getProfile: (): string => getUrl("/ws/profile"),
 	
-	getProfile: (): string => getUrl("/employee/profile"),
-	
-	// Employees / managers
-	getManagers: (): string => getUrl("/management/employees"),
-	
-	// Projects
+	// All projects
 	getProjects: (): string => {
-		return getUrl(`/management/projects`);
+		return getUrl(`/ws/projects`);
 	},
 	
-	getUserProjects: ( employeeId: string ): string => {
-		return getUrl(`/management/projects?employee_id=${ employeeId }`);
+	// Project mutations
+	createProject: (): string => {
+		return getUrl("/ws/projects/create");
 	},
+	
+	// all users global token
+	getUsers: (): string => getUrl("/ws/users"),
+	getFilteredUsers: ( search: string ): string => {
+		return getUrl(`/api/users?search=${ encodeURIComponent(search) }`);
+	},
+	
+	getFilteredProjects: ( search: string ): string => {
+		return getUrl(`/api/projects?search=${ encodeURIComponent(search) }`);
+	},
+	
 	
 	// Todos
 	getProjectTodos: ( projectId: string ): string => {
@@ -31,11 +39,6 @@ export const api = {
 		return getUrl(
 			`/management/projects_todos?project_id=${ projectId }&employee_id=${ employeeId }`
 		);
-	},
-	
-	// Project mutations
-	createProject: (): string => {
-		return getUrl("/management/projects/create");
 	},
 	
 	updateProject: ( projectId: string ): string => {

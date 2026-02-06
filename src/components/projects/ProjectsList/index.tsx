@@ -10,33 +10,9 @@ import { useTranslations } from "next-intl";
 import ProjectCard from "../ProjectsCard";
 import { Modal, ModalProject, ModalRemoveProject } from "@/components/Modals";
 import modals from "@/components/Modals/modal.module.scss";
-import React, { ReactNode, useState } from "react";
+import React, { useState } from "react";
 import { useUserStore } from "@/store";
-import { CallbackPayload, LinkCard, ManagerCard, Todos } from "../ProjectsCard/types"
-
-export type DraggableBlockProps = {
-	id: string | number;
-	children: ReactNode;
-	stateSearch: boolean;
-}
-
-export type ProjectsListType = {
-	id: string;
-	label: string,
-	color: string,
-	confirmed_hours: number,
-	months_hours: number,
-	tracked_hours: number,
-	links: LinkCard[],
-	managers: ManagerCard[],
-	todos: Todos[],
-	callbacks?: CallbackPayload;
-}
-
-export type ProjectsProps = {
-	projects: ProjectsListType[];
-	isSearchActive?: boolean;
-}
+import { CallbackPayload, DraggableBlockProps, ProjectsProps, PropsCard } from "../types"
 
 const DraggableBlock = ( { id, children, stateSearch }: DraggableBlockProps ) => {
 	const { attributes, listeners, transition, isDragging, setNodeRef, transform } = useSortable({
@@ -71,102 +47,77 @@ const DraggableBlock = ( { id, children, stateSearch }: DraggableBlockProps ) =>
 };
 
 const ProjectsList = ( { projects, isSearchActive }: ProjectsProps ) => {
-	const { reorderProjects } = useProjectsStore();
-	const { setModalID, modalID } = useUserStore();
+	const { setModalID } = useUserStore();
 	const t = useTranslations();
-	const [ project, setProject ] = useState([] as any);
-	const [ modalState, setModalState ] = useState({} as CallbackPayload);
+	
+	const projectOrder = useProjectsStore(s => s.projectOrder);
+	const setProjectOrder = useProjectsStore(s => s.setProjectOrder);
+	
+	const [ selectedProject, setSelectedProject ] = useState<PropsCard | undefined>();
 	
 	const handleDragEnd = ( event: DragEndEvent ) => {
+		if ( isSearchActive ) return;
+		
 		const { active, over } = event;
 		if ( !over || active.id === over.id ) return;
-		const oldIndex = projects.findIndex(
-			( block ) => block.id.toString() === active.id
-		);
-		const newIndex = projects.findIndex(
-			( block ) => block.id.toString() === over.id
-		);
 		
-		if ( oldIndex < 0 || newIndex < 0 || oldIndex === newIndex ) return;
+		const activeId = String(active.id);
+		const overId = String(over.id);
 		
-		const newOrder = arrayMove(projects, oldIndex, newIndex);
-		reorderProjects(newOrder.map(card => card.id));
+		const ids = projects.map(p => String(p.id)); // ВАЖЛИВО: по поточному списку
+		const oldIndex = ids.indexOf(activeId);
+		const newIndex = ids.indexOf(overId);
+		
+		if ( oldIndex === -1 || newIndex === -1 ) return;
+		
+		const nextIds = arrayMove(ids, oldIndex, newIndex);
+		setProjectOrder(nextIds); // зберігаємо тільки порядок
 	};
 	
 	const handleProjectAction = ( action: CallbackPayload ) => {
-		if ( !action ) return;
-		
-		setModalState(action);
-		
-		const project = projects.find(
-			p => p.id === action.project_id
-		);
-		
-		if ( project ) {
-			setProject(project);
-		}
-		
+		const p = projects.find(x => String(x.id) === String(action.project_id));
+		setSelectedProject(p);
 		setModalID(`${ action.modalType }-${ action.project_id }`);
 	};
 	
 	return (
 		<>
-			<DndContext onDragEnd={ handleDragEnd }
-						modifiers={ [ restrictToVerticalAxis, restrictToParentElement ] }>
+			<DndContext
+				onDragEnd={ isSearchActive ? undefined : handleDragEnd }
+				modifiers={ [ restrictToVerticalAxis, restrictToParentElement ] }
+			>
 				<SortableContext
-					items={ projects.map(( block ) => block.id.toString()) }
+					items={ projects.map(p => String(p.id)) }
 					strategy={ verticalListSortingStrategy }
 				>
-					
 					<div className={ style.projects_list }>
-						{
-							projects.length === 0 && isSearchActive &&
-                          <div className={ style.projects_empty }>
-                            <NoResultsIcon size={ 80 } className={ style.no_results_icon }/>
-                            <span>{ t("projects.search.noResults") }</span>
-                          </div>
-						}
+						{ projects.length === 0 && isSearchActive && (
+							<div className={ style.projects_empty }>
+								<NoResultsIcon size={ 80 } className={ style.no_results_icon }/>
+								<span>{ t("projects.search.noResults") }</span>
+							</div>
+						) }
 						
-						{
-							projects.map(item =>
-								<DraggableBlock key={ item.id } id={ item.id } stateSearch={ !!isSearchActive }>
-									<ProjectCard
-										project_id={ item.id }
-										project={ item.label }
-										links={ item.links }
-										color={ item.color }
-										managers={ item.managers }
-										tracked_hours={ item.tracked_hours }
-										confirmed_hours={ item.confirmed_hours }
-										months_hours={ item.months_hours }
-										todos={ item.todos }
-										callbacks={ handleProjectAction }
-									/>
-								</DraggableBlock>
-							)
-						}
+						{ projects.map(item => (
+							<DraggableBlock key={ item.id } id={ item.id } stateSearch={ !!isSearchActive }>
+								<ProjectCard { ...item } callbacks={ handleProjectAction }/>
+							</DraggableBlock>
+						)) }
 					</div>
-				
-				
 				</SortableContext>
 			</DndContext>
 			
-			<Modal id={ `edit-${ modalState.project_id }` }
-				   className={ modals.editProject }
-				   title={ t('modals.editProject.title') }
-				   animation={ 'center' }>
-				<ModalProject mode="edit" project={ project }/>
+			<Modal id={ `edit-${ selectedProject?.id ?? "" }` } className={ modals.editProject }
+				   title={ t("modals.editProject.title") } animation="center">
+				<ModalProject mode="edit" project={ selectedProject }/>
 			</Modal>
 			
-			<Modal id={ `delete-${ modalState.project_id }` }
-				   className={ modals.removeProject }
-				   title={ t('modals.deleteProject.title') }
-				   animation={ 'center' }>
-				<ModalRemoveProject project_name={ project.label }/>
+			<Modal id={ `delete-${ selectedProject?.id ?? "" }` } className={ modals.removeProject }
+				   title={ t("modals.deleteProject.title") } animation="center">
+				<ModalRemoveProject project_name={ selectedProject?.label || "" }/>
 			</Modal>
 		</>
-	
 	);
-}
+};
 
 export default ProjectsList;

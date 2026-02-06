@@ -1,9 +1,12 @@
+"use client";
+
 import style from "./style.module.scss";
 import { useTranslations } from "next-intl";
-import { Button } from "@/components/UI";
+import { Button, InputAssignee } from "@/components/UI";
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import InputCheckbox from "@/components/UI/InputCheckbox";
 import { useProjectsStore, useUserStore } from "@/store";
+import { useUsers } from "@/features/users";
 
 type FilterKey = "links" | "pm" | "hours" | "todo";
 type FiltersState = Record<FilterKey, boolean>;
@@ -12,45 +15,71 @@ const DEFAULT_FILTERS: FiltersState = {
 	links: true,
 	pm: true,
 	hours: true,
-	todo: true
+	todo: true,
 };
 
 const FILTER_CONFIG: { key: FilterKey; labelKey: string }[] = [
 	{ key: "links", labelKey: "modals.settings.links" },
 	{ key: "pm", labelKey: "modals.settings.pm" },
 	{ key: "hours", labelKey: "modals.settings.hours" },
-	{ key: "todo", labelKey: "modals.settings.toDo" }
+	{ key: "todo", labelKey: "modals.settings.toDo" },
 ];
 
-const mapStoreToLocal = ( filters: Partial<FiltersState> | null | undefined ): FiltersState => ({
+const mapStoreToLocal = (
+	filters: Partial<FiltersState> | null | undefined
+): FiltersState => ({
 	links: filters?.links ?? DEFAULT_FILTERS.links,
 	pm: filters?.pm ?? DEFAULT_FILTERS.pm,
 	hours: filters?.hours ?? DEFAULT_FILTERS.hours,
-	todo: filters?.todo ?? DEFAULT_FILTERS.todo
+	todo: filters?.todo ?? DEFAULT_FILTERS.todo,
 });
 
 const ModalSettings = () => {
 	const t = useTranslations();
 	const { setModalID } = useUserStore();
-	const { filters, setFilter } = useProjectsStore();
+	
+	const { users } = useUsers();
+	const { filters, setFilter, pmUserIds, setPmUserIds } = useProjectsStore();
 	
 	const [ localFilters, setLocalFilters ] = useState<FiltersState>(() =>
 		mapStoreToLocal(filters)
+	);
+	
+	// ✅ якщо пусто => "All"
+	const [ localPMIds, setLocalPMIds ] = useState<string[]>(() =>
+		(pmUserIds ?? []).map(String)
 	);
 	
 	useEffect(() => {
 		setLocalFilters(mapStoreToLocal(filters));
 	}, [ filters ]);
 	
+	useEffect(() => {
+		setLocalPMIds((pmUserIds ?? []).map(String));
+	}, [ pmUserIds ]);
+	
 	const handleLocalToggle = useCallback(( key: FilterKey ) => {
-		setLocalFilters(prev => ({
+		setLocalFilters(( prev ) => ({
 			...prev,
-			[key]: !prev[key]
+			[key]: !prev[key],
 		}));
 	}, []);
 	
+	const isAllPMChecked = useMemo(() => localPMIds.length === 0, [ localPMIds ]);
+	
+	const handleSelectAllPM = useCallback(() => {
+		// All => показуємо всіх, зберігаємо як пустий масив
+		setLocalPMIds([]);
+	}, []);
+	
+	const togglePM = useCallback(( id: string ) => {
+		setLocalPMIds(( prev ) =>
+			prev.includes(id) ? prev.filter(( x ) => x !== id) : [ ...prev, id ]
+		);
+	}, []);
+	
 	const hasAnyFalse = useMemo(
-		() => Object.values(localFilters).some(v => !v),
+		() => Object.values(localFilters).some(( v ) => !v),
 		[ localFilters ]
 	);
 	
@@ -59,11 +88,20 @@ const ModalSettings = () => {
 	}, []);
 	
 	const handleSaveFilters = useCallback(() => {
-		(Object.keys(localFilters) as FilterKey[]).forEach(key => {
+		(Object.keys(localFilters) as FilterKey[]).forEach(( key ) => {
 			setFilter(key, localFilters[key]);
 		});
+		
+		// ✅ [] означає "All"
+		setPmUserIds(localPMIds);
+		
 		setModalID(null);
-	}, [ localFilters, setFilter, setModalID ]);
+	}, [ localFilters, localPMIds, setFilter, setPmUserIds, setModalID ]);
+	
+	const pmUsers = useMemo(
+		() => (Array.isArray(users) ? users.filter(( u ) => u.role?.slug === "pm") : []),
+		[ users ]
+	);
 	
 	return (
 		<>
@@ -72,12 +110,40 @@ const ModalSettings = () => {
 					<div className={ style.settingsBlock_title }>
 						{ t("modals.settings.filters") }
 					</div>
+					
 					<div className={ style.settingsBlock_filter }>
 						<div className={ style.filterCaption }>
 							{ t("modals.settings.projectManager") }
 						</div>
+						
 						<div className={ style.filterList }>
-							{/* фільтр по PM */ }
+							{/* ✅ ALL */ }
+							<InputAssignee
+								key="all"
+								inputName="projectAssignee-all"
+								first_name={ t("uiText.all") }
+								last_name=""
+								idUser="all"
+								checked={ isAllPMChecked }
+								onChange={ handleSelectAllPM }
+							/>
+							
+							{ pmUsers.map(( user ) => {
+								const id = String(user.id);
+								const checked = localPMIds.includes(id);
+								
+								return (
+									<InputAssignee
+										key={ id }
+										inputName={ `projectAssignee-${ id }` }
+										first_name={ user.first_name }
+										last_name={ user.last_name }
+										idUser={ id }
+										checked={ checked }
+										onChange={ () => togglePM(id) }
+									/>
+								);
+							}) }
 						</div>
 					</div>
 				</div>
@@ -86,6 +152,7 @@ const ModalSettings = () => {
 					<div className={ style.settingsBlock_title }>
 						{ t("modals.settings.tableInfo") }
 					</div>
+					
 					<div className={ style.settingsBlock_filter }>
 						{ FILTER_CONFIG.map(( { key, labelKey } ) => (
 							<InputCheckbox

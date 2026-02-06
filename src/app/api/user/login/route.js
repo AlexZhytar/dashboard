@@ -11,10 +11,11 @@ export async function POST( req ) {
     body: JSON.stringify( body ),
   } );
   
+  const data = await res.json();
+  
   if ( !res.ok ) {
-    return NextResponse.json( { error: `Auth API error ${ res.status }` }, { status: res.status } );
+    return NextResponse.json( data.error || [] );
   }
   
-  const data = await res.json();
   return NextResponse.json( data || [] );
 }

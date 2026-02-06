@@ -31,9 +31,6 @@ export const useUserStore = create(
       
       authEverhour: false,
       setAuthEverhour: ( authEverhour ) => set( { authEverhour } ),
-      
-      authGoogle: false,
-      setAuthGoogle: ( authGoogle ) => set( { authGoogle } ),
     }),
     {
       name: 'user-settings',

@@ -1,13 +1,13 @@
 'use client';
 
-import { ManagerCard } from './types';
 import style from '../projects.module.scss';
 import { getInitials } from '@/utils';
 import { Tooltip } from "react-tooltip";
 import React from "react";
 import { useUserStore } from "@/store";
+import { UserItem } from "@/features/types";
 
-const ProjectCardManager = ( { first_name, last_name, id }: ManagerCard ) => {
+const ProjectCardManager = ( { first_name, last_name, id }: UserItem ) => {
 	const initials = getInitials(`${ first_name } ${ last_name }`);
 	const { setModalID, setManagerID } = useUserStore();
 	

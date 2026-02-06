@@ -9,7 +9,7 @@ export function useUserProjects( user_id ) {
     const fetchProjects = async () => {
       setLoadingProjects( true );
       try {
-        const res = await fetch( `/api/user/get-projects?employee_id=${ user_id }` );
+        const res = await fetch( `/api/user/get-projects` );
         
         if ( res.status === 401 ) {
           setUserProjects( null );

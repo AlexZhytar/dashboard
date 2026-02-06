@@ -7,18 +7,18 @@ import { useUser } from "@/features/user";
 import { useUserStore } from "@/store";
 import { NoResultsIcon } from "@/components/Icons";
 
-export interface UserList {
-	id: number;
+export type UserInfo = {
+	id: number | string;
 	first_name: string;
 	last_name: string;
-	email: string;
-	avatar_url: string | null;
-	created_at: string;
-	updated_at: string;
-}
+	email?: string;            // ⬅ optional
+	avatar_url?: string | null;
+	created_at?: string;
+	updated_at?: string;
+};
 
 interface ModalUserProps {
-	userInfo: UserList;
+	userInfo?: UserInfo | null;
 }
 
 const ModalUser = ( { userInfo }: ModalUserProps ) => {
@@ -27,7 +27,8 @@ const ModalUser = ( { userInfo }: ModalUserProps ) => {
 	const { setModalID } = useUserStore();
 	
 	const noUser = () => {
-		return (<div className={ style.noUser }>
+		return (
+			<div className={ style.noUser }>
 				<NoResultsIcon size={ 80 }/>
 				<span>{ t("modals.user.notFound") }</span>
 			</div>
@@ -35,7 +36,9 @@ const ModalUser = ( { userInfo }: ModalUserProps ) => {
 	}
 	
 	if ( !userInfo ) return noUser();
-	const userProfile = user && user.id === userInfo.id;
+	const fullName = `${ userInfo.first_name } ${ userInfo.last_name }`.trim();
+	const avatarSrc = userInfo?.avatar_url ?? "/images/no-photo.webp";
+	const userProfile = user && String(user.id) === String(userInfo.id);
 	
 	const handleLogout = async () => {
 		setModalID(null);
@@ -51,12 +54,10 @@ const ModalUser = ( { userInfo }: ModalUserProps ) => {
 						<Image src="/images/bg-profile.jpg" alt="Background" fill/>
 					</div>
 					<div className={ style.avatar }>
-						<Image src={ userInfo.avatar_url ? userInfo.avatar_url : '/images/no-photo.webp' } width={ 100 }
-							   height={ 100 }
-							   alt={ `${ userInfo.first_name } ${ userInfo.last_name }` }/>
+						<Image src={ avatarSrc } width={ 100 } height={ 100 } alt={ fullName }/>
 					</div>
-					<div className={ style.name }>{ userInfo.first_name } { userInfo.last_name }</div>
-					<div className={ style.email }>{ userInfo.email }</div>
+					<div className={ style.name }>{ fullName }</div>
+					{ userInfo.email && <div className={ style.email }>{ userInfo.email }</div> }
 				</div>
 				
 				<div className={ style.userDetails }>

@@ -17,7 +17,7 @@
     "errors": {
       "loginEmailEmpty": "Email field cannot be empty",
       "loginEmail": "Invalid email format, please enter a valid address",
-      "loginPassword": "Password must contain at least 8 characters",
+      "loginPassword": "Password must contain at least 6 characters",
       "loginPasswordEmpty": "Password field cannot be empty",
       "wrongAuth": "Incorrect email or password"
     }
@@ -59,7 +59,8 @@
     "noToDos": "No To-Dos available",
     "account": "Account",
     "logout": "Logout",
-    "profile": "Profile"
+    "profile": "Profile",
+    "all": "All"
   },
   "modals": {
     "newProject": {

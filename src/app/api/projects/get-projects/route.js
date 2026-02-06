@@ -10,10 +10,10 @@ export async function GET() {
     return NextResponse.json( { error: 'Missing token or team_id' }, { status: 400 } );
   }
   
-  const res = await fetch( api.getManagers(), {
+  const res = await fetch( api.getProjects(), {
     method: 'GET',
     headers: {
-      Authorization: `Bearer ${ token }`,
+      'x-api-token': `${ token }`,
       'Content-Type': 'application/json',
     },
   } );

@@ -1,28 +1,24 @@
-import React, { useCallback, useState } from "react";
+"use client";
+
+import React, { useCallback, useMemo, useState } from "react";
 import style from "./style.module.scss";
 import modals from "../modal.module.scss";
 import { useUserStore } from "@/store";
 import { Button, InputAssignee, InputRadioColor, InputText, Preloader } from "@/components/UI";
-import { useManagers } from "@/features/employees";
 import { useTranslations } from "next-intl";
-
-interface ProjectManager {
-	first_name: string;
-	last_name: string;
-	id: string;
-}
-
-type managersType = ProjectManager | ProjectManager[];
+import { useUsers } from "@/features/users";
+import { PropsCard } from "@/components/projects/types";
+import type { UserItem } from "@/features/types";
 
 interface FormState {
-	projectID: string,
+	projectID: string;
 	projectName: string;
 	projectColor: string;
 	projectEverhour: string;
 	projectApproved: number;
 	projectMonths: number;
 	projectTracked: number;
-	projectManagers: ProjectManager[];
+	projectManagers: UserItem[];
 }
 
 const PROJECT_COLORS = [
@@ -36,38 +32,26 @@ const PROJECT_COLORS = [
 	"blue",
 	"indigo",
 	"purple",
-	"pink"
+	"pink",
 ] as const;
 
 interface ModalProjectProps {
-	project?: {
-		id: string;
-		label: string;
-		color: string;
-		confirmed_hours: number;
-		months_hours: number;
-		tracked_hours: number;
-		everhour_id: string;
-		managers: {
-			id: string;
-			first_name: string;
-			last_name: string;
-		}[];
-	};
+	project?: PropsCard;
 	mode: "create" | "edit" | string;
 }
 
+const toNumber = ( v: string ) => {
+	const n = Number(v);
+	return Number.isFinite(n) ? n : 0;
+};
+
 const ModalProject = ( { project, mode }: ModalProjectProps ) => {
 	const { setModalID } = useUserStore();
-	const { managers, loadManagers } = useManagers();
+	const { users, loadUsers } = useUsers(); // ✅ users має бути UserItem[]
 	const t = useTranslations();
 	
-	const rawManagers = managers;
-	const assignedManagers: managersType = Array.isArray(rawManagers)
-		? rawManagers
-		: rawManagers
-			? [ rawManagers ]
-			: [];
+	// ✅ завжди масив
+	const assignedManagers: UserItem[] = useMemo(() => (Array.isArray(users) ? users : []), [ users ]);
 	
 	const [ formData, setFormData ] = useState<FormState>(() => {
 		if ( !project || mode === "create" ) {
@@ -79,80 +63,74 @@ const ModalProject = ( { project, mode }: ModalProjectProps ) => {
 				projectApproved: 0,
 				projectMonths: 0,
 				projectTracked: 0,
-				projectManagers: []
+				projectManagers: [],
 			};
 		}
 		
 		return {
-			projectID: project.id,
+			projectID: String(project.id),
 			projectName: project.label,
 			projectColor: project.color,
-			projectApproved: project.confirmed_hours,
-			projectMonths: project.months_hours,
-			projectTracked: project.tracked_hours,
-			projectEverhour: project.everhour_id,
-			projectManagers: project.managers.map(a => ({
-				id: a.id,
+			projectApproved: Number(project.confirmed_hours) || 0,
+			projectMonths: Number(project.months_hours) || 0,
+			projectTracked: Number(project.tracked_hours) || 0,
+			projectEverhour: project.everhour_id ?? "",
+			projectManagers: (project.assigned_users ?? []).map(( a: any ) => ({
+				id: String(a.id),
 				first_name: a.first_name,
 				last_name: a.last_name,
-			}))
+			})),
 		};
 	});
 	
 	const handleChange = useCallback(( e: React.ChangeEvent<HTMLInputElement> ) => {
 		const { name, value, type, checked, dataset } = e.target;
 		
+		// ✅ чекбокси асайні
 		if ( type === "checkbox" && dataset.userId ) {
-			const userId = dataset.userId;
+			const userId = String(dataset.userId);
 			const firstName = dataset.firstName || "";
 			const lastName = dataset.lastName || "";
 			
-			setFormData(prev => {
-				const exists = prev.projectManagers.some(a => a.id === userId);
-				let projectManagers: ProjectManager[];
+			setFormData(( prev ) => {
+				const exists = prev.projectManagers.some(( a ) => String(a.id) === userId);
 				
-				if ( checked ) {
-					if ( exists ) return prev;
-					projectManagers = [
-						...prev.projectManagers,
-						{
-							id: userId,
-							first_name: firstName,
-							last_name: lastName
-						}
-					];
-				} else {
-					projectManagers = prev.projectManagers.filter(a => a.id !== userId);
-				}
+				const nextManagers: UserItem[] = checked
+					? exists
+						? prev.projectManagers
+						: [ ...prev.projectManagers, { id: userId, first_name: firstName, last_name: lastName } ]
+					: prev.projectManagers.filter(( a ) => String(a.id) !== userId);
 				
-				return {
-					...prev,
-					projectManagers
-				};
+				return { ...prev, projectManagers: nextManagers };
 			});
 			
 			return;
 		}
 		
-		setFormData(prev => ({
-			...prev,
-			[name]: value
-		}));
+		// ✅ numeric поля
+		if ( name === "projectApproved" || name === "projectMonths" || name === "projectTracked" ) {
+			setFormData(( prev ) => ({ ...prev, [name]: toNumber(value) } as FormState));
+			return;
+		}
+		
+		// ✅ інші поля
+		setFormData(( prev ) => ({ ...prev, [name]: value }));
 	}, []);
 	
-	const handleSubmit = ( e: React.FormEvent<HTMLFormElement> ) => {
+	const handleSubmit = useCallback(( e: React.FormEvent<HTMLFormElement> ) => {
 		e.preventDefault();
 		
+		// TODO: відправка formData на бек
+		// console.log(formData);
 		
-	};
+		setModalID(null);
+	}, [ setModalID ]);
 	
 	return (
-		<form noValidate className={ style.formAddProject }>
+		<form noValidate className={ style.formAddProject } onSubmit={ handleSubmit }>
 			<div className={ style.formAddProject_inner }>
 				<div className={ `${ modals.field } ${ modals.field_50 }` }>
-					<div className={ modals.field_caption }>
-						{ t("modals.newProject.labels.projectName") }
-					</div>
+					<div className={ modals.field_caption }>{ t("modals.newProject.labels.projectName") }</div>
 					<div className={ modals.field_input }>
 						<InputText
 							name="projectName"
@@ -164,11 +142,9 @@ const ModalProject = ( { project, mode }: ModalProjectProps ) => {
 				</div>
 				
 				<div className={ `${ modals.field } ${ modals.field_50 }` }>
-					<div className={ modals.field_caption }>
-						{ t("modals.newProject.labels.accentColor") }
-					</div>
+					<div className={ modals.field_caption }>{ t("modals.newProject.labels.accentColor") }</div>
 					<div className={ modals.field_color }>
-						{ PROJECT_COLORS.map(color => (
+						{ PROJECT_COLORS.map(( color ) => (
 							<InputRadioColor
 								key={ color }
 								checked={ formData.projectColor === color }
@@ -181,25 +157,22 @@ const ModalProject = ( { project, mode }: ModalProjectProps ) => {
 				</div>
 				
 				<div className={ `${ modals.field } ${ modals.field_100 }` }>
-					<div className={ modals.field_caption }>
-						{ t("modals.newProject.labels.assignee") }
-					</div>
+					<div className={ modals.field_caption }>{ t("modals.newProject.labels.assignee") }</div>
 					<div className={ modals.field_assignee }>
-						{ loadManagers && <Preloader size="sm"/> }
+						{ loadUsers && <Preloader size="sm"/> }
 						
-						{ assignedManagers.map(manager => {
-							const isChecked = formData.projectManagers.some(
-								m => m.id === manager.id.toString()
-							);
+						{ assignedManagers.map(( manager ) => {
+							const id = String(manager.id);
+							const isChecked = formData.projectManagers.some(( m ) => String(m.id) === id);
 							
 							return (
 								<InputAssignee
-									key={ manager.id }
-									inputName={ `projectAssignee-${ manager.id }` }
+									key={ id }
+									inputName={ `projectAssignee-${ id }` }
 									first_name={ manager.first_name }
 									last_name={ manager.last_name }
 									onChange={ handleChange }
-									idUser={ `${ manager.id }` }
+									idUser={ id }
 									checked={ isChecked }
 								/>
 							);
@@ -208,9 +181,7 @@ const ModalProject = ( { project, mode }: ModalProjectProps ) => {
 				</div>
 				
 				<div className={ `${ modals.field } ${ modals.field_33 }` }>
-					<div className={ modals.field_caption }>
-						{ t("modals.newProject.labels.approved") }
-					</div>
+					<div className={ modals.field_caption }>{ t("modals.newProject.labels.approved") }</div>
 					<div className={ modals.field_input }>
 						<InputText
 							number
@@ -223,12 +194,10 @@ const ModalProject = ( { project, mode }: ModalProjectProps ) => {
 				</div>
 				
 				<div className={ `${ modals.field } ${ modals.field_33 }` }>
-					<div className={ modals.field_caption }>
-						{ t("modals.newProject.labels.monthly") }
-					</div>
+					<div className={ modals.field_caption }>{ t("modals.newProject.labels.monthly") }</div>
 					<div className={ modals.field_input }>
 						<InputText
-							number={ true }
+							number
 							name="projectMonths"
 							placeholder={ t("modals.newProject.placeholders.monthly") }
 							value={ formData.projectMonths }
@@ -236,13 +205,12 @@ const ModalProject = ( { project, mode }: ModalProjectProps ) => {
 						/>
 					</div>
 				</div>
+				
 				<div className={ `${ modals.field } ${ modals.field_33 }` }>
-					<div className={ modals.field_caption }>
-						{ t("modals.newProject.labels.tracked") }
-					</div>
+					<div className={ modals.field_caption }>{ t("modals.newProject.labels.tracked") }</div>
 					<div className={ modals.field_input }>
 						<InputText
-							number={ true }
+							number
 							name="projectTracked"
 							value={ formData.projectTracked }
 							onChange={ handleChange }
@@ -251,9 +219,7 @@ const ModalProject = ( { project, mode }: ModalProjectProps ) => {
 				</div>
 				
 				<div className={ `${ modals.field } ${ modals.field_66 }` }>
-					<div className={ modals.field_caption }>
-						{ t("modals.newProject.labels.everhour") }
-					</div>
+					<div className={ modals.field_caption }>{ t("modals.newProject.labels.everhour") }</div>
 					<div className={ modals.field_input }>
 						<InputText
 							name="projectEverhour"
@@ -265,30 +231,17 @@ const ModalProject = ( { project, mode }: ModalProjectProps ) => {
 				</div>
 				
 				<div className={ `${ modals.field } ${ modals.field_100 }` }>
-					<div className={ modals.field_caption }>
-						{ t("modals.newProject.labels.links") }
-					</div>
-					<div className={ modals.field_input }>
-						{/*<InputText*/ }
-						{/*	name="projectClickup"*/ }
-						{/*	placeholder={ t("modals.newProject.placeholders.clickUpLink") }*/ }
-						{/*	value={ formData.projectClickup }*/ }
-						{/*	onChange={ handleChange }*/ }
-						{/*/>*/ }
-					</div>
+					<div className={ modals.field_caption }>{ t("modals.newProject.labels.links") }</div>
+					<div className={ modals.field_input }>{/* links inputs */ }</div>
 				</div>
 			</div>
 			
 			<div className={ style.formAddProject_bottom }>
-				<Button
-					type="button"
-					variant="secondary"
-					data-modal-id="modal-add-project"
-					onClick={ () => setModalID(null) }
-				>
+				<Button type="button" variant="secondary" onClick={ () => setModalID(null) }>
 					{ t("uiText.cancel") }
 				</Button>
-				<Button type="submit" onClick={ () => handleSubmit } variant="primary">
+				
+				<Button type="submit" variant="primary">
 					{ mode === "create" ? t("uiText.createProject") : t("uiText.save") }
 				</Button>
 			</div>

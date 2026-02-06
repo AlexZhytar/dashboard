@@ -19,8 +19,8 @@ export function useUser() {
         }
         if ( !res.ok ) throw new Error( "Failed to fetch user" );
         
-        const data = await res.json();
-        setUser( data?.user ?? data ?? null );
+        const json = await res.json();
+        setUser( json.data ?? json ?? null );
       } catch (e) {
         console.error( "❌ fetch user:", e );
         setUser( null );

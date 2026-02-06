@@ -2,7 +2,7 @@
 
 import React, { useEffect, useRef, useState } from 'react';
 import style from '../projects.module.scss';
-import { PropsCard, Todos } from './types';
+import { PropsCard, Todos } from '../types';
 import ProjectCardLinks from './ProjectCardLinks';
 import ProjectCardManager from './ProjectCardManager';
 import ProjectCardHours from "@/components/projects/ProjectsCard/ProjectCardHours";
@@ -16,18 +16,19 @@ import ToDoCard from "@/components/toDo/ToDoCard";
 import { useUuid } from "@/hooks";
 
 const ProjectCard: React.FC<PropsCard> = ( {
-	project_id,
-	project,
+	id,
+	label,
 	color,
 	links,
-	managers,
+	assigned_users,
 	todos,
 	tracked_hours,
 	confirmed_hours,
 	months_hours,
 	callbacks
 } ) => {
-	const { filters, setProjectID } = useProjectsStore();
+	const filters = useProjectsStore(s => s.filters);
+	const setActiveProjectId = useProjectsStore(s => s.setActiveProjectId);
 	const { setModalID } = useUserStore();
 	const t = useTranslations();
 	const [ isOpen, setIsOpen ] = useState(false);
@@ -42,14 +43,14 @@ const ProjectCard: React.FC<PropsCard> = ( {
 		
 		callbacks?.({
 			modalType,
-			project_id: id
+			project_id: String(id),
 		});
 	}
 	
 	const handleOpenTodoList = ( e: React.MouseEvent<HTMLButtonElement> ) => {
 		e.preventDefault();
-		setProjectID(project_id);
-		setModalID('toDoList');
+		setActiveProjectId(String(id));
+		setModalID("toDoList");
 	}
 	
 	useEffect(() => {
@@ -59,10 +60,10 @@ const ProjectCard: React.FC<PropsCard> = ( {
 			}
 		};
 		
-		document.addEventListener("mousedown", handleClickOutside);
+		document.addEventListener("pointerdown", handleClickOutside);
 		
 		return () => {
-			document.removeEventListener("mousedown", handleClickOutside);
+			document.removeEventListener("pointerdown", handleClickOutside);
 		};
 	}, []);
 	
@@ -120,6 +121,7 @@ const ProjectCard: React.FC<PropsCard> = ( {
 	};
 	
 	const pinnedTodos = getTopTodos(todos);
+	const pmUsers = assigned_users.filter(u => u.role?.slug === "pm");
 	
 	return (
 		<>
@@ -127,14 +129,14 @@ const ProjectCard: React.FC<PropsCard> = ( {
 				<div className={ style.projects_card_color }
 					 style={ { backgroundColor: !color || color === '' ? 'var(--color-green)' : color } }/>
 				<div className={ style.project }>
-					<div className={ style.project_block }>{ project }</div>
+					<div className={ style.project_block }>{ label }</div>
 				</div>
 				
 				{ filters.links && (
 					<div className={ style.links }>
 						<div className={ style.links_block }>
 							{
-								links.map(( item, index ) => {
+								links?.map(( item, index ) => {
 									return <ProjectCardLinks icon={ item.icon }
 															 key={ index }
 															 url={ item.url }
@@ -149,7 +151,7 @@ const ProjectCard: React.FC<PropsCard> = ( {
 				{ filters.pm && (
 					<div className={ style.pm }>
 						<div className={ style.pm_block }>
-							{ managers.map(user => {
+							{ (pmUsers ?? []).map(user => {
 								return (
 									<ProjectCardManager
 										key={ user.id }
@@ -235,6 +237,7 @@ const ProjectCard: React.FC<PropsCard> = ( {
 							<Button type={ 'button' }
 									id={ `list-${ uuid }` }
 									onMouseEnter={ () => setIsOpen(true) }
+									onClick={ () => setIsOpen(v => !v) }
 									className={ `${ style.btnMore } ` }
 									variant={ 'secondary' }>
 								<DotsIcon/>
@@ -248,7 +251,7 @@ const ProjectCard: React.FC<PropsCard> = ( {
 								<div className={ style.moreList }>
 									<Button type={ 'button' }
 											className={ `${ style.moreList_remove }` }
-											data-project-id={ project_id }
+											data-project-id={ id }
 											data-modal-type={ 'delete' }
 											onClick={ e => editProject(e) }
 											variant={ 'secondary' }>
@@ -257,7 +260,7 @@ const ProjectCard: React.FC<PropsCard> = ( {
 									</Button>
 									<Button type={ 'button' }
 											className={ `${ style.moreList_edit }` }
-											data-project-id={ project_id }
+											data-project-id={ id }
 											data-modal-type={ 'edit' }
 											onClick={ e => editProject(e) }
 											variant={ 'primary' }>

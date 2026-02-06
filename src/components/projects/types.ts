@@ -1,13 +1,10 @@
+import { ReactNode } from "react";
+import { UserItem } from "@/features/types";
+
 export type LinkCard = {
 	url: string;
 	icon: string;
 	label: string;
-}
-
-export type ManagerCard = {
-	first_name: string;
-	last_name: string;
-	id: number;
 }
 
 export type Todos = {
@@ -25,14 +22,26 @@ export interface CallbackPayload {
 }
 
 export type PropsCard = {
-	project_id: string;
-	project: string;
+	id: string;
+	label: string;
 	color: string;
-	managers: ManagerCard[];
-	links: LinkCard[];
+	assigned_users: UserItem[];
+	links?: LinkCard[];
 	todos?: Todos[];
+	everhour_id?: string;
 	confirmed_hours: number,
 	months_hours: number,
 	tracked_hours: number,
 	callbacks?: ( payload: CallbackPayload ) => void;
+}
+
+export type DraggableBlockProps = {
+	id: string | number;
+	children: ReactNode;
+	stateSearch: boolean;
+}
+
+export type ProjectsProps = {
+	projects: PropsCard[];
+	isSearchActive?: boolean;
 }

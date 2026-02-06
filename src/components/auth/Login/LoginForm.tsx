@@ -31,7 +31,6 @@ export const LoginForm = () => {
 		setErrors(prev => ({ ...prev, [name]: undefined }));
 	};
 	
-	
 	const handleSubmit = async ( e: React.FormEvent<HTMLFormElement> ) => {
 		e.preventDefault();
 		
@@ -50,7 +49,7 @@ export const LoginForm = () => {
 		const password = formData.loginPassword;
 		if ( !password.trim() ) {
 			newErrors.loginPassword = t("loginForm.errors.loginPasswordEmpty");
-		} else if ( password.length < 8 ) {
+		} else if ( password.length < 6 ) {
 			newErrors.loginPassword = t("loginForm.errors.loginPassword");
 		}
 		
@@ -70,20 +69,22 @@ export const LoginForm = () => {
 				}),
 			});
 			
-			if ( !response.ok ) {
-				const res = await response.text();
+			const res = await response.json();
+			
+			if ( !res.status ) {
+				setErrors(res.message || {});
 				setCheckAuth(true);
 				setLoading(false);
 				return;
 			}
 			
-			const data = await response.json();
-			const receivedToken = data.token;
+			const receivedToken = res.data.token.hash;
+			const expiresAt = res.data.token.expires_at;
 			
 			await fetch('/api/user/save-token', {
 				method: 'POST',
 				headers: { 'Content-Type': 'application/json' },
-				body: JSON.stringify({ token: receivedToken }),
+				body: JSON.stringify({ token: receivedToken, expires_at: expiresAt }),
 			});
 			
 			setAuthorized(true);
@@ -96,7 +97,6 @@ export const LoginForm = () => {
 			console.error('Ошибка запроса:', error);
 		}
 	};
-	
 	
 	return (
 		<form noValidate className={ style.login_form } onSubmit={ handleSubmit }>
@@ -122,7 +122,8 @@ export const LoginForm = () => {
 					<Button variant="primary" type="submit">
 						<span>{ t("loginForm.loginButton") }</span>
 					</Button>
-					{ checkAuth && <Toast variant="error" message={ t("loginForm.errors.wrongAuth") }/> }
+					{ typeof errors === 'string' && <Toast variant="error"
+                                                           message={ errors }/> }
 				</div>
 			</> }
 		</form>

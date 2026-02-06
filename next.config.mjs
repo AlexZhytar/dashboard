@@ -5,8 +5,8 @@ const nextConfig = {
   async rewrites() {
     return [
       {
-        source: '/api/:path*',
-        destination: 'https://dashboard-backend.testsofts.com/api/:path*',
+        source: '/v1/:path*',
+        destination: 'https://n8n.testsofts.com/webhook/dashboard/v1/:path*',
       },
     ];
   },

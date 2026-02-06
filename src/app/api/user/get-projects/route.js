@@ -2,21 +2,18 @@ import { NextResponse } from 'next/server';
 import { cookies } from 'next/headers';
 import { api } from "@/utils";
 
-export async function GET( req ) {
+export async function GET() {
   const cookieStore = await cookies();
   const token = cookieStore.get( 'dash-auth' )?.value;
-  const { searchParams } = new URL( req.url );
-  const employeeId = searchParams.get( 'employee_id' );
-  console.log( employeeId )
   
   if ( !token ) {
     return NextResponse.json( { error: 'Missing token or team_id' }, { status: 400 } );
   }
   
-  const res = await fetch( api.getUserProjects( `${ employeeId }` ), {
+  const res = await fetch( api.getUserProjects(), {
     method: 'GET',
     headers: {
-      Authorization: `Bearer ${ token }`,
+      'x-api-token': `${ token }`,
       'Content-Type': 'application/json',
     },
   } );
