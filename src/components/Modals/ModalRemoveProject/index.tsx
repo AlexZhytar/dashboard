@@ -6,7 +6,7 @@ import { Button, InputText, Preloader, Toast } from "@/components/UI";
 import { useTranslations } from "next-intl";
 import { useProjectsStore, useUserStore } from "@/store";
 
-interface ModalRemoveProject {
+interface ModalRemoveProjectProps {
 	projectID: number;
 	project_name: string;
 }
@@ -14,7 +14,7 @@ interface ModalRemoveProject {
 const ModalRemoveProject = ( {
 	projectID,
 	project_name,
-}: ModalRemoveProject ) => {
+}: ModalRemoveProjectProps ) => {
 	const [ input, setInput ] = useState("");
 	const t = useTranslations();
 	const { setModalID } = useUserStore();

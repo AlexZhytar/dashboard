@@ -5,7 +5,7 @@ import { getInitials } from '@/utils';
 import { Tooltip } from "react-tooltip";
 import React from "react";
 import { useUserStore } from "@/store";
-import { UserItem } from "@/features/types";
+import { UserItem } from "@/types/user";
 
 const ProjectCardManager = ( { first_name, last_name, id }: UserItem ) => {
 	const initials = getInitials(`${ first_name } ${ last_name }`);

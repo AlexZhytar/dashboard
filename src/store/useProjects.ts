@@ -1,8 +1,6 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
-import { PropsCard } from "@/components/projects/types";
-
-type Project = Omit<PropsCard, "id"> & { id: number };
+import { Project, PropsCard } from "@/types/project";
 
 const defaultFilters = {
 	links: true,

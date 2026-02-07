@@ -6,20 +6,10 @@ import Image from "next/image";
 import { useUser } from "@/features/user";
 import { useUserStore } from "@/store";
 import { NoResultsIcon } from "@/components/Icons";
-
-export type UserInfo = {
-	id: number | string;
-	first_name: string;
-	last_name: string;
-	email?: string;
-	avatar_url?: string | null;
-	created_at?: string;
-	updated_at?: string;
-	[key: string]: any;
-};
+import { User } from "@/types/user";
 
 interface ModalUserProps {
-	userInfo?: UserInfo | null;
+	userInfo?: User | null;
 }
 
 const ModalUser = ( { userInfo }: ModalUserProps ) => {

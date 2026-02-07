@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import type { UserItem } from "../types";
+import type { User } from "@/types/user";
 
 export function useUsers() {
-	const [ users, setUsers ] = useState<UserItem[]>([]);
+	const [ users, setUsers ] = useState<User[]>([]);
 	const [ loadUsers, setLoadUsers ] = useState(false);
 	
 	useEffect(() => {

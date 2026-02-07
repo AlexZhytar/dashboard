@@ -1,19 +1,8 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
+import { User } from "@/types/user";
 
 export type ModalID = string | null;
-
-export interface User {
-	id: number;
-	first_name: string;
-	last_name: string;
-	email?: string;
-	avatar_url?: string | null;
-	created_at?: string;
-	updated_at?: string;
-	
-	[key: string]: unknown;
-}
 
 type UserStoreState = {
 	authorized: boolean;

@@ -12,7 +12,7 @@ import { Modal, ModalProject, ModalRemoveProject } from "@/components/Modals";
 import modals from "@/components/Modals/modal.module.scss";
 import React, { useState } from "react";
 import { useUserStore } from "@/store";
-import { CallbackPayload, DraggableBlockProps, ProjectsProps, PropsCard } from "../types"
+import { CallbackPayload, DraggableBlockProps, ProjectsProps, PropsCard } from "@/types/project"
 
 const DraggableBlock = ( { id, children, stateSearch }: DraggableBlockProps ) => {
 	const { attributes, listeners, transition, isDragging, setNodeRef, transform } = useSortable({
@@ -49,6 +49,8 @@ const DraggableBlock = ( { id, children, stateSearch }: DraggableBlockProps ) =>
 const ProjectsList = ( { projects, isSearchActive }: ProjectsProps ) => {
 	const { setModalID } = useUserStore();
 	const t = useTranslations();
+	
+	console.log(projects)
 	
 	const projectOrder = useProjectsStore(s => s.projectOrder);
 	const setProjectOrder = useProjectsStore(s => s.setProjectOrder);
@@ -114,7 +116,8 @@ const ProjectsList = ( { projects, isSearchActive }: ProjectsProps ) => {
 			
 			<Modal id={ `delete-${ selectedProject?.id ?? "" }` } className={ modals.removeProject }
 				   title={ t("modals.deleteProject.title") } animation="center">
-				<ModalRemoveProject projectID={ Number(selectedProject?.id) } project_name={ selectedProject?.label || "" }/>
+				<ModalRemoveProject projectID={ Number(selectedProject?.id) }
+									project_name={ selectedProject?.label || "" }/>
 			</Modal>
 		</>
 	);

@@ -7,8 +7,8 @@ import { useProjectsStore, useUserStore } from "@/store";
 import { Button, InputAssignee, InputRadioColor, InputText, Preloader, } from "@/components/UI";
 import { useTranslations } from "next-intl";
 import { useUsers } from "@/features/users";
-import { PropsCard } from "@/components/projects/types";
-import type { UserItem } from "@/features/types";
+import { PropsCard } from "@/types/project";
+import type { UserItem } from "@/types/user";
 
 interface FormState {
 	projectID: number;
@@ -41,7 +41,8 @@ interface ModalProjectProps {
 }
 
 const toNumber = ( v: string ) => {
-	const n = Number(v);
+	const cleaned = v.replace(/[^0-9.]/g, '');
+	const n = parseFloat(cleaned);
 	return Number.isFinite(n) ? n : 0;
 };
 
@@ -62,7 +63,7 @@ const ModalProject = ( { project, mode }: ModalProjectProps ) => {
 			return {
 				projectID: 0,
 				projectName: "",
-				projectColor: "",
+				projectColor: "red",
 				projectEverhour: "",
 				projectApproved: 0,
 				projectMonths: 0,
@@ -72,15 +73,15 @@ const ModalProject = ( { project, mode }: ModalProjectProps ) => {
 		}
 		
 		return {
-			projectID: project.id,
+			projectID: Number(project.id),
 			projectName: project.label,
-			projectColor: project.color,
+			projectColor: project.color || "red",
 			projectApproved: Number(project.confirmed_hours) || 0,
 			projectMonths: Number(project.months_hours) || 0,
 			projectTracked: Number(project.tracked_hours) || 0,
 			projectEverhour: project.everhour_id ?? "",
 			projectManagers: (project.assigned_users ?? []).map(( a: any ) => ({
-				id: a.id,
+				id: Number(a.id),
 				first_name: a.first_name,
 				last_name: a.last_name,
 			})),

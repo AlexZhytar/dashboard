@@ -1,4 +1,4 @@
-import { LinkCard } from '../types';
+import { LinkCard } from '@/types/project';
 import style from '../projects.module.scss';
 
 const ProjectCardLinks = ( { icon, url, label }: LinkCard ) => <a href={ url } target='_blank' className={ style.link }>

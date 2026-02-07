@@ -4,14 +4,9 @@ import { Button } from "@/components/UI";
 import { useLocale, useTranslations } from "next-intl";
 import { useProjectsStore, useUserStore } from "@/store";
 import { NoResultsIcon } from "@/components/Icons";
-import { Todos } from "@/components/projects/types";
+import { Todos } from "@/types/todo";
 import ToDoCard from "@/components/toDo/ToDoCard";
 import { pluralizeEn, pluralizeUa } from "@/utils";
-
-interface Project {
-	id: number;
-	todos: Todos;
-}
 
 const ModalToDoList = () => {
 	const t = useTranslations();

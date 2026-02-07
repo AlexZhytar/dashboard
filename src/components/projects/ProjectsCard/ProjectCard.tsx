@@ -2,7 +2,8 @@
 
 import React, { useEffect, useRef, useState } from 'react';
 import style from '../projects.module.scss';
-import { PropsCard, Todos } from '../types';
+import { PropsCard } from '@/types/project';
+import { Todos } from '@/types/todo';
 import ProjectCardLinks from './ProjectCardLinks';
 import ProjectCardManager from './ProjectCardManager';
 import ProjectCardHours from "@/components/projects/ProjectsCard/ProjectCardHours";
@@ -19,7 +20,7 @@ const ProjectCard: React.FC<PropsCard> = ( {
 	id,
 	label,
 	color,
-	links,
+	project_links,
 	assigned_users,
 	todos,
 	tracked_hours,
@@ -137,7 +138,7 @@ const ProjectCard: React.FC<PropsCard> = ( {
 					<div className={ style.links }>
 						<div className={ style.links_block }>
 							{
-								links?.map(( item, index ) => {
+								project_links?.map(( item, index ) => {
 									return <ProjectCardLinks icon={ item.icon }
 															 key={ index }
 															 url={ item.url }
